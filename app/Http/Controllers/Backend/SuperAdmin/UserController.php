@@ -31,13 +31,23 @@ class UserController extends Controller
                     }else{
                         return '<span class="badge badge-pill badge-danger">Inactive</span>';
                     }
+                })->addColumn('type', function($data) {
+                    if($data->type == 'Super Admin'){
+                        return '<span class="badge badge-pill badge-danger">Super Admin</span>';
+                    }else if($data->type == 'Admin'){
+                        return '<span class="badge badge-pill badge-warning">Admin</span>';
+                    }else if($data->type == 'Manager'){
+                        return '<span class="badge badge-pill badge-info">Manager</span>';
+                    }else if($data->type == 'Customer'){
+                        return '<span class="badge badge-pill badge-success">Customer</span>';
+                    }
                 })->addColumn('image', function($data) {
                     return '<img class="rounded-circle" height="70px;" src="'.asset($data->image ?? get_static_option('no_image')).'" width="70px;" class="rounded-circle" />';
                 })->addColumn('action', function($data) {
                     return '<a href="'.route('superadmin.user.edit', $data).'" class="btn btn-info"><i class="fa fa-edit"></i> </a>
                     <button class="btn btn-danger" onclick="delete_function(this)" value="'.route('superadmin.user.destroy', $data).'"><i class="fa fa-trash"></i> </button>';
                 })
-                ->rawColumns(['status','image','action'])
+                ->rawColumns(['status','image', 'type','action'])
                 ->make(true);
         }else{
             return view('backend.superadmin.user.index');
@@ -144,7 +154,7 @@ class UserController extends Controller
         if($request->hasFile('image')){
             if ($user->image != null)
                 File::delete(public_path($user->image)); //Old image delete
-            $image             = $request->file('avatar');
+            $image             = $request->file('image');
             $folder_path       = 'uploads/images/user/avatar/';
             $image_new_name    = Str::random(20).'-'.now()->timestamp.'.'.$image->getClientOriginalExtension();
             //resize and save to server

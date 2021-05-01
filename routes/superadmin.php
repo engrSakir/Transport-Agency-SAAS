@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\SuperAdmin;
 
 Route::group(['as' => 'superadmin.', 'prefix' => 'backend/super-admin/'], function (){
+
         Route::get('/dashboard', [SuperAdmin\DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/banner', [SuperAdmin\BannerController::class, 'index'])->name('banner');
@@ -41,6 +42,10 @@ Route::group(['as' => 'superadmin.', 'prefix' => 'backend/super-admin/'], functi
         Route::get('/subscriber/email', [SuperAdmin\SubscriberController::class, 'subscriberEmail'])->name('subscriberEmail');
         Route::post('/subscriber/email', [SuperAdmin\SubscriberController::class, 'subscriberEmailSend'])->name('subscriberEmailSend');
 
+
+        Route::post('/message-status-change', [SuperAdmin\WebsiteMessageController::class, 'messageStatusChange'])->name('messageStatusChange');
+        Route::post('/message-reply-mail', [SuperAdmin\WebsiteMessageController::class, 'websiteMessageReplyMail'])->name('websiteMessageReplyMail');
+
         Route::resource('homeContent', SuperAdmin\HomeContentController::class);
         Route::resource('homeContentFaq', SuperAdmin\HomeContentFaqController::class);
         Route::resource('strength', SuperAdmin\StrengthController::class);
@@ -59,8 +64,9 @@ Route::group(['as' => 'superadmin.', 'prefix' => 'backend/super-admin/'], functi
         Route::resource('subscriber', SuperAdmin\SubscriberController::class);
         Route::resource('websiteMessage', SuperAdmin\WebsiteMessageController::class);
         Route::resource('user', SuperAdmin\UserController::class);
+        Route::resource('package', SuperAdmin\PackageController::class);
+        Route::resource('company', SuperAdmin\CompanyController::class);
+        Route::resource('branch', SuperAdmin\BranchController::class);
 
-        Route::post('/message-status-change', [SuperAdmin\WebsiteMessageController::class, 'messageStatusChange'])->name('messageStatusChange');
-        Route::post('/message-reply-mail', [SuperAdmin\WebsiteMessageController::class, 'websiteMessageReplyMail'])->name('websiteMessageReplyMail');
     });
 

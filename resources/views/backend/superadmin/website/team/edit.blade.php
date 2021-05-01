@@ -39,7 +39,7 @@
                         <div class="form-group row">
                             <label for="name" class="col-sm-4 col-form-label">Name <b class="text-danger">*</b></label>
                             <div class="col-12">
-                                <input name="name" type="text" class="form-control" id="name" value="{{ $team->name }}" reired>
+                                <input name="name" type="text" class="form-control" id="name" value="{{ $team->name }}">
                             </div>
                         </div>
                         <div class="form-group row">

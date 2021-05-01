@@ -1,5 +1,5 @@
 @push('title')
-    User
+    Company
 @endpush
 @extends('layouts.backend.app')
 @push('style')
@@ -9,15 +9,15 @@
 @section('breadcrumb')
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h4 class="text-themecolor">User</h4>
+            <h4 class="text-themecolor">Company</h4>
         </div>
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">User</li>
+                    <li class="breadcrumb-item active">Company</li>
                 </ol>
-                <a href="{{ route('superadmin.user.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create User</a>
+                <a href="{{ route('superadmin.company.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create Company</a>
             </div>
         </div>
     </div>
@@ -31,17 +31,16 @@
             <div class="col-lg-12">
                 <div class="card m-b-30">
                     <div class="card-header bg-danger">
-                        <h5 class="card-title text-white">User </h5>
+                        <h5 class="card-title text-white">Company </h5>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive color-bordered-table success-bordered-table">
                             <table id="datatable" class="display table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Image</th>
+                                        <th>Logo</th>
                                         <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Type</th>
+                                        <th>Package</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -51,10 +50,9 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Image</th>
+                                        <th>Logo</th>
                                         <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Type</th>
+                                        <th>Package</th>
                                         <th>Status</th>
                                     </tr>
                                 </tfoot>
@@ -78,24 +76,21 @@
             responsive: true,
             processing: true,
             serverSide: true,
-            ajax: '{!! route('superadmin.user.index') !!}',
+            ajax: '{!! route('superadmin.company.index') !!}',
             columns: [
                 {
-                    data: 'image',
-                    name: 'image'
+                    data: 'logo',
+                    name: 'logo'
                 },
                 {
                     data: 'name',
                     name: 'name'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: 'package',
+                    name: 'package.'
                 },
                 {
-                    data: 'type',
-                    name: 'type'
-                },{
                     data: 'status',
                     name: 'status'
                 },
