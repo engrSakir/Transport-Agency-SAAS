@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Superadmin;
+namespace App\Http\Controllers\Backend\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;

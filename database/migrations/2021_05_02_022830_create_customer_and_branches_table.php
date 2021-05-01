@@ -15,6 +15,8 @@ class CreateCustomerAndBranchesTable extends Migration
     {
         Schema::create('customer_and_branches', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('branch_id');
+            $table->foreignId('user_id')->comment('customer');
             $table->timestamps();
         });
     }

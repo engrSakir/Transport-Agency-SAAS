@@ -1,5 +1,5 @@
 @push('title')
-    Branch
+    Package
 @endpush
 @extends('layouts.backend.app')
 @push('style')
@@ -9,15 +9,15 @@
 @section('breadcrumb')
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h4 class="text-themecolor">Branch</h4>
+            <h4 class="text-themecolor">Package</h4>
         </div>
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Branch</li>
+                    <li class="breadcrumb-item active">Package</li>
                 </ol>
-                <a href="{{ route('superadmin.branch.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create Branch</a>
+                <a href="{{ route('superadmin.package.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create Package</a>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
             <div class="col-lg-12">
                 <div class="card m-b-30">
                     <div class="card-header bg-danger">
-                        <h5 class="card-title text-white">Branch </h5>
+                        <h5 class="card-title text-white">Package </h5>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive color-bordered-table success-bordered-table">
@@ -39,7 +39,12 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Logo</th>
+                                        <th>Branch</th>
+                                        <th>Admin</th>
+                                        <th>Manager</th>
+                                        <th>Customer</th>
+                                        <th>Invoice</th>
+                                        <th>Sms</th>
                                         <th>Company</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -51,7 +56,12 @@
                                 <tfoot>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Logo</th>
+                                        <th>Branch</th>
+                                        <th>Admin</th>
+                                        <th>Manager</th>
+                                        <th>Customer</th>
+                                        <th>Invoice</th>
+                                        <th>Sms</th>
                                         <th>Company</th>
                                         <th>Status</th>
                                     </tr>
@@ -76,15 +86,35 @@
             responsive: true,
             processing: true,
             serverSide: true,
-            ajax: '{!! route('superadmin.branch.index') !!}',
+            ajax: '{!! route('superadmin.package.index') !!}',
             columns: [
                 {
                     data: 'name',
                     name: 'name'
                 },
                 {
-                    data: 'logo',
-                    name: 'logo'
+                    data: 'branch',
+                    name: 'branch'
+                },
+                {
+                    data: 'admin',
+                    name: 'admin'
+                },
+                {
+                    data: 'manager',
+                    name: 'manager'
+                },
+                {
+                    data: 'customer',
+                    name: 'customer'
+                },
+                {
+                    data: 'invoice',
+                    name: 'invoice'
+                },
+                {
+                    data: 'sms',
+                    name: 'sms'
                 },
                 {
                     data: 'company',
