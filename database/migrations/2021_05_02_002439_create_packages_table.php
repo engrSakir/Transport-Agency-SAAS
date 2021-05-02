@@ -22,7 +22,8 @@ class CreatePackagesTable extends Migration
             $table->integer('manager')->default(1)->comment('max-permitted');
             $table->integer('customer')->default(50)->comment('max-permitted');
             $table->integer('invoice')->default(100)->comment('max-permitted');
-            $table->integer('sms')->default(100)->comment('free');
+            $table->integer('free_sms')->default(100)->comment('free-message');
+            $table->float('price_per_message')->default(0.47)->comment('poisa');
             $table->timestamps();
         });
     }

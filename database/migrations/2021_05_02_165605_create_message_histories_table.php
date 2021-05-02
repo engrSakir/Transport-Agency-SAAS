@@ -15,7 +15,6 @@ class CreateMessageHistoriesTable extends Migration
     {
         Schema::create('message_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('masking_id')->nullable();
             $table->foreignId('company_id');
             $table->foreignId('branch_id')->nullable();
             $table->foreignId('sender_id')->nullable();

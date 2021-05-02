@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
         $user = new User();
         $user->type = 'Admin';
         $user->name = 'Admin';
+        $user->company_id = 1;
         $user->email = 'admin@gmail.com';
         $user->password = Hash::make('password');
         $user->save();
@@ -47,6 +48,7 @@ class UserSeeder extends Seeder
             $user = new User();
             $user->type = 'Super Admin';
             $user->name = 'Mr Super Admin '.$i;
+            $user->company_id = $i;
             $user->email = 'superadmin'.$i.'@gmail.com';
             $user->password = Hash::make('password');
             $user->save();
@@ -59,6 +61,7 @@ class UserSeeder extends Seeder
             $user->type = 'Admin';
             $user->name = 'Mr Admin '.$i;
             $user->email = 'admin'.$i.'@gmail.com';
+            $user->company_id = $i;
             $user->password = Hash::make('password');
             $user->save();
             $user->assignRole('Admin');

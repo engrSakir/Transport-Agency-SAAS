@@ -9,7 +9,7 @@ class Package extends Model
 {
     use HasFactory;
 
-    public function companies(){
-        return $this->hasMany(Company::class, 'package_id', 'id');
+    public function purchases(){
+        return $this->hasMany(PurchasePackage::class, 'package_id', 'id');
     }
 }

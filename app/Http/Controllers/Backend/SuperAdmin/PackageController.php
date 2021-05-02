@@ -27,13 +27,13 @@ class PackageController extends Controller
                     }else{
                         return '<span class="badge badge-pill badge-danger">Inactive</span>';
                     }
-                })->addColumn('company', function($data) {
-                    return $data->companies->count();
+                })->addColumn('purchase', function($data) {
+                    return $data->purchases->count();
                 })->addColumn('action', function($data) {
                     return '<a href="'.route('superadmin.package.edit', $data).'" class="btn btn-info m-1"><i class="fa fa-edit"></i> </a>
                     <button class="btn btn-danger m-1" onclick="delete_function(this)" value="'.route('superadmin.package.destroy', $data).'"><i class="fa fa-trash"></i> </button>';
                 })
-                ->rawColumns(['status', 'company', 'action'])
+                ->rawColumns(['status', 'purchase', 'action'])
                 ->make(true);
         }else{
             return view('backend.superadmin.package.index');
@@ -65,7 +65,8 @@ class PackageController extends Controller
            'manager'=>'required|numeric|min:0',
            'customer'=>'required|numeric|min:0',
            'invoice'=>'required|numeric|min:0',
-           'sms'=>'required|numeric|min:0',
+           'free_sms'=>'required|numeric|min:0',
+           'price_per_message'=>'required|numeric|min:0',
            'status'=>'required|boolean',
         ]);
 
@@ -77,7 +78,8 @@ class PackageController extends Controller
         $package->manager   =   $request->manager;
         $package->customer  =   $request->customer;
         $package->invoice   =   $request->invoice;
-        $package->sms   =   $request->sms;
+        $package->free_sms   =   $request->free_sms;
+        $package->price_per_message   =   $request->price_per_message;
         try {
             $package->save();
             return back()->withSuccess('Package successfully added');
@@ -124,7 +126,8 @@ class PackageController extends Controller
             'manager'=>'required|numeric|min:0',
             'customer'=>'required|numeric|min:0',
             'invoice'=>'required|numeric|min:0',
-            'sms'=>'required|numeric|min:0',
+            'free_sms'=>'required|numeric|min:0',
+            'price_per_message'=>'required|numeric|min:0',
             'status'=>'required|boolean',
         ]);
 
@@ -135,7 +138,8 @@ class PackageController extends Controller
         $package->manager   =   $request->manager;
         $package->customer  =   $request->customer;
         $package->invoice   =   $request->invoice;
-        $package->sms   =   $request->sms;
+        $package->free_sms   =   $request->free_sms;
+        $package->price_per_message   =   $request->price_per_message;
         try {
             $package->save();
             return back()->withSuccess('Package successfully updated');

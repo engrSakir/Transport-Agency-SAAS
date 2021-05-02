@@ -109,11 +109,24 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="sms" class="col-sm-4 col-form-label">SMS</label>
+                                <label for="free_sms" class="col-sm-4 col-form-label">Free SMS</label>
                                 <div class="col-sm-8">
-                                    <input value="{{ $package->sms }}" name="sms" type="number" class="form-control"
-                                           id="sms" placeholder="sms">
-                                    @error('sms')
+                                    <input value="{{ $package->free_sms }}" name="free_sms" type="number" class="form-control"
+                                           id="free_sms" placeholder="free_sms">
+                                    @error('free_sms')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="price_per_message" class="col-sm-4 col-form-label">Price per SMS</label>
+                                <div class="col-sm-8">
+                                    <input value="{{ $package->price_per_message }}" name="price_per_message" type="number" class="form-control"
+                                           id="price_per_message" placeholder="price_per_message">
+                                    @error('price_per_message')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>

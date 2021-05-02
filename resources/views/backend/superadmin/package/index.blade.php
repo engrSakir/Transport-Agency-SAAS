@@ -44,8 +44,9 @@
                                         <th>Manager</th>
                                         <th>Customer</th>
                                         <th>Invoice</th>
-                                        <th>Sms</th>
-                                        <th>Company</th>
+                                        <th>SMS Price</th>
+                                        <th>Free Sms</th>
+                                        <th>Purchase</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -61,8 +62,9 @@
                                         <th>Manager</th>
                                         <th>Customer</th>
                                         <th>Invoice</th>
-                                        <th>Sms</th>
-                                        <th>Company</th>
+                                        <th>SMS Price</th>
+                                        <th>Free Sms</th>
+                                        <th>Purchase</th>
                                         <th>Status</th>
                                     </tr>
                                 </tfoot>
@@ -113,12 +115,16 @@
                     name: 'invoice'
                 },
                 {
-                    data: 'sms',
-                    name: 'sms'
+                    data: 'price_per_message',
+                    name: 'price_per_message'
                 },
                 {
-                    data: 'company',
-                    name: 'company'
+                    data: 'free_sms',
+                    name: 'free_sms'
+                },
+                {
+                    data: 'purchase',
+                    name: 'purchase'
                 },
                 {
                     data: 'status',

@@ -25,7 +25,8 @@ class PackageSeeder extends Seeder
             $package->manager = $faker->numberBetween(1,10);
             $package->customer = $faker->numberBetween(50,500);
             $package->invoice = $faker->numberBetween(50,500);
-            $package->sms = $faker->numberBetween(50,500);
+            $package->free_sms = $faker->numberBetween(50,500);
+            $package->price_per_message =  $faker->numberBetween(0.30,0.60);
             $package->save();
         }
     }
