@@ -3,3 +3,13 @@
         <i class="far fa-circle text-success"></i><span class="hide-menu">Dashboard</span>
     </a>
 </li>
+<li>
+    <a class="waves-effect waves-dark" href="{{ route('admin.branch.index') }}">
+        <i class="far fa-circle text-success"></i><span class="hide-menu">Branch</span>
+    </a>
+</li>
+<li>
+    <a class="waves-effect waves-dark" href="{{ route('admin.package') }}">
+        <i class="far fa-circle text-success"></i><span class="hide-menu">Package</span>
+    </a>
+</li>

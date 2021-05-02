@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Branch;
 use App\Models\Company;
 use App\Models\Package;
 use App\Models\PurchaseMessage;
@@ -39,6 +40,14 @@ class CompanySeeder extends Seeder
             $purchase_message->price_per_message = Package::find($i)->price_per_message;
             $purchase_message->package_id = $i;
             $purchase_message->save();
+        }
+
+        //Company has branch
+        for ($i = 1; $i <= 10; $i++) {
+            $branch = new Branch();
+            $branch->company_id = $i;
+            $branch->name = 'Branch -'. $i;
+            $branch->save();
         }
     }
 }
