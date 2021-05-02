@@ -135,6 +135,19 @@
                             </div>
 
                             <div class="form-group row">
+                                <label for="duration_day" class="col-sm-4 col-form-label">Duration (in Day)</label>
+                                <div class="col-sm-8">
+                                    <input value="{{ $package->duration_day }}" name="duration_day" type="number" class="form-control"
+                                           id="duration_day" placeholder="duration_day">
+                                    @error('duration_day')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label for="status" class="col-sm-4 col-form-label">Status</label>
                                 <div class="col-sm-8">
                                     <select name="status" id="status" class="select2-single form-control">

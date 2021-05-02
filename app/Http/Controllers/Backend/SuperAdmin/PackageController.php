@@ -67,6 +67,7 @@ class PackageController extends Controller
            'invoice'=>'required|numeric|min:0',
            'free_sms'=>'required|numeric|min:0',
            'price_per_message'=>'required|numeric|min:0',
+           'duration_day'=>'required|numeric|min:0',
            'status'=>'required|boolean',
         ]);
 
@@ -80,6 +81,7 @@ class PackageController extends Controller
         $package->invoice   =   $request->invoice;
         $package->free_sms   =   $request->free_sms;
         $package->price_per_message   =   $request->price_per_message;
+        $package->duration_day   =   $request->duration_day;
         try {
             $package->save();
             return back()->withSuccess('Package successfully added');
@@ -128,6 +130,7 @@ class PackageController extends Controller
             'invoice'=>'required|numeric|min:0',
             'free_sms'=>'required|numeric|min:0',
             'price_per_message'=>'required|numeric|min:0',
+            'duration_day'=>'required|numeric|min:0',
             'status'=>'required|boolean',
         ]);
 
@@ -140,6 +143,7 @@ class PackageController extends Controller
         $package->invoice   =   $request->invoice;
         $package->free_sms   =   $request->free_sms;
         $package->price_per_message   =   $request->price_per_message;
+        $package->duration_day   =   $request->duration_day;
         try {
             $package->save();
             return back()->withSuccess('Package successfully updated');

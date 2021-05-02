@@ -44,6 +44,7 @@
                                         <th>Manager</th>
                                         <th>Customer</th>
                                         <th>Invoice</th>
+                                        <th>Duration</th>
                                         <th>SMS Price</th>
                                         <th>Free Sms</th>
                                         <th>Purchase</th>
@@ -62,6 +63,7 @@
                                         <th>Manager</th>
                                         <th>Customer</th>
                                         <th>Invoice</th>
+                                        <th>Duration</th>
                                         <th>SMS Price</th>
                                         <th>Free Sms</th>
                                         <th>Purchase</th>
@@ -113,6 +115,10 @@
                 {
                     data: 'invoice',
                     name: 'invoice'
+                },
+                {
+                    data: 'duration_day',
+                    name: 'duration_day'
                 },
                 {
                     data: 'price_per_message',
