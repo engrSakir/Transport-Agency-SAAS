@@ -79,5 +79,33 @@ if (!function_exists('random_code')){
        return WebsiteMessage::where('is_process_complete', false)->count();
    }
 
+   function check_superadmin(){
+       if(auth()->user()->type == 'Super Admin'){
+           return true;
+       }
+       return false;
+   }
+
+   function check_admin(){
+       if(auth()->user()->type == 'Admin'){
+           return true;
+       }
+       return false;
+   }
+
+   function check_manager(){
+       if(auth()->user()->type == 'Manager'){
+           return true;
+       }
+       return false;
+   }
+
+   function check_customer(){
+       if(auth()->user()->type == 'Customer'){
+           return true;
+       }
+       return false;
+   }
+
 
 }
