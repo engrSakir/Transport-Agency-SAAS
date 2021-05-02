@@ -17,12 +17,12 @@ class CreatePackagesTable extends Migration
             $table->id();
             $table->boolean('is_active')->default(true);
             $table->string('name');
-            $table->integer('branch')->default(1);
-            $table->integer('admin')->default(1);
-            $table->integer('manager')->default(1);
-            $table->integer('customer')->default(50);
-            $table->integer('invoice')->default(100);
-            $table->integer('sms')->default(100);
+            $table->integer('branch')->default(1)->comment('max-permitted');
+            $table->integer('admin')->default(1)->comment('max-permitted');
+            $table->integer('manager')->default(1)->comment('max-permitted');
+            $table->integer('customer')->default(50)->comment('max-permitted');
+            $table->integer('invoice')->default(100)->comment('max-permitted');
+            $table->integer('sms')->default(100)->comment('free');
             $table->timestamps();
         });
     }
