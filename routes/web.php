@@ -17,14 +17,13 @@ require __DIR__.'/frontend.php';
 require __DIR__.'/auth.php';
 
  Route::group(['middleware' => 'auth'], function (){
-        require __DIR__.'/backend.php';
-        require __DIR__.'/superadmin.php';
         require __DIR__.'/application.php';
+        require __DIR__.'/superadmin.php';
+        require __DIR__.'/admin.php';
+        require __DIR__.'/backend.php';
+
  });
 
- Route::get('/backend/admin/dashboard', function (){
-    echo 'admin';
- });
 
  Route::get('/backend/manager/dashboard', function (){
     echo 'manager';
