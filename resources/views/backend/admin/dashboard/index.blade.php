@@ -20,7 +20,17 @@
     </div>
 @endsection
 @section('content')
-
+    <div class="row">
+        <!-- Column -->
+        <div class="col-md-6 col-lg-4 col-xlg-2">
+            <div class="card">
+                <div class="box bg-info text-center">
+                    <h1 class="font-light text-white">{{ $usable_message_amount }}</h1>
+                    <h6 class="text-white">অব্যবহৃত মেসেজের সংখ্যা</h6>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('script')
 
