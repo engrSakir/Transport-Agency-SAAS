@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller
@@ -27,7 +28,7 @@ class BranchController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.admin.branch.create');
     }
 
     /**
@@ -38,7 +39,38 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (auth()->user()->company->purchasePackage->branch <= auth()->user()->company->branches->count()){
+            return back()->withErrors('You need to upgrade your package for add more branch');
+        }
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|string',
+            'address' => 'nullable|string',
+            'sender_search_length' => 'required|numeric',
+            'receiver_search_length' => 'required|numeric',
+            'global_search_length' => 'required|numeric',
+            'status' => 'required|boolean',
+            'head_office' => 'required|boolean',
+        ]);
+
+        $branch = new Branch();
+        $branch->company_id = auth()->user()->company->id;
+        $branch->name = $request->name;
+        $branch->email = $request->email;
+        $branch->phone = $request->phone;
+        $branch->address = $request->address;
+        $branch->sender_search_length = $request->sender_search_length;
+        $branch->receiver_search_length = $request->receiver_search_length;
+        $branch->global_search_length = $request->global_search_length;
+        $branch->is_active = $request->status;
+        $branch->is_head_office = $request->head_office;
+        try {
+            $branch->save();
+            return redirect()->route('admin.branch.index')->withSuccess('Branch successfully added');
+        } catch (\Exception $exception) {
+            return back()->withErrors( $exception->getMessage());
+        }
     }
 
     /**
