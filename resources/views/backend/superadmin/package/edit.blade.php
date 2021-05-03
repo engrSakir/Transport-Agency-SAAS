@@ -135,11 +135,24 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="duration_day" class="col-sm-4 col-form-label">Duration (in Day)</label>
+                                <label for="duration" class="col-sm-4 col-form-label">Duration (in Day)</label>
                                 <div class="col-sm-8">
-                                    <input value="{{ $package->duration_day }}" name="duration_day" type="number" class="form-control"
-                                           id="duration_day" placeholder="duration_day">
-                                    @error('duration_day')
+                                    <input value="{{ $package->duration }}" name="duration" type="number" class="form-control"
+                                           id="duration" placeholder="Duration">
+                                    @error('duration')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="price" class="col-sm-4 col-form-label">Price</label>
+                                <div class="col-sm-8">
+                                    <input value="{{ $package->price }}" name="price" type="number" class="form-control"
+                                           id="price" placeholder="Price">
+                                    @error('price')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>

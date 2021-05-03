@@ -23,8 +23,9 @@ class CreatePackagesTable extends Migration
             $table->integer('customer')->default(50)->comment('max-permitted');
             $table->integer('invoice')->default(100)->comment('max-permitted');
             $table->integer('free_sms')->default(100)->comment('free-message');
-            $table->float('price_per_message')->default(0.47)->comment('poisa');
-            $table->integer('duration_day')->default(10)->comment('in-day');
+            $table->float('price_per_message')->default(0.47)->comment('Price of sms');
+            $table->integer('duration')->default(10)->comment('in-day');
+            $table->integer('price')->default(500)->comment('price of package');
             $table->timestamps();
         });
     }
