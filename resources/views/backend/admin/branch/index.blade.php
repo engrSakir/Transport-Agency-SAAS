@@ -27,9 +27,9 @@
         <!-- Start row -->
         <div class="row">
             @foreach($branches as $branch)
-            <div class="col-md-6">
+            <div class="col-md-6 border-top-0">
                 <div class="card @if($loop->odd) border-info @else border-success @endif">
-                    <div class="card-header @if($loop->odd) bg-info @else bg-success @endif">
+                    <div class="card-header text-center @if($loop->odd) bg-info @else bg-success @endif">
                         <h4 class="m-b-0 text-white"> <b>{{ $branch->name }}</b> </h4></div>
                     <div class="card-body">
                         <div class="row">
