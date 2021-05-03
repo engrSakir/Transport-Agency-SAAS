@@ -20,14 +20,13 @@ require __DIR__.'/auth.php';
         require __DIR__.'/application.php';
         require __DIR__.'/superadmin.php';
         require __DIR__.'/admin.php';
+        require __DIR__.'/manager.php';
         require __DIR__.'/backend.php';
 
  });
 
 
- Route::get('/backend/manager/dashboard', function (){
-    echo 'manager';
- });
+
 
  Route::get('/dashboard', function (){
     echo 'customer';
