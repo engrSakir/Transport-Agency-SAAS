@@ -9,6 +9,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'backend/admin/'], function (){
     Route::get('/package', [Admin\PackageController::class, 'index'])->name('package');
 
     Route::resource('branch', Admin\BranchController::class);
+    Route::resource('manager', Admin\ManagerController::class);
 
 
 });

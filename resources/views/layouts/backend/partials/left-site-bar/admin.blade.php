@@ -9,7 +9,13 @@
     </a>
 </li>
 <li>
+    <a class="waves-effect waves-dark" href="{{ route('admin.manager.index') }}">
+        <i class="far fa-circle text-success"></i><span class="hide-menu">Manager</span>
+    </a>
+</li>
+<li>
     <a class="waves-effect waves-dark" href="{{ route('admin.package') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">Package</span>
     </a>
 </li>
+
