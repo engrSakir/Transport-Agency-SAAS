@@ -3,8 +3,7 @@
 @endpush
 @extends('layouts.backend.app')
 @push('style')
-    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 @endpush
 @section('breadcrumb')
     <div class="row page-titles">
@@ -29,28 +28,70 @@
         <div class="row">
             @foreach($branches as $branch)
             <div class="col-md-6">
-                <div class="card border-info">
-                    <div class="card-header bg-info">
+                <div class="card @if($loop->odd) border-info @else border-success @endif">
+                    <div class="card-header @if($loop->odd) bg-info @else bg-success @endif">
                         <h4 class="m-b-0 text-white"> <b>{{ $branch->name }}</b> </h4></div>
                     <div class="card-body">
-                        <h3 class="card-title">Special title treatment</h3>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="javascript:void(0)" class="btn btn-inverse">Go somewhere</a>
+                        <div class="row">
+                            <!-- Column -->
+                            <div class="col-md-6 col-lg-4 col-xlg-2">
+                                <div class="card">
+                                    <div class="box bg-info text-center">
+                                        <h1 class="font-light text-white">{{ $branch->invoices->count() }}</h1>
+                                        <h6 class="text-white">Invoice</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Column -->
+                            <div class="col-md-6 col-lg-4 col-xlg-2">
+                                <div class="card">
+                                    <div class="box bg-primary text-center">
+                                        <h1 class="font-light text-white">{{ $branch->messages->count() }}</h1>
+                                        <h6 class="text-white">Message</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Column -->
+                            <div class="col-md-6 col-lg-4 col-xlg-2">
+                                <div class="card">
+                                    <div class="box bg-success text-center">
+                                        <h1 class="font-light text-white">{{ $branch->managers->count() }}</h1>
+                                        <h6 class="text-white">Manager</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Column -->
+                            <div class="col-md-6 col-lg-4 col-xlg-2">
+                                <div class="card">
+                                    <div class="box bg-dark text-center">
+                                        <h1 class="font-light text-white">{{ $branch->branchCustomers->count() }}</h1>
+                                        <h6 class="text-white">Customer</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Column -->
+                            <div class="col-md-6 col-lg-4 col-xlg-2">
+                                <div class="card">
+                                    <div class="box bg-megna text-center">
+                                        <h1 class="font-light text-white">{{ $branch->invoices->sum('paid') }}</h1>
+                                        <h6 class="text-white">Paid</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Column -->
+                            <div class="col-md-6 col-lg-4 col-xlg-2">
+                                <div class="card">
+                                    <div class="box bg-warning text-center">
+                                        <h1 class="font-light text-white">{{ $branch->invoices->sum('total') - $branch->invoices->sum('paid') }}</h1>
+                                        <h6 class="text-white">Unpaid</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             @endforeach
-            <div class="col-md-6">
-                <div class="card border-success">
-                    <div class="card-header bg-success">
-                        <h4 class="m-b-0 text-white">Card Title</h4></div>
-                    <div class="card-body">
-                        <h3 class="card-title">Special title treatment</h3>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="javascript:void(0)" class="btn btn-inverse">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
         </div>
         <!-- End row -->
     </div>
@@ -58,50 +99,4 @@
 @endsection
 @push('script')
 
-<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-<script>
-    $(function() {
-        $('#datatable').DataTable({
-            responsive: true,
-            processing: true,
-            serverSide: true,
-            ajax: '{!! route('superadmin.branch.index') !!}',
-            columns: [
-                {
-                    data: 'image',
-                    name: 'image'
-                },
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'type',
-                    name: 'type'
-                },{
-                    data: 'status',
-                    name: 'status'
-                },
-                {
-                    data: 'action',
-                    name: 'action'
-                },
-            ],
-            initComplete: function() {
-                this.api().columns().every(function() {
-                    var column = this;
-                    var input = document.createElement("input");
-                    $(input).appendTo($(column.footer()).empty())
-                        .on('change', function() {
-                            column.search($(this).val(), false, false, true).draw();
-                        });
-                });
-            }
-        });
-    });
-</script>
 @endpush

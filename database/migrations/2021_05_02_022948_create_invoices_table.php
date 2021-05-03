@@ -16,6 +16,8 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('branch_id');
+            $table->integer('total')->comment('Total price');
+            $table->integer('paid')->default(0)->comment('Paid price');
             $table->timestamps();
         });
     }

@@ -21,6 +21,10 @@ class Branch extends Model
         return $this->hasMany(Invoice::class, 'branch_id', 'id');
     }
 
+    public function messages(){
+        return $this->hasMany(MessageHistory::class, 'branch_id', 'id');
+    }
+
     public function company(){
         return $this->belongsTo(Company::class, 'company_id', 'id');
     }

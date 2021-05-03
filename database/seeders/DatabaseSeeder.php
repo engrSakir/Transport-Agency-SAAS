@@ -30,5 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TeamSeeder::class);
         $this->call(PackageSeeder::class);
         $this->call(CompanySeeder::class);
+
+        \App\Models\Invoice::factory(50)->create();
     }
 }
