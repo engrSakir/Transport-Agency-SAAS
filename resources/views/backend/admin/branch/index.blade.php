@@ -32,7 +32,7 @@
                     <a href="{{ route('admin.branch.edit', $branch) }}">
                          <div class="card-header text-center bg-info">
                             <h4 class="m-b-0 text-white"> <b>{{ $branch->name }}</b> </h4>
-                             @if(!$branch->is_active) <span class="badge badge-pill badge-danger">Deactivated</span> @endif
+                             @if($branch->is_active) <span class="badge badge-pill badge-success">Active</span> @else <span class="badge badge-pill badge-danger">Deactivated</span> @endif
                              @if(!$branch->is_head_office) <span class="badge badge-pill badge-success">Head Office</span> @endif
                         </div>
                     </a>
