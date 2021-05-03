@@ -109,6 +109,10 @@ class BranchController extends Controller
      */
     public function update(Request $request, Branch $branch)
     {
+        if ($branch->company->id != auth()->user()->company->id){
+            return back()->withErrors('You have not access');
+        }
+
         $request->validate([
             'name' => 'required|string',
             'email' => 'nullable|email',
