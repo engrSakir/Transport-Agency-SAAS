@@ -137,8 +137,8 @@
                             <label for="head_office" class="col-sm-4 col-form-label">Head office</label>
                             <div class="col-sm-8">
                                 <select name="head_office" id="head_office" class="select2-single form-control">
-                                    <option @if (old('status') == true) selected @endif value="1">Yes </option>
-                                    <option @if (old('status') == false) selected @endif value="0">No </option>
+                                    <option @if (old('head_office') == true) selected @endif value="1">Yes </option>
+                                    <option @if (old('head_office') == false) selected @endif value="0">No </option>
                                 </select>
                                 @error('head_office')
                                 <div class="alert alert-danger" role="alert">

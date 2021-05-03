@@ -42,6 +42,7 @@ class BranchController extends Controller
         if (auth()->user()->company->purchasePackage->branch <= auth()->user()->company->branches->count()){
             return back()->withErrors('You need to upgrade your package for add more branch');
         }
+
         $request->validate([
             'name' => 'required|string',
             'email' => 'nullable|email',
@@ -92,7 +93,11 @@ class BranchController extends Controller
      */
     public function edit(Branch $branch)
     {
-        //
+        if ($branch->company->id != auth()->user()->company->id){
+            return back()->withErrors('You have not access');
+        }
+
+        return view('backend.admin.branch.edit', compact('branch'));
     }
 
     /**
@@ -104,7 +109,33 @@ class BranchController extends Controller
      */
     public function update(Request $request, Branch $branch)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|string',
+            'address' => 'nullable|string',
+            'sender_search_length' => 'required|numeric',
+            'receiver_search_length' => 'required|numeric',
+            'global_search_length' => 'required|numeric',
+            'status' => 'required|boolean',
+            'head_office' => 'required|boolean',
+        ]);
+
+        $branch->name = $request->name;
+        $branch->email = $request->email;
+        $branch->phone = $request->phone;
+        $branch->address = $request->address;
+        $branch->sender_search_length = $request->sender_search_length;
+        $branch->receiver_search_length = $request->receiver_search_length;
+        $branch->global_search_length = $request->global_search_length;
+        $branch->is_active = $request->status;
+        $branch->is_head_office = $request->head_office;
+        try {
+            $branch->save();
+            return redirect()->route('admin.branch.index')->withSuccess('Branch successfully updated');
+        } catch (\Exception $exception) {
+            return back()->withErrors( $exception->getMessage());
+        }
     }
 
     /**
