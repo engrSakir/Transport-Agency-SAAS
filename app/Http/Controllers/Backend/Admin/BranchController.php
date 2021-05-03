@@ -16,7 +16,8 @@ class BranchController extends Controller
     public function index()
     {
         $branches = auth()->user()->company->branches;
-        return view('backend.admin.branch.index', compact('branches'));
+        $year = date('Y');
+        return view('backend.admin.branch.index', compact('branches','year'));
     }
 
     /**

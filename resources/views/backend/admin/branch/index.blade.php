@@ -34,34 +34,43 @@
                     <div class="card-body">
                         <div class="row">
                             <!-- Column -->
-                            <div class="col-md-6 col-lg-4 col-xlg-2">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="box bg-megna text-center">
+                                        <h1 class="font-light text-white">{{ $branch->invoices()->whereYear('created_at', '=', $year)->sum('paid') }}</h1>
+                                        <h6 class="text-white">Paid  ({{ $year }}) </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Column -->
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="box bg-danger text-center">
+                                        <h1 class="font-light text-white">{{ $branch->invoices()->whereYear('created_at', '=', $year)->sum('total') - $branch->invoices()->whereYear('created_at', '=', date('Y'))->sum('paid') }}</h1>
+                                        <h6 class="text-white">Unpaid ({{ $year }}) </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Column -->
+                            <div class="col-md-6 col-lg-6 col-xlg-4">
                                 <div class="card">
                                     <div class="box bg-info text-center">
-                                        <h1 class="font-light text-white">{{ $branch->invoices->count() }}</h1>
-                                        <h6 class="text-white">Invoice</h6>
+                                        <h1 class="font-light text-white">{{ $branch->invoices()->whereYear('created_at', '=', $year)->count() }}</h1>
+                                        <h6 class="text-white">Invoice ({{ $year }}) </h6>
                                     </div>
                                 </div>
                             </div>
                             <!-- Column -->
-                            <div class="col-md-6 col-lg-4 col-xlg-2">
+                            <div class="col-md-6 col-lg-6 col-xlg-4">
                                 <div class="card">
-                                    <div class="box bg-primary text-center">
-                                        <h1 class="font-light text-white">{{ $branch->messages->count() }}</h1>
-                                        <h6 class="text-white">Message</h6>
+                                    <div class="box bg-warning text-center">
+                                        <h1 class="font-light text-white">{{ $branch->messages()->whereYear('created_at', '=', $year)->sum('message_count') }}</h1>
+                                        <h6 class="text-white">Message ({{ $year }})</h6>
                                     </div>
                                 </div>
                             </div>
                             <!-- Column -->
-                            <div class="col-md-6 col-lg-4 col-xlg-2">
-                                <div class="card">
-                                    <div class="box bg-success text-center">
-                                        <h1 class="font-light text-white">{{ $branch->managers->count() }}</h1>
-                                        <h6 class="text-white">Manager</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Column -->
-                            <div class="col-md-6 col-lg-4 col-xlg-2">
+                            <div class="col-md-6 col-lg-6 col-xlg-4">
                                 <div class="card">
                                     <div class="box bg-dark text-center">
                                         <h1 class="font-light text-white">{{ $branch->branchCustomers->count() }}</h1>
@@ -70,23 +79,16 @@
                                 </div>
                             </div>
                             <!-- Column -->
-                            <div class="col-md-6 col-lg-4 col-xlg-2">
+                            <div class="col-md-6 col-lg-6 col-xlg-4">
                                 <div class="card">
-                                    <div class="box bg-megna text-center">
-                                        <h1 class="font-light text-white">{{ $branch->invoices->sum('paid') }}</h1>
-                                        <h6 class="text-white">Paid</h6>
+                                    <div class="box bg-success text-center">
+                                        <h1 class="font-light text-white">{{ $branch->managers->count() }}</h1>
+                                        <h6 class="text-white">Manager</h6>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Column -->
-                            <div class="col-md-6 col-lg-4 col-xlg-2">
-                                <div class="card">
-                                    <div class="box bg-warning text-center">
-                                        <h1 class="font-light text-white">{{ $branch->invoices->sum('total') - $branch->invoices->sum('paid') }}</h1>
-                                        <h6 class="text-white">Unpaid</h6>
-                                    </div>
-                                </div>
-                            </div>
+
+
                         </div>
                     </div>
                 </div>
