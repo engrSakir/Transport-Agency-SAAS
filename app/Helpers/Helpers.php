@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Branch;
+use App\Models\BranchLink;
 use App\Models\CustomPage;
 use App\Models\GlobalImages;
 use App\Models\StaticOption;
@@ -102,6 +104,13 @@ if (!function_exists('random_code')){
 
    function check_customer(){
        if(auth()->user()->type == 'Customer'){
+           return true;
+       }
+       return false;
+   }
+
+   function check_branch_link($from_branch_id, $to_branch_id){
+       if(BranchLink::where('from_branch_id', $from_branch_id)->where('to_branch_id', $to_branch_id)->count() > 0){
            return true;
        }
        return false;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Models\BranchLink;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,8 @@ class BranchController extends Controller
      */
     public function create()
     {
-        return view('backend.admin.branch.create');
+        $branches = auth()->user()->company->branches;
+        return view('backend.admin.branch.create', compact('branches'));
     }
 
     /**
@@ -53,6 +55,7 @@ class BranchController extends Controller
             'global_search_length' => 'required|numeric',
             'status' => 'required|boolean',
             'head_office' => 'required|boolean',
+            'linked_branches' => 'required',
         ]);
 
         $branch = new Branch();
@@ -68,6 +71,18 @@ class BranchController extends Controller
         $branch->is_head_office = $request->head_office;
         try {
             $branch->save();
+            if (BranchLink::where('from_branch_id', $branch->id)->count() > 0){
+                BranchLink::where('from_branch_id', $branch->id)->delete();
+            }
+            foreach ($request->linked_branches as $linked_branch){
+                if (auth()->user()->company->id != Branch::find($linked_branch)->company->id){
+                    return back()->withErrors('You have not access');
+                }
+                $branch_link = new BranchLink();
+                $branch_link->from_branch_id    =   $branch->id;
+                $branch_link->to_branch_id  =   $linked_branch;
+                $branch_link->save();
+            }
             return redirect()->route('admin.branch.index')->withSuccess('Branch successfully added');
         } catch (\Exception $exception) {
             return back()->withErrors( $exception->getMessage());
@@ -97,7 +112,8 @@ class BranchController extends Controller
             return back()->withErrors('You have not access');
         }
 
-        return view('backend.admin.branch.edit', compact('branch'));
+        $branches = auth()->user()->company->branches;
+        return view('backend.admin.branch.edit', compact('branch', 'branches'));
     }
 
     /**
@@ -123,6 +139,7 @@ class BranchController extends Controller
             'global_search_length' => 'required|numeric',
             'status' => 'required|boolean',
             'head_office' => 'required|boolean',
+            'linked_branches' => 'required',
         ]);
 
         $branch->name = $request->name;
@@ -136,6 +153,20 @@ class BranchController extends Controller
         $branch->is_head_office = $request->head_office;
         try {
             $branch->save();
+
+            if (BranchLink::where('from_branch_id', $branch->id)->count() > 0){
+                BranchLink::where('from_branch_id', $branch->id)->delete();
+            }
+            //dd($request->linked_branches);
+            foreach ($request->linked_branches as $linked_branch){
+                if (auth()->user()->company->id != Branch::find($linked_branch)->company->id){
+                    return back()->withErrors('You have not access');
+                }
+                $branch_link = new BranchLink();
+                $branch_link->from_branch_id    =   $branch->id;
+                $branch_link->to_branch_id  =   $linked_branch;
+                $branch_link->save();
+            }
             return redirect()->route('admin.branch.index')->withSuccess('Branch successfully updated');
         } catch (\Exception $exception) {
             return back()->withErrors( $exception->getMessage());

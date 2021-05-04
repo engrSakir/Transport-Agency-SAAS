@@ -29,6 +29,14 @@ class Branch extends Model
         return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 
+    public function fromLinkedBranchs(){
+        return $this->hasMany(BranchLink::class, 'from_branch_id', 'id');
+    }
+
+    public function toLinkedBranchs(){
+        return $this->hasMany(BranchLink::class, 'to_branch_id', 'id');
+    }
+
     // this is a recommended way to declare event handlers
     public static function boot() {
         parent::boot();
@@ -36,6 +44,8 @@ class Branch extends Model
             $company->managers()->delete();
             $company->branchCustomers()->delete();
             $company->invoices()->delete();
+            $company->fromLinkedBranchs()->delete();
+            $company->toLinkedBranchs()->delete();
             // do the rest of the cleanup...
         });
     }
