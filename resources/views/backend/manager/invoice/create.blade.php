@@ -30,8 +30,8 @@
                 <form class="form-horizontal mt-4" id="invoice-form">
                     <div class="row">
                         <div class="form-group col-md-3">
-                            <label>Default Text <span class="help"> e.g. "George deo"</span></label>
-                            <input type="text" class="form-control">
+                            <label>Sender Name</label>
+                            <input type="text" class="form-control" id="sender-name">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="example-email">Email <span class="help"> e.g. "example@gmail.com"</span></label>
@@ -190,5 +190,37 @@
                 }
             }
         });
+    </script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#sender-name" ).autocomplete({
+                source: function(request, response) {
+                    console.log(request.term);
+                    var formData = new FormData();
+                    formData.append('sender_name', request.term)
+                    $.ajax({
+                        method: 'GET',
+                        url: "{{ route('manager.invoice.create') }}",
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success:function(data){
+                            console.log(data)
+                            var array = $.map(data,function(obj){
+                                return{
+                                    value: obj.name, //Filable in input field
+                                    label: obj.name,  //Show as label of input field
+                                }
+                            })
+                            response($.ui.autocomplete.filter(array, request.term));
+                        },
+                    })
+                },
+                minLength: 1,
+            });
+        } );
     </script>
 @endpush

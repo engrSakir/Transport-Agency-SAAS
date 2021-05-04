@@ -35,6 +35,8 @@ class UserSeeder extends Seeder
         $user->name = 'Manager';
         $user->email = 'manager@gmail.com';
         $user->password = Hash::make('password');
+        $user->company_id = 1;
+        $user->branch_id = 1;
         $user->save();
 
         $user = new User();
@@ -43,48 +45,5 @@ class UserSeeder extends Seeder
         $user->email = 'customer@gmail.com';
         $user->password = Hash::make('password');
         $user->save();
-
-        for ($i = 1; $i <= 10; $i++) {
-            $user = new User();
-            $user->type = 'Super Admin';
-            $user->name = 'Mr Super Admin '.$i;
-            $user->company_id = $i;
-            $user->email = 'superadmin'.$i.'@gmail.com';
-            $user->password = Hash::make('password');
-            $user->save();
-
-            $user->assignRole('Super Admin');
-        }
-
-        for ($i = 1; $i <= 10; $i++) {
-            $user = new User();
-            $user->type = 'Admin';
-            $user->name = 'Mr Admin '.$i;
-            $user->email = 'admin'.$i.'@gmail.com';
-            $user->company_id = $i;
-            $user->password = Hash::make('password');
-            $user->save();
-            $user->assignRole('Admin');
-        }
-
-        for ($i = 1; $i <= 10; $i++) {
-            $user = new User();
-            $user->type = 'Manager';
-            $user->name = 'Mr Manager '.$i;
-            $user->email = 'manager'.$i.'@gmail.com';
-            $user->password = Hash::make('password');
-            $user->save();
-            $user->assignRole('Admin');
-        }
-
-        for ($i = 1; $i <= 10; $i++) {
-            $user = new User();
-            $user->type = 'Customer';
-            $user->name = 'Mr Customer '.$i;
-            $user->email = 'customer'.$i.'@gmail.com';
-            $user->password = Hash::make('password');
-            $user->save();
-            $user->assignRole('Admin');
-        }
     }
 }

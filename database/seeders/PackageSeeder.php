@@ -17,7 +17,7 @@ class PackageSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 2; $i++) {
             $package = new Package();
             $package->name = 'Package - '.$i;
             $package->branch = $faker->numberBetween(1,10);

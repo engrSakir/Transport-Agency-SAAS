@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Manager;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
@@ -23,10 +24,18 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $linked_branches = auth()->user()->branch->fromLinkedBranchs;
-        return view('backend.manager.invoice.create', compact('linked_branches'));
+        if ($request->ajax()){
+            return DB::table('customer_and_branches')
+                ->where('customer_and_branches.branch_id', auth()->user()->branch->id)
+                ->rightJoin('users', 'customer_and_branches.user_id', '=', 'users.id')
+                ->select('name', 'phone', 'email')
+                ->get();
+        }else{
+            $linked_branches = auth()->user()->branch->fromLinkedBranchs;
+            return view('backend.manager.invoice.create', compact('linked_branches'));
+        }
     }
 
     /**
