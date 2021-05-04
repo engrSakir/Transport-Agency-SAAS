@@ -30,20 +30,24 @@
                 <form class="form-horizontal mt-4" id="invoice-form">
                     <div class="row">
                         <div class="form-group col-md-3">
-                            <label>Sender Name</label>
-                            <input type="text" class="form-control" id="sender-name">
+                            <label for="sender-name">Sender Name</label>
+                            <input type="hidden" value="sender-name">
+                            <input type="text" class="form-control search-item" id="sender-name" name="sender-name" placeholder="Sender name" value="">
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="example-email">Email <span class="help"> e.g. "example@gmail.com"</span></label>
-                            <input type="email" id="example-email" name="example-email" class="form-control" placeholder="Email">
+                            <label for="receiver-name">Receiver Name</label>
+                            <input type="hidden" value="receiver-name">
+                            <input type="text" class="form-control search-item" id="receiver-name" name="receiver-name" placeholder="Receiver name" value="">
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Default Text <span class="help"> e.g. "George deo"</span></label>
-                            <input type="text" class="form-control" value="George deo...">
+                            <label for="receiver-phone">Receiver Phone</label>
+                            <input type="hidden" value="receiver-phone">
+                            <input type="text" class="form-control search-item" id="receiver-phone" name="receiver-phone" placeholder="Receiver phone" value="">
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="example-email">Email <span class="help"> e.g. "example@gmail.com"</span></label>
-                            <input type="email" id="example-email" name="example-email" class="form-control" placeholder="Email">
+                            <label for="receiver-email">Receiver Email</label>
+                            <input type="hidden" value="receiver-email">
+                            <input type="email" class="form-control search-item" id="receiver-email" name="receiver-email" placeholder="Receiver Email" value="">
                         </div>
                     </div>
                     <div class="form-group button-group">
