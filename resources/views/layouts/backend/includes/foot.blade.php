@@ -11,21 +11,12 @@
 <script src="{{ asset('assets/backend/dist/js/waves.js') }}"></script>
 <!--Menu sidebar -->
 <script src="{{ asset('assets/backend/dist/js/sidebarmenu.js') }}"></script>
+<!--stickey kit -->
+<script src="{{ asset('assets/backend/node_modules/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
+<script src="{{ asset('assets/backend/node_modules/sparkline/jquery.sparkline.min.js') }}"></script>
 <!--Custom JavaScript -->
 <script src="{{ asset('assets/backend/dist/js/custom.min.js') }}"></script>
 <!-- ============================================================== -->
-<!-- This page plugins -->
-<!-- ============================================================== -->
-<!--morris JavaScript -->
-<script src="{{ asset('assets/backend/node_modules/raphael/raphael-min.js') }}"></script>
-<script src="{{ asset('assets/backend/node_modules/morrisjs/morris.min.js') }}"></script>
-<script src="{{ asset('assets/backend/node_modules/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
-<!-- Popup message jquery -->
-<script src="{{ asset('assets/backend/node_modules/toast-master/js/jquery.toast.js') }}"></script>
-<!-- Chart JS -->
-<script src="{{ asset('assets/backend/dist/js/dashboard1.js') }}"></script>
-<script src="{{ asset('assets/backend/node_modules/toast-master/js/jquery.toast.js') }}"></script>
-<!-- End JS -->
 <script src="{{ asset('assets/helpers/helper.js') }}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 @include('sweetalert::alert')

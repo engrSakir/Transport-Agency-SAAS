@@ -9,15 +9,8 @@
 <title>@stack('title') | {{ config('app.name') }}</title>
 <!-- Favicon icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="{{ asset(get_static_option('fav_icon') ?? get_static_option('no_image')) }}">
-<!-- chartist CSS -->
-<link href="{{ asset('assets/backend/node_modules/morrisjs/morris.css') }}" rel="stylesheet">
-<!--Toaster Popup message CSS -->
-<link href="{{ asset('assets/backend/node_modules/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="{{ asset('assets/backend/dist/css/style.min.css') }}" rel="stylesheet">
-<!-- Dashboard 1 Page CSS -->
-<link href="{{ asset('assets/backend/dist/css/pages/dashboard1.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/backend/dist/css/pages/icon-page.css') }}" rel="stylesheet">
 <!-- Custom  CSS -->
 <link href="{{ asset('assets/helpers/helper.css') }}" rel="stylesheet">
 <!-- This page CSS -->
