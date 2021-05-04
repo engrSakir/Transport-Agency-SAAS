@@ -47,108 +47,16 @@
                         </div>
                     </div>
                     <div class="form-group button-group">
+                        @foreach($linked_branches as $linked_branch)
                         <div class="btn-group">
                             <label class="btn btn-outline btn-info button-group">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="options" value="male" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1"> <i class="ti-check text-active" aria-hidden="true"></i> Male fdgh fdgh fgdh fgd h</label>
+                                    <input type="radio" id="branch-{{ $loop->iteration }}" name="branch" value="{{ $linked_branch->toBranch->id }}" class="custom-control-input">
+                                    <label class="custom-control-label" for="branch-{{ $loop->iteration }}"> <i class="ti-check text-active" aria-hidden="true"></i> {{ $linked_branch->toBranch->name }} </label>
                                 </div>
                             </label>
                         </div>
-                        <!-- Example single danger button -->
-                        <div class="btn-group">
-                            <label class="btn btn-outline btn-info button-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="options" value="male" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1"> <i class="ti-check text-active" aria-hidden="true"></i> Male fgdh dfgh fgd </label>
-                                </div>
-                            </label>
-                        </div>
-                        <!-- Example single danger button -->
-                        <div class="btn-group">
-                            <label class="btn btn-outline btn-info button-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="options" value="male" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1"> <i class="ti-check text-active" aria-hidden="true"></i> Male fdgh fgdh fgdh fgdh fgh </label>
-                                </div>
-                            </label>
-                        </div>
-                        <!-- Example single danger button -->
-                        <div class="btn-group">
-                            <label class="btn btn-outline btn-info button-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="options" value="male" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1"> <i class="ti-check text-active" aria-hidden="true"></i> Male fdgh fgdh </label>
-                                </div>
-                            </label>
-                        </div>
-                        <!-- Example single danger button -->
-                        <div class="btn-group">
-                            <label class="btn btn-outline btn-info button-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="options" value="male" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1"> <i class="ti-check text-active" aria-hidden="true"></i> Male fdtgh fgd hfg</label>
-                                </div>
-                            </label>
-                        </div>
-                        <!-- Example single danger button -->
-                        <div class="btn-group">
-                            <label class="btn btn-outline btn-info button-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="options" value="male" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1"> <i class="ti-check text-active" aria-hidden="true"></i> Male fgh fdgh fgh </label>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="btn-group">
-                            <label class="btn btn-outline btn-info button-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="options" value="male" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1"> <i class="ti-check text-active" aria-hidden="true"></i> Malefg dh fgdh </label>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="btn-group">
-                            <label class="btn btn-outline btn-info button-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="options" value="male" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1"> <i class="ti-check text-active" aria-hidden="true"></i> Malefdgh fgdh fgh </label>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="btn-group">
-                            <label class="btn btn-outline btn-info button-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="options" value="male" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1"> <i class="ti-check text-active" aria-hidden="true"></i> Malefgdh fgdh fgdh </label>
-                                </div>
-                            </label>
-                        </div>
-                        <!-- Example single danger button -->
-                        <div class="btn-group">
-                            <label class="btn btn-outline btn-info button-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="options" value="male" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1"> <i class="ti-check text-active" aria-hidden="true"></i> Malefgdh fgh fgh</label>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="btn-group">
-                            <label class="btn btn-outline btn-info button-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="options" value="male" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1"> <i class="ti-check text-active" aria-hidden="true"></i> Malefgdh fgdh fhtgd </label>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="btn-group">
-                            <label class="btn btn-outline btn-info button-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="options" value="male" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1"> <i class="ti-check text-active" aria-hidden="true"></i> Male</label>
-                                </div>
-                            </label>
-                        </div>
+                        @endforeach
                     </div>
                     <div class="form-group">
                         <textarea class="form-control" rows="5"></textarea>

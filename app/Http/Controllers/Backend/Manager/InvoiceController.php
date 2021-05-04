@@ -25,7 +25,8 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        return view('backend.manager.invoice.create');
+        $linked_branches = auth()->user()->branch->fromLinkedBranchs;
+        return view('backend.manager.invoice.create', compact('linked_branches'));
     }
 
     /**
