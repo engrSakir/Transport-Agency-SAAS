@@ -199,7 +199,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="input-due">Due</span>
                                 </div>
-                                <input type="number" class="form-control" id="due" v-bind:value="due" disabled readonly>
+                                <input type="number" class="form-control bg-danger" id="due" v-bind:value="due" disabled readonly>
                             </div>
                         </div>
                         <div class="form-group col-md-3">
@@ -207,7 +207,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="input-total" >Total</span>
                                 </div>
-                                <input type="number" class="form-control" min="0" id="total" v-bind:value="total" disabled readonly>
+                                <input type="number" class="form-control bg-success" min="0" id="total" v-bind:value="total" disabled readonly>
                             </div>
                         </div>
                         <div class="form-group col-md-3">
@@ -215,7 +215,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Signature</span>
                                 </div>
-                                <input type="text" class="form-control" value="{{ auth()->user()->name }}" readonly>
+                                <input type="text" class="form-control bg-secondary" value="{{ auth()->user()->name }}" readonly>
                             </div>
                         </div>
 
