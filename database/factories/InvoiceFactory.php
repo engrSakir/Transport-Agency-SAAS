@@ -22,9 +22,18 @@ class InvoiceFactory extends Factory
     public function definition()
     {
         return [
-            'branch_id' => $this->faker->numberBetween(1,10),
-            'total' => $this->faker->numberBetween(20,500),
+            'status' => 'Received',
+            'from_branch_id' => $this->faker->numberBetween(1,50),
+            'to_branch_id' => $this->faker->numberBetween(1,50),
+            'sender_id' => $this->faker->numberBetween(1,20),
+            'receiver_id' => $this->faker->numberBetween(1,50),
+            'description' => $this->faker->text(50),
+            'quantity' => $this->faker->numberBetween(1,50),
+            'price' => $this->faker->numberBetween(20,500),
+            'home' => $this->faker->numberBetween(20,250),
+            'labour' => $this->faker->numberBetween(20,200),
             'paid' => $this->faker->numberBetween(20,500),
+            'creator_id' => $this->faker->numberBetween(1,50),
         ];
     }
 }

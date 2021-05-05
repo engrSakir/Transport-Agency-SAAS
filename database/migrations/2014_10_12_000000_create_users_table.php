@@ -18,13 +18,14 @@ class CreateUsersTable extends Migration
             $table->string('type')->comment('Super Admin|Admin|Manager|Customer')->default('Customer');
             $table->string('image')->nullable();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('is_active')->default(1);
-            $table->foreignId('company_id')->nullable();
-            $table->foreignId('branch_id')->nullable();
+            $table->foreignId('company_id')->nullable()->comment('For admin and manager');
+            $table->foreignId('branch_id')->nullable()->comment('only for manager');
+            $table->foreignId('creator_id')->nullable()->comment('Who add this user');
             $table->rememberToken();
             $table->timestamps();
         });

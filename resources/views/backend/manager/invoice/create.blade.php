@@ -117,7 +117,7 @@
                         @endforeach
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" rows="5"></textarea>
+                        <textarea class="form-control" rows="5" id="description" name="description"></textarea>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-3">
@@ -184,7 +184,9 @@
                                 <input type="text" class="form-control bg-secondary" value="{{ auth()->user()->name }}" readonly>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="button" id="save-invoice" class="btn waves-effect waves-light btn-lg btn-primary"> SAVE INVOICE </button>
                     </div>
                 </form>
             </div>
@@ -252,10 +254,10 @@
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $( function() {
+        $(function() {
             $( "#receiver-name" ).autocomplete({
                 source: function(request, response) {
-                    console.log(request.term);
+                    // console.log(request.term);
                     var formData = new FormData();
                     formData.append('name', request.term)
                     $.ajax({
@@ -266,7 +268,7 @@
                         processData: false,
                         contentType: false,
                         success:function(data){
-                            console.log(data)
+                            // console.log(data)
                             var array = $.map(data,function(obj){
                                 return{
                                     value: obj.name, //Filable in input field
@@ -288,7 +290,7 @@
             });
             $( "#receiver-phone" ).autocomplete({
                 source: function(request, response) {
-                    console.log(request.term);
+                    // console.log(request.term);
                     var formData = new FormData();
                     formData.append('phone', request.term)
                     $.ajax({
@@ -299,7 +301,7 @@
                         processData: false,
                         contentType: false,
                         success:function(data){
-                            console.log(data)
+                            // console.log(data)
                             var array = $.map(data,function(obj){
                                 return{
                                     value: obj.phone, //Filable in input field
@@ -321,7 +323,7 @@
             });
             $( "#receiver-email" ).autocomplete({
                 source: function(request, response) {
-                    console.log(request.term);
+                    // console.log(request.term);
                     var formData = new FormData();
                     formData.append('email', request.term)
                     $.ajax({
@@ -332,7 +334,7 @@
                         processData: false,
                         contentType: false,
                         success:function(data){
-                            console.log(data)
+                            // console.log(data)
                             var array = $.map(data,function(obj){
                                 return{
                                     value: obj.email, //Filable in input field
@@ -352,6 +354,72 @@
                     $('#receiver-name').val(ui.item.name);
                 }
             });
+
+            $('#save-invoice').click( function (){
+                var formData = new FormData();
+                var this_btn = $(this);
+                formData.append('sender_name', $('#sender-name').val());
+                formData.append('receiver_name', $('#receiver-name').val());
+                formData.append('receiver_phone', $('#receiver-phone').val());
+                formData.append('receiver_email', $('#receiver-email').val());
+                formData.append('branch', $('input:radio[name=branch]:checked').val());
+                formData.append('description', $('#description').val());
+                formData.append('quantity', $('#quantity').val());
+                formData.append('price', $('#price').val());
+                formData.append('advance', $('#advance').val());
+                formData.append('home', $('#home').val());
+                formData.append('labour', $('#labour').val());
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('manager.invoice.store') }}',
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function (){
+                        //this_btn.html('Please wait ---- ');
+                        this_btn.prop("disabled",true);
+                    },
+                    complete: function (){
+                        //this_btn.html('Edit now');
+                        this_btn.prop("disabled",false);
+                    },
+                    success: function (data) {
+                        if (data.type == 'success'){
+                            $('#invoice-form').trigger("reset");
+                            Swal.fire({
+                                icon: data.type,
+                                title: 'INVOICE',
+                                text: data.message,
+                            });
+                        }else{
+                            Swal.fire({
+                                icon: data.type,
+                                title: 'Oops...',
+                                text: data.message,
+                                footer: 'Something went wrong!'
+                            });
+                        }
+                    },
+                    error: function (xhr) {
+                        var errorMessage = '<div class="card bg-danger">\n' +
+                            '                        <div class="card-body text-center p-5">\n' +
+                            '                            <span class="text-white">';
+                        $.each(xhr.responseJSON.errors, function(key,value) {
+                            errorMessage +=(''+value+'<br>');
+                        });
+                        errorMessage +='</span>\n' +
+                            '                        </div>\n' +
+                            '                    </div>';
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            footer: errorMessage
+                        });
+                    },
+                });
+            });
+
         });
     </script>
 @endpush
