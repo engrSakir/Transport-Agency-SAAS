@@ -174,7 +174,7 @@ class InvoiceController extends Controller
     {
         if ($invoice->from_branch_id == auth()->user()->branch->id || $invoice->to_branch_id == auth()->user()->branch->id){
             $pdf = PDF::loadView('backend.pdf.invoice');
-            return $pdf->stream(config('app.name').'-invoice-.pdf');
+            return $pdf->stream('Invoice-'.config('app.name').'-('.$invoice->fromBranch->company->name.'- invoice code-'.$invoice->barcode.').pdf');
         }else{
             return back()->withErrors('Your are not permitted to check this invoice.');
         }

@@ -29,7 +29,7 @@ require __DIR__.'/auth.php';
 
 
  Route::get('/pdf', function (){
-    $pdf = PDF::loadView('welcome');
+    $pdf = PDF::loadView('backend.pdf.invoice');
 		return $pdf->stream('document.pdf');
  });
 
