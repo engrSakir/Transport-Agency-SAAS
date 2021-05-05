@@ -1,3 +1,4 @@
+{{--https://mpdf.github.io/real-life-examples/letterhead-letters.html--}}
 <html>
 <head>
     <title> {{  __('Invoice') }} | {{ config('app.name') }}</title>
