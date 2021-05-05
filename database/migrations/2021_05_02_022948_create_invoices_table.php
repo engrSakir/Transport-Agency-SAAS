@@ -32,10 +32,14 @@ class CreateInvoicesTable extends Migration
 
             $table->string('creator_ip')->nullable()->comment('Creator IP address');
             $table->string('creator_browser')->nullable()->comment('Creator browser');
+            $table->string('creator_device')->nullable()->comment('Creator device');
+            $table->string('creator_os')->nullable()->comment('Creator os');
             $table->string('creator_location')->nullable()->comment('Creator location');
 
             $table->string('last_visitor_ip')->nullable()->comment('Last visitor IP address');
             $table->string('last_visitor_browser')->nullable()->comment('Last visitor browser');
+            $table->string('last_visitor_device')->nullable()->comment('Last visitor device');
+            $table->string('last_visitor_os')->nullable()->comment('Last visitor os');
             $table->string('last_visitor_location')->nullable()->comment('Last visitor location');
             $table->timestamps();
         });

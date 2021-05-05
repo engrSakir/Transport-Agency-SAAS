@@ -130,9 +130,11 @@ class InvoiceController extends Controller
 
         $invoice->creator_id        = auth()->user()->id;
 
-//        $invoice->creator_ip        = $request->creator_ip;
-//        $invoice->creator_browser   = $request->creator_browser;
-//        $invoice->creator_location  = $request->creator_location;
+        $invoice->creator_ip        = geoip()->getClientIP();
+        $invoice->creator_browser   = get_client_browser();
+        $invoice->creator_device    = get_client_device();
+        $invoice->creator_os        = get_client_os();
+        $invoice->creator_location  = geoip()->getLocation(geoip()->getClientIP())->city;
 
         //# Step 4 SMS
 

@@ -165,7 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        \Torann\GeoIP\GeoIPServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -237,6 +237,7 @@ return [
         //  external package related aliases
         'Image' => Intervention\Image\Facades\Image::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
 
 
     ],
