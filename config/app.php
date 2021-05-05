@@ -165,7 +165,13 @@ return [
         /*
          * Package Service Providers...
          */
+<<<<<<< Updated upstream
         \Torann\GeoIP\GeoIPServiceProvider::class,
+=======
+
+        niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
+
+>>>>>>> Stashed changes
         /*
          * Application Service Providers...
          */
@@ -237,7 +243,11 @@ return [
         //  external package related aliases
         'Image' => Intervention\Image\Facades\Image::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+<<<<<<< Updated upstream
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+=======
+        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
+>>>>>>> Stashed changes
 
 
     ],

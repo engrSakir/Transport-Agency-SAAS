@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,8 @@ require __DIR__.'/auth.php';
 
 
 
- Route::get('/dashboard', function (){
-    echo 'customer';
+ Route::get('/pdf', function (){
+    $pdf = PDF::loadView('welcome');
+		return $pdf->stream('document.pdf');
  });
 
