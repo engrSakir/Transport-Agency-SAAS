@@ -66,6 +66,7 @@ class InvoiceController extends Controller
         ]);
 
         //# Step 1 CUSTOMER
+        $customer = null;
         //যদি এই তথ্যের সাথে মিলে কাস্টমার না থাকে তাহলে নতুন কাস্টমার তৈরি হবে
         if ($request->receiver_phone){  // ফোন নাম্বার পায় তাহলে সেই ফোন নাম্বারের আন্ডারে হবে
             $customer = User::where('phone', $request->receiver_phone)->first();
@@ -105,9 +106,9 @@ class InvoiceController extends Controller
 
         //# Step 3 LINKED
         //কাস্টমার যদি এই ব্রাঞ্চ এর সাথে যুক্ত হয়ে না থাকে তাহলে যুক্ত হয়ে যাবে
-        CustomerAndBranch::firstOrCreate(
-            ['branch_id' => auth()->user()->branch->id],
-            ['user_id' => $customer->id]
+        $customer_and_branch = CustomerAndBranch::firstOrCreate(
+            ['user_id' => $customer->id],
+            ['branch_id' => auth()->user()->branch->id]
         );
 
         //# Step 4 INVOICE
