@@ -65,6 +65,14 @@ class InvoiceController extends Controller
            'labour'             =>  'required|numeric|min:0',
         ]);
 
+        //# Step 0 CHECK TO_BRANCH IS VALID OR NOT
+        if (!check_branch_link(auth()->user()->branch->id, $request->branch)){
+            return response()->json([
+                'type' => 'error',
+                'message' => 'Branch are not linked. Contact with admin.',
+            ]);
+        }
+
         //# Step 1 CUSTOMER
         $customer = null;
         //যদি এই তথ্যের সাথে মিলে কাস্টমার না থাকে তাহলে নতুন কাস্টমার তৈরি হবে
