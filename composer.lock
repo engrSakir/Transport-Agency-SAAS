@@ -4,11 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< Updated upstream
     "content-hash": "8c535f3ac953943d4a022bb791c8d3d9",
-=======
     "content-hash": "17b1cf41303d1906db7b2aa13a07db03",
->>>>>>> Stashed changes
     "packages": [
         {
             "name": "asm89/stack-cors",
