@@ -3,7 +3,61 @@
 @endpush
 @extends('layouts.backend.app')
 @push('style')
+    <style>
+        .ui-autocomplete {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            display: none;
+            float: left;
+            min-width: 160px;
+            padding: 5px 0;
+            margin: 2px 0 0;
+            list-style: none;
+            font-size: 14px;
+            text-align: left;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+            -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+            background-clip: padding-box;
+            height: 500px;
+            overflow: auto;
+        }
 
+        .ui-autocomplete > li > div {
+            display: block;
+            padding: 3px 20px;
+            clear: both;
+            font-weight: normal;
+            line-height: 1.42857143;
+            color: #333333;
+            white-space: nowrap;
+        }
+
+        .ui-state-hover,
+        .ui-state-active,
+        .ui-state-focus {
+            text-decoration: none;
+            color: #262626;
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+
+        .ui-helper-hidden-accessible {
+            border: 0;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+    </style>
 @endpush
 @section('breadcrumb')
     <div class="row page-titles">
@@ -199,14 +253,14 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $( function() {
-            $( "#sender-name" ).autocomplete({
+            $( "#receiver-name" ).autocomplete({
                 source: function(request, response) {
                     console.log(request.term);
                     var formData = new FormData();
-                    formData.append('sender_name', request.term)
+                    formData.append('name', request.term)
                     $.ajax({
-                        method: 'GET',
-                        url: "{{ route('manager.invoice.create') }}",
+                        method: 'POST',
+                        url: "{{ route('manager.receiverName') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         data: formData,
                         processData: false,
@@ -216,7 +270,9 @@
                             var array = $.map(data,function(obj){
                                 return{
                                     value: obj.name, //Filable in input field
-                                    label: obj.name,  //Show as label of input field
+                                    label: obj.name + '<br>' + obj.phone + '<br>' + obj.email,  //Show as label of input field
+                                    phone: obj.phone,
+                                    email: obj.email
                                 }
                             })
                             response($.ui.autocomplete.filter(array, request.term));
@@ -224,7 +280,78 @@
                     })
                 },
                 minLength: 1,
+                select:function(event, ui){
+                    //console.log(ui.item);
+                    $('#receiver-phone').val(ui.item.phone);
+                    $('#receiver-email').val(ui.item.email);
+                }
             });
-        } );
+            $( "#receiver-phone" ).autocomplete({
+                source: function(request, response) {
+                    console.log(request.term);
+                    var formData = new FormData();
+                    formData.append('phone', request.term)
+                    $.ajax({
+                        method: 'POST',
+                        url: "{{ route('manager.receiverPhone') }}",
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success:function(data){
+                            console.log(data)
+                            var array = $.map(data,function(obj){
+                                return{
+                                    value: obj.phone, //Filable in input field
+                                    label: obj.name + '-' + obj.phone + '-' + obj.email,  //Show as label of input field
+                                    name: obj.name,
+                                    email: obj.email
+                                }
+                            })
+                            response($.ui.autocomplete.filter(array, request.term));
+                        },
+                    })
+                },
+                minLength: 1,
+                select:function(event, ui){
+                    //console.log(ui.item);
+                    $('#receiver-name').val(ui.item.name);
+                    $('#receiver-email').val(ui.item.email);
+                }
+            });
+            $( "#receiver-email" ).autocomplete({
+                source: function(request, response) {
+                    console.log(request.term);
+                    var formData = new FormData();
+                    formData.append('email', request.term)
+                    $.ajax({
+                        method: 'POST',
+                        url: "{{ route('manager.receiverEmail') }}",
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success:function(data){
+                            console.log(data)
+                            var array = $.map(data,function(obj){
+                                return{
+                                    value: obj.email, //Filable in input field
+                                    label: obj.name + '-' + obj.phone + '-' + obj.email,  //Show as label of input field
+                                    phone: obj.phone,
+                                    name: obj.name
+                                }
+                            })
+                            response($.ui.autocomplete.filter(array, request.term));
+                        },
+                    })
+                },
+                minLength: 1,
+                select:function(event, ui){
+                    //console.log(ui.item);
+                    $('#receiver-phone').val(ui.item.phone);
+                    $('#receiver-name').val(ui.item.name);
+                }
+            });
+        });
     </script>
 @endpush

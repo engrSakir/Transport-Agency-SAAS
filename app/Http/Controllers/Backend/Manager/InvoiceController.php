@@ -93,4 +93,56 @@ class InvoiceController extends Controller
     {
         //
     }
+
+    public function senderName(Request $request)
+    {
+        if ($request->ajax()){
+            return DB::table('customer_and_branches')
+                ->where('customer_and_branches.branch_id', auth()->user()->branch->id)
+                ->rightJoin('users', 'customer_and_branches.user_id', '=', 'users.id')
+                ->select('name', 'phone', 'email')
+                ->get();
+        }else{
+            return redirect()->back()->withErrors('Request no allowed');
+        }
+    }
+    public function receiverName(Request $request)
+    {
+        if ($request->ajax()){
+            return DB::table('customer_and_branches')
+                ->where('customer_and_branches.branch_id', auth()->user()->branch->id)
+                ->rightJoin('users', 'customer_and_branches.user_id', '=', 'users.id')
+                ->where('name', 'LIKE', '%'. $request->name. '%')
+                ->select('name', 'phone', 'email')
+                ->get();
+        }else{
+            return redirect()->back()->withErrors('Request no allowed');
+        }
+    }
+    public function receiverPhone(Request $request)
+    {
+        if ($request->ajax()){
+            return DB::table('customer_and_branches')
+                ->where('customer_and_branches.branch_id', auth()->user()->branch->id)
+                ->rightJoin('users', 'customer_and_branches.user_id', '=', 'users.id')
+                ->where('phone', 'LIKE', '%'. $request->phone. '%')
+                ->select('name', 'phone', 'email')
+                ->get();
+        }else{
+            return redirect()->back()->withErrors('Request no allowed');
+        }
+    }
+    public function receiverEmail(Request $request)
+    {
+        if ($request->ajax()){
+            return DB::table('customer_and_branches')
+                ->where('customer_and_branches.branch_id', auth()->user()->branch->id)
+                ->rightJoin('users', 'customer_and_branches.user_id', '=', 'users.id')
+                ->where('email', 'LIKE', '%'. $request->email. '%')
+                ->select('name', 'phone', 'email')
+                ->get();
+        }else{
+            return redirect()->back()->withErrors('Request no allowed');
+        }
+    }
 }
