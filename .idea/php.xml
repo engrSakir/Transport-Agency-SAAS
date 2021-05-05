@@ -114,6 +114,10 @@
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-permission" />
       <path value="$PROJECT_DIR$/vendor/realrashid/sweet-alert" />
       <path value="$PROJECT_DIR$/vendor/torann/geoip" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/mpdf/mpdf" />
+      <path value="$PROJECT_DIR$/vendor/niklasravnsborg/laravel-pdf" />
+      <path value="$PROJECT_DIR$/vendor/setasign/fpdi" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />

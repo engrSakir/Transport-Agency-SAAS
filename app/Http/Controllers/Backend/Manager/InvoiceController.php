@@ -7,11 +7,12 @@ use App\Models\CustomerAndBranch;
 use App\Models\Invoice;
 use App\Models\Sender;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use niklasravnsborg\LaravelPdf\Facades\Pdf as PDF;
+
+
 
 class InvoiceController extends Controller
 {
@@ -171,7 +172,12 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        //
+        if ($invoice->from_branch_id == auth()->user()->branch->id || $invoice->to_branch_id == auth()->user()->branch->id){
+            $pdf = PDF::loadView('backend.pdf.invoice');
+            return $pdf->stream(config('app.name').'-invoice-.pdf');
+        }else{
+            return back()->withErrors('Your are not permitted to check this invoice.');
+        }
     }
 
     /**
