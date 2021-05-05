@@ -27,7 +27,7 @@ class CompanySeeder extends Seeder
     {
         $faker = Faker::create();
         //10 package
-        for ($package_counter = 1; $package_counter <= 10; $package_counter++) {
+        for ($package_counter = 1; $package_counter <= 2; $package_counter++) {
             $package = new Package();
             $package->name = 'Package - '.$package_counter;
             $package->branch = $faker->numberBetween(1,10);
