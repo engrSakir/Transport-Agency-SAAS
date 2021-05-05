@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\Manager;
 
-Route::group(['as' => 'manager.', 'prefix' => 'backend/manager/'], function (){
+Route::group(['middleware' => 'manager', 'as' => 'manager.', 'prefix' => 'backend/manager/'], function (){
 
     Route::get('/dashboard', [Manager\DashboardController::class, 'index'])->name('dashboard');
 

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\SuperAdmin;
 
-Route::group(['as' => 'superadmin.', 'prefix' => 'backend/super-admin/'], function (){
+Route::group(['middleware' => 'superadmin', 'as' => 'superadmin.', 'prefix' => 'backend/super-admin/'], function (){
 
         Route::get('/dashboard', [SuperAdmin\DashboardController::class, 'index'])->name('dashboard');
 

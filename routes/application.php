@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::group(['as' => 'application.', 'prefix' => 'application/'], function (){
+Route::group(['middleware' => 'super-admin', 'as' => 'application.', 'prefix' => 'application/'], function (){
     Route::group(['as' => 'image.', 'prefix' => 'image/'], function (){
         Route::post('/no-image', [SuperAdmin\SettingController::class, 'noImage'])->name('noImage');
         Route::post('/fav-icon', [SuperAdmin\SettingController::class, 'favIcon'])->name('favIcon');
