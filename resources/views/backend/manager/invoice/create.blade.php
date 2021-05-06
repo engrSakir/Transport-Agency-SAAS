@@ -255,6 +255,33 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function() {
+            $( "#sender-name" ).autocomplete({
+                source: function(request, response) {
+                    // console.log(request.term);
+                    var formData = new FormData();
+                    formData.append('name', request.term)
+                    $.ajax({
+                        method: 'POST',
+                        url: "{{ route('manager.senderName') }}",
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success:function(data){
+                            // console.log(data)
+                            var array = $.map(data,function(obj){
+                                return{
+                                    value: obj.name, //Filable in input field
+                                    label: obj.name  //Show as label of input field
+                                }
+                            })
+                            response($.ui.autocomplete.filter(array, request.term));
+                        },
+                    })
+                },
+                minLength: 1,
+            });
+            
             $( "#receiver-name" ).autocomplete({
                 source: function(request, response) {
                     // console.log(request.term);

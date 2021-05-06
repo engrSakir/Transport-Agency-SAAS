@@ -161,6 +161,7 @@ class InvoiceController extends Controller
             'type' => 'success',
             'message' => 'Successfully done',
             'invoice' => $invoice,
+            'url' => route('manager.invoice.show', $invoice),
         ]);
     }
 
