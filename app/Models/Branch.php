@@ -17,8 +17,12 @@ class Branch extends Model
         return $this->hasMany(CustomerAndBranch::class, 'branch_id', 'id');
     }
 
-    public function invoices(){
-        return $this->hasMany(Invoice::class, 'branch_id', 'id');
+    public function fromInvoices(){
+        return $this->hasMany(Invoice::class, 'from_branch_id', 'id');
+    }
+
+    public function toInvoices(){
+        return $this->hasMany(Invoice::class, 'to_branch_id', 'id');
     }
 
     public function messages(){

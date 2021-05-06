@@ -42,7 +42,7 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="box bg-megna text-center">
-                                        <h1 class="font-light text-white">{{ $branch->invoices()->whereYear('created_at', '=', $year)->sum('paid') }}</h1>
+                                        <h1 class="font-light text-white">{{ $branch->fromInvoices()->whereYear('created_at', '=', $year)->sum('paid') }}</h1>
                                         <h6 class="text-white">Paid  ({{ $year }}) </h6>
                                     </div>
                                 </div>
@@ -51,7 +51,12 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="box bg-danger text-center">
-                                        <h1 class="font-light text-white">{{ $branch->invoices()->whereYear('created_at', '=', $year)->sum('total') - $branch->invoices()->whereYear('created_at', '=', date('Y'))->sum('paid') }}</h1>
+                                        <h1 class="font-light text-white">
+                                            {{ $branch->fromInvoices()->whereYear('created_at', '=', $year)->sum('price')+
+                                             $branch->fromInvoices()->whereYear('created_at', '=', $year)->sum('home')+
+                                             $branch->fromInvoices()->whereYear('created_at', '=', $year)->sum('labour')-
+                                             $branch->fromInvoices()->whereYear('created_at', '=', date('Y'))->sum('paid') }}
+                                        </h1>
                                         <h6 class="text-white">Unpaid ({{ $year }}) </h6>
                                     </div>
                                 </div>
@@ -60,7 +65,7 @@
                             <div class="col-md-6 col-lg-6 col-xlg-4">
                                 <div class="card">
                                     <div class="box bg-info text-center">
-                                        <h1 class="font-light text-white">{{ $branch->invoices()->whereYear('created_at', '=', $year)->count() }}</h1>
+                                        <h1 class="font-light text-white">{{ $branch->fromInvoices()->whereYear('created_at', '=', $year)->count() }}</h1>
                                         <h6 class="text-white">Invoice ({{ $year }}) </h6>
                                     </div>
                                 </div>
