@@ -43,3 +43,8 @@ Route::get('/pdf/a4-1', function (){
 		return $pdf->stream('document.pdf');
  });
 
+ Route::get('/pdf/a-5-one', function (){
+    $pdf = PDF::loadView('backend.pdf.a-5-one');
+		return $pdf->stream('a-5-one.pdf');
+ });
+
