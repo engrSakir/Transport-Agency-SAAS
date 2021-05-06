@@ -281,7 +281,7 @@
                 },
                 minLength: 1,
             });
-            
+
             $( "#receiver-name" ).autocomplete({
                 source: function(request, response) {
                     // console.log(request.term);
@@ -414,6 +414,11 @@
                     success: function (data) {
                         if (data.type == 'success'){
                             $('#invoice-form').trigger("reset");
+                            var html_embed_code = `<embed type="text/html" src="`+data.url+`" width="750" height="500">`;
+                            $('#extra-large-modal-body').html(html_embed_code);
+                            $('#extra-large-modal-body').addClass( "text-center" );
+                            $('#extra-large-modal-title').text( "INVOICE" );
+                            $('#extra-large-modal').modal('show');
                             Swal.fire({
                                 icon: data.type,
                                 title: 'INVOICE',
