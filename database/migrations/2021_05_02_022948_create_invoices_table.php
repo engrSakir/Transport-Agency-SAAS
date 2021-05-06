@@ -15,10 +15,12 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('core')->nullable()->comment('barcode');
-            $table->string('status')->default('Received')->comment('Received|On Going|Delivered');
             $table->foreignId('from_branch_id');
             $table->foreignId('to_branch_id');
+            $table->string('core')->nullable()->comment('barcode');
+            $table->string('status')->default('Received')->comment('Received|On Going|Delivered');
+            $table->foreignId('chalan_id')->nullable()->comment('Chalan Paper ID');
+            $table->foreignId('creator_id')->nullable()->comment('Admin/manager who create invoice');
             $table->foreignId('sender_id')->comment('Sender name');
             $table->foreignId('receiver_id')->comment('Customer/Receiver');
             $table->longText('description')->nullable()->comment('Product note');
@@ -27,8 +29,8 @@ class CreateInvoicesTable extends Migration
             $table->double('home')->default(0)->comment('Home delivery charge');
             $table->double('labour')->default(0)->comment('Labour charge');
             $table->double('paid')->default(0)->comment('Paid amount');
-            $table->foreignId('chalan_id')->nullable()->comment('Chalan Paper ID');
-            $table->foreignId('creator_id')->nullable()->comment('Admin/manager who create invoice');
+
+            $table->integer('custom_counter')->nullable()->comment('Custom ID like 1-999');
 
             $table->string('creator_ip')->nullable()->comment('Creator IP address');
             $table->string('creator_browser')->nullable()->comment('Creator browser');

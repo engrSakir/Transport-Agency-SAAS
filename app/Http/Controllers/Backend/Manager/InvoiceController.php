@@ -140,6 +140,16 @@ class InvoiceController extends Controller
 
         $invoice->creator_id        = auth()->user()->id;
 
+        //Logic for custom counter
+        $custom_counter = Invoice::where('from_branch_id', auth()->user()->branch->id)->orderBy('id', 'desc')->first()->custom_counter ?? 0;
+        if ($custom_counter >= auth()->user()->branch->custom_inv_counter_max_value){
+            $invoice->custom_counter = auth()->user()->branch->custom_inv_counter_min_value;
+        }else{
+            $custom_counter++;
+        }
+
+        $invoice->custom_counter        = $custom_counter;
+
         $invoice->creator_ip        = geoip()->getClientIP();
         $invoice->creator_browser   = get_client_browser();
         $invoice->creator_device    = get_client_device();
@@ -150,6 +160,7 @@ class InvoiceController extends Controller
 
         try {
             $invoice->save();
+
         }catch (\Exception $exception){
             return response()->json([
                 'type' => 'error',

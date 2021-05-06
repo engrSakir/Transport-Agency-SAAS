@@ -25,6 +25,8 @@ class CreateBranchesTable extends Migration
             $table->integer('sender_search_length')->default(2);
             $table->integer('receiver_search_length')->default(2);
             $table->integer('global_search_length')->default(2);
+            $table->integer('custom_inv_counter_max_value')->default(999);
+            $table->integer('custom_inv_counter_min_value')->default(1);
             $table->string('invoice_style')->default('A5')->comment('A5|A4');
             $table->timestamps();
         });
