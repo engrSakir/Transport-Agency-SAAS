@@ -116,5 +116,11 @@ if (!function_exists('random_code')){
        return false;
    }
 
+   function en_to_bn($en_value){
+       $search         = array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+       $replace_by     =  array('১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯', '০');
+       return str_replace($search, $replace_by, $en_value);
+   }
+
 
 }

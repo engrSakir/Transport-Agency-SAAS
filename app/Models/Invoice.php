@@ -16,4 +16,23 @@ class Invoice extends Model
     public function toBranch(){
         return $this->belongsTo(Branch::class, 'to_branch_id', 'id');
     }
+
+    public function chalan(){
+        return $this->belongsTo(Chalan::class, 'chalan_id', 'id');
+    }
+
+    public function creator(){
+        return $this->belongsTo(User::class, 'creator_id', 'id');
+    }
+
+    public function sender(){
+        return $this->belongsTo(Sender::class, 'sender_id', 'id');
+    }
+
+    public function receiver(){
+        return $this->belongsTo(User::class, 'receiver_id', 'id');
+    }
+
+
+
 }

@@ -52,10 +52,7 @@
                                 <div class="card">
                                     <div class="box bg-danger text-center">
                                         <h1 class="font-light text-white">
-                                            {{ $branch->fromInvoices()->whereYear('created_at', '=', $year)->sum('price')+
-                                             $branch->fromInvoices()->whereYear('created_at', '=', $year)->sum('home')+
-                                             $branch->fromInvoices()->whereYear('created_at', '=', $year)->sum('labour')-
-                                             $branch->fromInvoices()->whereYear('created_at', '=', date('Y'))->sum('paid') }}
+                                            {{ $branch->fromInvoices()->whereYear('created_at', '=', $year)->sum(DB::raw('price + home + labour')) - $branch->fromInvoices()->whereYear('created_at', '=', date('Y'))->sum('paid') }}
                                         </h1>
                                         <h6 class="text-white">Unpaid ({{ $year }}) </h6>
                                     </div>
