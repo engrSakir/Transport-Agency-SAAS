@@ -31,6 +31,20 @@
             height: 5.4cm;
         }
 
+        .inv-paid-seal {
+            /* The image used */
+            background-image: url("{{ asset('uploads/images/setting/paid.png') }}");
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .inv-due-seal {
+            /* The image used */
+            background-image: url("{{ asset('uploads/images/setting/due.png') }}");
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
         body{
             font-family: bengali_englisg, sans-serif;
         }
@@ -128,30 +142,7 @@
 </div>
 <div class="row">
     <!-- Start col -->
-    <!-- background logo water mark paid/partial/due with condition -->
     <div class="col-lg-12">
-{{--        style="background-image: url({{ asset($invoice->fromBranch->company->logo ?? get_static_option('no_image')) }}) ;--}}
-{{--        background-size: 70%;--}}
-{{--        background-repeat:no-repeat;--}}
-{{--        background-position: center -100px;">--}}
-
-{{--         @if($invoice->sum(DB::raw('price + home + labour')) <= $invoice->paid)--}}
-{{--         style="background-image: url({{ asset('uploads/images/company/logo/logo.png') }}) ;--}}
-{{--             background-size: 70%;--}}
-{{--             background-repeat:no-repeat;--}}
-{{--             background-position: center -100px;"--}}
-{{--         @elseif($invoice->paid > 0)--}}
-{{--         style="background-image: url({{ asset('uploads/images/company/logo/logo.png') }}) ;--}}
-{{--             background-size: 70%;--}}
-{{--             background-repeat:no-repeat;--}}
-{{--             background-position: center -100px;"--}}
-{{--         @else--}}
-{{--         style="background-image: url({{ asset('uploads/images/company/logo/logo.png') }}) ;--}}
-{{--             background-size: 70%;--}}
-{{--             background-repeat:no-repeat;--}}
-{{--             background-position: center -100px;"--}}
-{{--        @endif--}}
-{{--    >--}}
         <div class="card m-b-30">
             <div class="card-body">
                 <div class="table-responsive">
@@ -175,8 +166,9 @@
                             <td class="left-right-bottom-color inv-description">
                                 <pre style="text-align: left; font-family: bengali_englisg;"> {{ $invoice->description }}</pre>
                             </td>
-                            <td  style="text-align: center;" class="right-color bottom-color">
+                            <td  style="text-align: center;" class="right-color bottom-color @if(($invoice->price + $invoice->home + $invoice->labour) >= $invoice->paid)  inv-due-seal @else inv-paid-seal @endif">
                                 {{ en_to_bn($invoice->price)  }}
+
                             </td>
                         </tr>
                     </table>
@@ -200,7 +192,7 @@
                                 বুকিং তারিখ- {{ en_to_bn($invoice->created_at->format('d/m/Y')) }}
                             </th>
                             <td style="text-align: right">মোট- </td>
-                            <td style="text-align: center; background-color: rgba(11,198,145,0.5); border: 1px solid black;"><b>{{ en_to_bn($invoice->sum(DB::raw('price + home + labour'))) }}</b></td>
+                            <td style="text-align: center; background-color: rgba(11,198,145,0.5); border: 1px solid black;"><b>{{ en_to_bn($invoice->price + $invoice->home + $invoice->labour) }}</b></td>
                         </tr>
                         <tr>
                             <th></th>
@@ -218,7 +210,7 @@
                             <td style="text-align: right; width: 50%;" class="">
                                 বাকী-
                             </td>
-                            <td style="text-align: center; border: 1px solid black; background-color: rgba(11,198,145,0.5);" class=""><b>{{ en_to_bn( $invoice->sum(DB::raw('price + home + labour')) - $invoice->paid) }}</b></td>
+                            <td style="text-align: center; border: 1px solid black; background-color: rgba(11,198,145,0.5);" class=""><b>{{ en_to_bn($invoice->price + $invoice->home + $invoice->labour - $invoice->paid) }}</b></td>
                         </tr>
                         </tbody>
                     </table>
