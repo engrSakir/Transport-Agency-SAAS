@@ -50,9 +50,11 @@ class BranchController extends Controller
             'email' => 'nullable|email',
             'phone' => 'nullable|string',
             'address' => 'nullable|string',
-            'sender_search_length' => 'required|numeric',
-            'receiver_search_length' => 'required|numeric',
-            'global_search_length' => 'required|numeric',
+            'sender_search_length' => 'required|numeric|min:0',
+            'receiver_search_length' => 'required|numeric|min:0',
+            'global_search_length' => 'required|numeric|min:0',
+            'custom_inv_counter_max_value' => 'required|numeric|min:0',
+            'custom_inv_counter_min_value' => 'required|numeric|min:0',
             'status' => 'required|boolean',
             'head_office' => 'required|boolean',
             'linked_branches' => 'required',
@@ -67,6 +69,8 @@ class BranchController extends Controller
         $branch->sender_search_length = $request->sender_search_length;
         $branch->receiver_search_length = $request->receiver_search_length;
         $branch->global_search_length = $request->global_search_length;
+        $branch->custom_inv_counter_max_value = $request->custom_inv_counter_max_value;
+        $branch->custom_inv_counter_min_value = $request->custom_inv_counter_min_value;
         $branch->is_active = $request->status;
         $branch->is_head_office = $request->head_office;
         try {
@@ -134,9 +138,11 @@ class BranchController extends Controller
             'email' => 'nullable|email',
             'phone' => 'nullable|string',
             'address' => 'nullable|string',
-            'sender_search_length' => 'required|numeric',
-            'receiver_search_length' => 'required|numeric',
-            'global_search_length' => 'required|numeric',
+            'sender_search_length' => 'required|numeric|min:0',
+            'receiver_search_length' => 'required|numeric|min:0',
+            'global_search_length' => 'required|numeric|min:0',
+            'custom_inv_counter_max_value' => 'required|numeric|min:0',
+            'custom_inv_counter_min_value' => 'required|numeric|min:0',
             'status' => 'required|boolean',
             'head_office' => 'required|boolean',
             'linked_branches' => 'required',
@@ -149,6 +155,8 @@ class BranchController extends Controller
         $branch->sender_search_length = $request->sender_search_length;
         $branch->receiver_search_length = $request->receiver_search_length;
         $branch->global_search_length = $request->global_search_length;
+        $branch->custom_inv_counter_max_value = $request->custom_inv_counter_max_value;
+        $branch->custom_inv_counter_min_value = $request->custom_inv_counter_min_value;
         $branch->is_active = $request->status;
         $branch->is_head_office = $request->head_office;
         try {
