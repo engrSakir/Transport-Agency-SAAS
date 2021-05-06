@@ -68,7 +68,7 @@
                                     <select name="package" id="package" class="select2-single form-control">
                                         <option value="" selected disabled>Chose package</option>
                                         @foreach($packages as $package)
-                                            <option @if ($company->package_id == $package->id) class="bg-success" selected @endif value="{{ $package->id }}"> {{ $package->name }} </option>
+                                            <option @if ($company->purchasePackage->id == $package->id) class="bg-success" selected @endif value="{{ $package->id }}"> {{ $package->name }} </option>
                                         @endforeach
                                     </select>
                                     @error('package')
