@@ -79,8 +79,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card card-body">
-                <h4 class="card-title">Default Forms</h4>
-                <h5 class="card-subtitle"> All bootstrap element classies </h5>
+                <h4 class="card-title">Hello {{ auth()->user()->name }} !</h4>
                 <form class="form-horizontal mt-4" id="invoice-form">
                     <div class="row">
                         <div class="form-group col-md-3">
