@@ -28,8 +28,18 @@ require __DIR__.'/auth.php';
 
 
 
- Route::get('/pdf', function (){
-    $pdf = PDF::loadView('backend.pdf.invoice');
+ Route::get('/pdf/a4', function (){
+    $pdf = PDF::loadView('backend.pdf.a4');
+		return $pdf->stream('document.pdf');
+ });
+
+Route::get('/pdf/a4-1', function (){
+    $pdf = PDF::loadView('backend.pdf.a4-1');
+    return $pdf->stream('document.pdf');
+});
+
+ Route::get('/pdf/a5', function (){
+    $pdf = PDF::loadView('backend.pdf.a5');
 		return $pdf->stream('document.pdf');
  });
 
