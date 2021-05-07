@@ -24,11 +24,68 @@
 @section('content')
     <div class="row">
         <!-- Column 1-->
+        @foreach($invoices->groupBy('to_branch_id') as $invoice_group => $invoice_items)
         <div class="col-md-6 col-lg-4 col-xlg-2">
             <div class="card">
                 <div class="box bg-info text-center">
-                    <h1 class="font-light text-white"> 00</h1>
-                    <h6 class="text-white"> মেসেজের </h6>
+                    <h1 class="font-light text-white"> {{ \App\Models\Branch::find($invoice_group)->name }}</h1>
+                    <h6 class="text-white"> {{ $invoice_items->count() }} </h6>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Primary Table</h4>
+                    <h6 class="card-subtitle">Add class <code>.color-bordered-table .primary-bordered-table</code></h6>
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Customer</th>
+                                <th>Office</th>
+                                <th>Payment</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($invoices as $invoice)
+                            <tr>
+                                <td>{{ $invoice->custom_counter }}</td>
+                                <td>
+                                    <b style="font-size: 18px;">{{ $invoice->receiver->name ?? '' }}</b><br>
+                                    {{ $invoice->receiver->phone ?? '' }}<br>
+                                    {{ $invoice->receiver->email ?? '' }}<br>
+                                    <span class="badge badge-success">
+                                        {{ $invoice->sender->name ?? '' }}
+                                    </span>
+                                </td>
+                                <td style="font-size: 16px;">
+                                    {{ $invoice->toBranch->name ?? '' }}<br>
+                                    <b>{{ $invoice->created_at->format('d/m/Y') }}</b>
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>@Sonu</td>
+                            </tr>
+                            @endforeach
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Customer</th>
+                                <th>Office</th>
+                                <th>Payment</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

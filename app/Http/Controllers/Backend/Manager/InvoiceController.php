@@ -280,4 +280,18 @@ class InvoiceController extends Controller
             return redirect()->back()->withErrors('Request no allowed');
         }
     }
+
+    public function statusConstant($status)
+    {
+        if ($status == 'received'){
+            $status = 'Received';
+        }elseif ($status == 'on-going'){
+            $status = 'On Going';
+        }elseif ($status == 'delivered'){
+            $status = 'Delivered';
+        }
+
+        $invoices = auth()->user()->branch->fromInvoices()->where('status', $status)->orderBy('id', 'desc')->paginate(100);
+        return view('backend.manager.invoice.index', compact('invoices'));
+    }
 }
