@@ -166,7 +166,7 @@
                             <td class="left-right-bottom-color inv-description">
                                 <pre style="text-align: left; font-family: bengali_englisg;"> {{ $invoice->description }}</pre>
                             </td>
-                            <td  style="text-align: center;" class="right-color bottom-color @if(($invoice->price + $invoice->home + $invoice->labour) >= $invoice->paid)  inv-due-seal @else inv-paid-seal @endif">
+                            <td  style="text-align: center; font-size: 22px;" class="right-color bottom-color @if(($invoice->price + $invoice->home + $invoice->labour) >= $invoice->paid)  inv-due-seal @else inv-paid-seal @endif">
                                 {{ en_to_bn($invoice->price)  }}
 
                             </td>
