@@ -8,7 +8,7 @@
 @section('breadcrumb')
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h4 class="text-themecolor">{{ $status ?? '' }}/{{ $branch ?? '' }}</h4>
+            <h4 class="text-themecolor">{{ $status ?? '' }}/{{ $branch_name ?? '' }}</h4>
         </div>
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
@@ -26,7 +26,7 @@
         <!-- Column 1-->
         @foreach($invoices->groupBy('to_branch_id') as $invoice_group => $invoice_items)
         <div class="col-md-6 col-lg-4 col-xlg-2">
-            <a href="{{ route('manager.invoice.statusAndBranchConstant', ['received', $invoice_group]) }}">
+            <a href="{{ route('manager.invoice.statusAndBranchConstant', [$status, $invoice_group]) }}">
                 <div class="card">
                     <div class="box bg-info text-center">
                         <h1 class="font-light text-white"> {{ \App\Models\Branch::find($invoice_group)->name }}</h1>
