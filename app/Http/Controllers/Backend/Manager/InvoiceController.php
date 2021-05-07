@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Manager;
 
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use App\Models\CustomerAndBranch;
 use App\Models\Invoice;
 use App\Models\Sender;
@@ -290,8 +291,25 @@ class InvoiceController extends Controller
         }elseif ($status == 'delivered'){
             $status = 'Delivered';
         }
-
         $invoices = auth()->user()->branch->fromInvoices()->where('status', $status)->orderBy('id', 'desc')->paginate(100);
-        return view('backend.manager.invoice.index', compact('invoices'));
+        return view('backend.manager.invoice.index', compact('invoices', 'status'));
+    }
+
+    public function statusAndBranchConstant($status, Branch $branch)
+    {
+        if ($branch->company_id != auth()->user()->company->id){
+            return back()->withErrors('Your are not permitted to access.');
+        }
+
+        if ($status == 'received'){
+            $status = 'Received';
+        }elseif ($status == 'on-going'){
+            $status = 'On Going';
+        }elseif ($status == 'delivered'){
+            $status = 'Delivered';
+        }
+        $branch = $branch->name;
+        $invoices = auth()->user()->branch->fromInvoices()->where('status', $status)->where('to_branch_id', $branch)->orderBy('id', 'desc')->paginate(100);
+        return view('backend.manager.invoice.index', compact('invoices', 'status', 'branch'));
     }
 }
