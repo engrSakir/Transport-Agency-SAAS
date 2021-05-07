@@ -145,6 +145,43 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="invoice_heading_one" class="col-sm-2 col-form-label">Invoice heading one</label>
+                                <div class="col-sm-10">
+                                    <input value="{{ $branch->invoice_heading_one }}" name="invoice_heading_one" type="text" min="0" class="form-control"
+                                           id="invoice_heading_one" placeholder="Address ...........">
+                                    @error('invoice_heading_one')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="invoice_heading_two" class="col-sm-2 col-form-label">Invoice heading two</label>
+                                <div class="col-sm-10">
+                                    <input value="{{ $branch->invoice_heading_two }}" name="invoice_heading_two" type="text" min="0" class="form-control"
+                                           id="invoice_heading_two" placeholder="Motto ...........">
+                                    @error('invoice_heading_two')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="invoice_watermark" class="col-sm-2 col-form-label">Invoice watermark</label>
+                                <div class="col-sm-10">
+                                    <img src="{{ asset($branch->invoice_watermark ?? get_static_option('no_image')) }}" alt="" width="70px" class="img-circle">
+                                    <input name="invoice_watermark" accept="image/*" type="file" class="form-control"
+                                           id="invoice_watermark" placeholder="invoice_watermark">
+                                    @error('invoice_watermark')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="status" class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-10">
                                     <select name="status" id="status" class="select2-single form-control">

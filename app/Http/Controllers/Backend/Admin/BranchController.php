@@ -7,6 +7,9 @@ use App\Models\Branch;
 use App\Models\BranchLink;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class BranchController extends Controller
 {
@@ -146,6 +149,9 @@ class BranchController extends Controller
             'status' => 'required|boolean',
             'head_office' => 'required|boolean',
             'linked_branches' => 'required',
+            'invoice_heading_one' => 'required|string',
+            'invoice_heading_two' => 'required|string',
+            'invoice_watermark' => 'nullable|image',
         ]);
 
         $branch->name = $request->name;
@@ -157,8 +163,23 @@ class BranchController extends Controller
         $branch->global_search_length = $request->global_search_length;
         $branch->custom_inv_counter_max_value = $request->custom_inv_counter_max_value;
         $branch->custom_inv_counter_min_value = $request->custom_inv_counter_min_value;
+        $branch->invoice_heading_one = $request->invoice_heading_one;
+        $branch->invoice_heading_two = $request->invoice_heading_two;
         $branch->is_active = $request->status;
         $branch->is_head_office = $request->head_office;
+        if($request->hasFile('invoice_watermark')){
+            if ($branch->invoice_watermark != null)
+                File::delete(public_path($branch->invoice_watermark)); //Old image delete
+            $image             = $request->file('invoice_watermark');
+            $folder_path       = 'uploads/images/branch/watermark/';
+            if (!file_exists($folder_path)) {
+                mkdir($folder_path, 0777, true);
+            }
+            $image_new_name    = Str::random(20).'-'.now()->timestamp.'.'.$image->getClientOriginalExtension();
+            //resize and save to server
+            Image::make($image->getRealPath())->save($folder_path.$image_new_name);
+            $branch->invoice_watermark = $folder_path.$image_new_name;
+        }
         try {
             $branch->save();
 
