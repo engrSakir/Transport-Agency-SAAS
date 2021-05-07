@@ -311,7 +311,7 @@ class InvoiceController extends Controller
             $status = 'On Going';
         }elseif ($status == 'delivered'){
             $status = 'Delivered';
-        }elseif ($status == 'All'){
+        }elseif ($status == 'all'){
             $invoices = auth()->user()->branch->fromInvoices()->where('to_branch_id', $branch->id)->orderBy('id', 'desc')->paginate(100);
             return view('backend.manager.invoice.index', compact('invoices', 'status', 'branch_name'));
         }else{

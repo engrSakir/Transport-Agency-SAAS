@@ -8,7 +8,7 @@
 @section('breadcrumb')
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h4 class="text-themecolor">{{ $status ?? '' }}/{{ $branch_name ?? '' }}</h4>
+            <h4 class="text-themecolor">Status: {{ $status ?? '' }}/Branch: {{ $branch_name ?? '' }}</h4>
         </div>
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
@@ -26,7 +26,7 @@
         <!-- Column 1-->
         @foreach($invoices->groupBy('to_branch_id') as $invoice_group => $invoice_items)
         <div class="col-md-6 col-lg-4 col-xlg-2">
-            <a href="{{ route('manager.invoice.statusAndBranchConstant', [$status, $invoice_group]) }}">
+            <a href="{{ route('manager.invoice.statusAndBranchConstant', [\Illuminate\Support\Str::slug($status, ' ', '-'), $invoice_group]) }}">
                 <div class="card">
                     <div class="box bg-info text-center">
                         <h1 class="font-light text-white"> {{ \App\Models\Branch::find($invoice_group)->name }}</h1>
@@ -41,8 +41,8 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Primary Table</h4>
-                    <h6 class="card-subtitle">Add class <code>.color-bordered-table .primary-bordered-table</code></h6>
+                    <h4 class="card-title">Invoice List</h4>
+{{--                    <h6 class="card-subtitle">Add class <code>.color-bordered-table .primary-bordered-table</code></h6>--}}
                     <div class="table-responsive">
                         <table class="table color-bordered-table primary-bordered-table">
                             <thead>
@@ -70,10 +70,16 @@
                                     {{ $invoice->toBranch->name ?? '' }}<br>
                                     <b>{{ $invoice->created_at->format('d/m/Y') }}</b>
                                 </td>
-                                <td>
-
+                                <td style="font-size: 16px;">
+                                    <span class="text-danger">Due: {{ $invoice->price + $invoice->home + $invoice->labour - $invoice->paid }}</span><br>
+                                    <span class="text-info">Paid: {{ $invoice->paid }}</span><br>
+                                    <span class="text-success">Total: {{ $invoice->price + $invoice->home + $invoice->labour }}</span>
                                 </td>
-                                <td>@Sonu</td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-circle btn-lg show-inv" value="{{ route('manager.invoice.show', $invoice) }}"><i class="mdi mdi-cloud-print"></i> </button>
+                                    <button type="button" class="btn btn-warning btn-circle btn-lg"><i class="mdi mdi-tooltip-edit"></i> </button>
+                                    <button type="button" class="btn btn-danger btn-circle btn-lg"><i class="mdi mdi-delete-circle"></i> </button>
+                                </td>
                             </tr>
                             @endforeach
                             <thead>
@@ -94,5 +100,16 @@
     </div>
 @endsection
 @push('script')
-
+    <script>
+        $(document).ready(function(){
+            // Get current page and set current in nav
+            $(".show-inv").click( function (){
+                var html_embed_code = `<embed type="text/html" src="`+$(this).val()+`" width="750" height="500">`;
+                $('#extra-large-modal-body').html(html_embed_code);
+                $('#extra-large-modal-body').addClass( "text-center" );
+                $('#extra-large-modal-title').text( "INVOICE" );
+                $('#extra-large-modal').modal('show');
+            });
+        });
+    </script>
 @endpush
