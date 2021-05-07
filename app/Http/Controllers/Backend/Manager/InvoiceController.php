@@ -10,6 +10,7 @@ use App\Models\Sender;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use niklasravnsborg\LaravelPdf\Facades\Pdf as PDF;
 
@@ -230,7 +231,22 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
-        //
+        if ($invoice->from_branch_id == auth()->user()->branch->id || $invoice->to_branch_id == auth()->user()->branch->id){
+            try {
+                $invoice->delete();
+                return response()->json([
+                    'type' => 'success',
+                    'message' => ''
+                ]);
+            }catch (\Exception$exception){
+                return response()->json([
+                    'type' => 'error',
+                    'message' => ''
+                ]);
+            }
+        }else{
+            return back()->withErrors('Your are not permitted to check this invoice.');
+        }
     }
 
     public function senderName(Request $request)

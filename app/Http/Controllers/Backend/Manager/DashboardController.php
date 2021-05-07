@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function index(){
-        return view('backend.manager.dashboard.index');
+        $invoices = auth()->user()->branch->fromInvoices()->orderBy('id', 'desc')->get();
+        $year = date('Y');
+        return view('backend.manager.dashboard.index', compact('invoices', 'year'));
     }
 }

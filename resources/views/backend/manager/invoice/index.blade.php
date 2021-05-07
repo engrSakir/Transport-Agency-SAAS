@@ -8,7 +8,7 @@
 @section('breadcrumb')
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h4 class="text-themecolor">Status: {{ $status ?? '' }}/Branch: {{ $branch_name ?? '' }}</h4>
+            <h4 class="text-themecolor font-weight-bold">Status: {{ $status ?? '' }}/Branch: {{ $branch_name ?? '' }}</h4>
         </div>
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
@@ -29,8 +29,15 @@
             <a href="{{ route('manager.invoice.statusAndBranchConstant', [\Illuminate\Support\Str::slug($status, ' ', '-'), $invoice_group]) }}">
                 <div class="card">
                     <div class="box bg-info text-center">
-                        <h1 class="font-light text-white"> {{ \App\Models\Branch::find($invoice_group)->name }}</h1>
-                        <h6 class="text-white"> {{ $invoice_items->count() }} </h6>
+                        <h4 class="font-light text-white font-weight-bold"> {{ \App\Models\Branch::find($invoice_group)->name }}</h4>
+                        <h6 class="text-white"> Invoice: {{ $invoice_items->count() }} </h6>
+                        <h6 class="text-white">
+                            Price : {{ $invoice_items->sum('price') + $invoice_items->sum('home') + $invoice_items->sum('labour') }}
+                            <br>
+                            Due : {{ $invoice_items->sum('price') + $invoice_items->sum('home') + $invoice_items->sum('labour') - $invoice_items->sum('paid') }}
+                            <br>
+                            Paid : {{ $invoice_items->sum('paid') }}
+                        </h6>
                     </div>
                 </div>
             </a>
@@ -78,7 +85,7 @@
                                 <td>
                                     <button type="button" class="btn btn-info btn-circle btn-lg show-inv" value="{{ route('manager.invoice.show', $invoice) }}"><i class="mdi mdi-cloud-print"></i> </button>
                                     <button type="button" class="btn btn-warning btn-circle btn-lg"><i class="mdi mdi-tooltip-edit"></i> </button>
-                                    <button type="button" class="btn btn-danger btn-circle btn-lg"><i class="mdi mdi-delete-circle"></i> </button>
+                                    <button type="button" class="btn btn-danger btn-circle btn-lg" onclick="delete_function(this)" value="{{ route('manager.invoice.destroy', $invoice) }}"><i class="mdi mdi-delete-circle"></i> </button>
                                 </td>
                             </tr>
                             @endforeach
