@@ -19,6 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->boolean('is_active')->default(true);
             $table->string('name');
             $table->string('logo')->nullable();
+            $table->string('reporting_email')->nullable();
             $table->timestamps();
         });
     }

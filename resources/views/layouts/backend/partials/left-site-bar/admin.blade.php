@@ -4,16 +4,21 @@
     </a>
 </li>
 <li>
-    <a class="waves-effect waves-dark" href="{{ route('admin.branch.index') }}">
-        <i class="far fa-circle text-success"></i><span class="hide-menu">Branch</span>
-    </a>
-</li>
-<li>
     <a class="waves-effect waves-dark" href="{{ route('admin.manager.index') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">Manager</span>
     </a>
 </li>
 <li>
+    <a class="waves-effect waves-dark" href="{{ route('admin.branch.index') }}">
+        <i class="far fa-circle text-success"></i><span class="hide-menu">Branch</span>
+    </a>
+</li>
+<li>
+    <a class="waves-effect waves-dark" href="{{ route('admin.company.index') }}">
+        <i class="far fa-circle text-success"></i><span class="hide-menu">Company</span>
+    </a>
+</li>
+<li style="display:none;">
     <a class="waves-effect waves-dark" href="{{ route('admin.package') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">Package</span>
     </a>

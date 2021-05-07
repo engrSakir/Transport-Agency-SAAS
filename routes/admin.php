@@ -7,6 +7,8 @@ Route::group(['middleware' => 'admin', 'as' => 'admin.', 'prefix' => 'backend/ad
 
     Route::get('/dashboard', [Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/package', [Admin\PackageController::class, 'index'])->name('package');
+    Route::get('/company', [Admin\CompanyController::class, 'index'])->name('company.index');
+    Route::post('/company', [Admin\CompanyController::class, 'update'])->name('company.update');
 
     Route::resource('branch', Admin\BranchController::class);
     Route::resource('manager', Admin\ManagerController::class);
