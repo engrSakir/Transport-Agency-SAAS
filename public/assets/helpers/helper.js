@@ -61,7 +61,7 @@
                                     response.message,
                                     response.type
                                 )
-                                location.replace( response.url);
+                                location.replace(response.url);
                             }else{
                                 Swal.fire(
                                     'Sorry !',

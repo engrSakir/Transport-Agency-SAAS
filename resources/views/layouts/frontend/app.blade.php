@@ -1,10 +1,11 @@
 <!Doctype html>
 <html lang="en">
 <head>
-    <title>Home</title>
     <link rel="icon" href="{{ asset('assets/frontend/images/all-img/favicon.png') }}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@stack('title') | {{ config('app.name') }}</title>
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/bootstrap-v4.1.3.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/animations.min.css') }}">
@@ -13,6 +14,8 @@
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/swiper.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/reponsive.css') }}">
+    <!--====== AJAX ======-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -26,10 +29,14 @@
             </ul>
             <ul class="top-content float-right">
                 <li><a href="#">Track</a></li>
+                @if(auth()->check())
+                <li><a href="#" data-toggle="modal" data-target="#login" class="logout-btn">Logout</a></li>
+                @else
                 <li><a href="#" data-toggle="modal" data-target="#login">Login</a></li>
+                @endif
             </ul>
         </div>
-
+        @guest
         <div class="modal fade" id="login">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -45,19 +52,30 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="well">
-                                    <form id="loginForm">
+                                    <form id="loginForm" action="{{ route('login') }}" method="post">
+                                        @csrf
                                         <h3>Login</h3>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="username" name="username"
-                                                   placeholder="Enter Name Or Email"/>
+                                            <input type="text" class="form-control" id="email" name="email"
+                                                   placeholder="Enter Phone Or Email" value="{{ old('email') }}"/>
                                             <span class="help-block"></span>
+                                            @error('email')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <input placeholder="Password" name="password" id="password" class="form-control input-field" type="password"/>
                                             <span class="fas fa-eye code field-icon"></span>
+                                            @error('password')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
                                         </div>
                                         <div class="col-lg-12 login-btn">
-                                            <a href="#" class="btn btn-default btn-block">Login</a>
+                                            <a href="#" onclick="document.getElementById('loginForm').submit()" class="btn btn-default btn-block">Login</a>
                                         </div>
                                         <p class="help-block">Forget You Password | <a href="#" class="sign-up">Sign
                                                 up</a></p>
@@ -79,6 +97,7 @@
                 </div>
             </div>
         </div>
+        @endguest
     </header>
 </div>
 
@@ -1270,7 +1289,10 @@
 <script src="{{ asset('assets/frontend/js/counter.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/crbnMenu.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/custom-script.js') }}"></script>
-
+<!-- ============================================================== -->
+<script src="{{ asset('assets/helpers/helper.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+@include('sweetalert::alert')
 </body>
 
 </html>
