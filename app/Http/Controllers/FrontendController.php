@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\CallToAction;
+use App\Models\Company;
 use App\Models\CustomPage;
 use App\Models\Faq;
 use App\Models\Gallery;
@@ -12,13 +13,16 @@ use App\Models\Partner;
 use App\Models\Portfolio;
 use App\Models\PortfolioCategory;
 use App\Models\Price;
+use App\Models\PurchasePackage;
 use App\Models\Service;
 use App\Models\Strength;
 use App\Models\Team;
 use App\Models\Testimonial;
+use App\Models\User;
 use App\Models\WebsiteMessage;
 use App\Models\WebsiteSubscribe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class FrontendController extends Controller
 {
@@ -123,6 +127,41 @@ class FrontendController extends Controller
                 'type' => 'error',
                 'message' => 'Something going wrong. '.$exception->getMessage(),
             ]);
+        }
+    }
+
+    public function companyRegistration(Request $request){
+        $request->validate([
+            'company_name' => 'required|string|unique:companies,name',
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required|string|min:6|unique:users,phone',
+            'password' => 'min:6|max:32|required|required_with:password_confirmation|same:password_confirmation',
+        ]);
+        $company = new Company();
+        $company->name = $request->company_name;
+        try {
+            $company->save();
+        }catch (\Exception $exception){
+            return back()->withErrors('এই মুহূর্তে কোম্পানী রেজিষ্ট্রেশন সম্পন্ন হচ্ছে না');
+        }
+
+        $user = new User();
+        $user->type = 'Admin';
+        $user->company_id = $company->id;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->password = Hash::make($request->password);
+        try {
+            $user->save();
+            $purchase_package = new PurchasePackage();
+            $purchase_package->company_id   =   $company->id;
+            $purchase_package->package_id   =   1;
+            $purchase_package->save();
+            return back()->withSuccess('কোম্পানি রেজিস্ট্রেশন সম্পন্ন হয়েছে আপনি এখন লগ-ইন করে এই সফটওয়্যারটি ব্যাবহার করতে পারবেন');
+        }catch (\Exception $exception){
+            return back()->withErrors('এই মুহূর্তে কোম্পানী রেজিষ্ট্রেশন সম্পন্ন হচ্ছে না');
         }
     }
 }

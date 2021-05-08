@@ -75,7 +75,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-lg-12 login-btn">
-                                            <a href="#" onclick="document.getElementById('loginForm').submit()" class="btn btn-default btn-block">Login</a>
+                                            <a href="javascript:0" onclick="document.getElementById('loginForm').submit()" class="btn btn-default btn-block">Login</a>
                                         </div>
                                         <p class="help-block">Forget You Password | <a href="#" class="sign-up">Sign
                                                 up</a></p>
@@ -231,8 +231,8 @@
             <img src="{{ asset('assets/frontend/images/home-slider/slide-1.jpg') }}" alt="logo_img" class="img-fluid">
             <div class="container">
                 <div class="carousel-caption vertical-top text-left">
-                    <h4 class="animate" data-anim-type="fadeInDown" data-anim-delay="600">One stap solution for</h4>
-                    <h1 class="animate" data-anim-type="fadeInDown" data-anim-delay="600">WorldWide<br><span>Transportation</span>
+                    <h4 class="animate" data-anim-type="fadeInDown" data-anim-delay="600">সহজ এবং নিখুঁত সমাধান</h4>
+                    <h1 class="animate" data-anim-type="fadeInDown" data-anim-delay="600">ট্রান্সপোর্ট এজেন্সি<br><span>ম্যানেজমেন্ট সফটওয়্যার</span>
                     </h1>
                     <p class="animate" data-anim-type="fadeInUp" data-anim-delay="600">The clean code allows you to
                         easily copy code blocks from content <br>modules and past
@@ -251,8 +251,8 @@
             <img src="{{ asset('assets/frontend/images/home-slider/slide-2.jpg') }}" alt="logo_img" class="img-fluid">
             <div class="container">
                 <div class="carousel-caption vertical-top text-center">
-                    <h4 class="animate" data-anim-type="fadeInDown" data-anim-delay="500">One stap solution for</h4>
-                    <h1 class="animate" data-anim-type="fadeInDown" data-anim-delay="500">WorldWide<br><span>Transportation</span>
+                    <h4 class="animate" data-anim-type="fadeInDown" data-anim-delay="500">সহজ এবং নিখুঁত সমাধান</h4>
+                    <h1 class="animate" data-anim-type="fadeInDown" data-anim-delay="500">ট্রান্সপোর্ট এজেন্সি<br><span>ম্যানেজমেন্ট সফটওয়্যার</span>
                     </h1>
                     <p class="animate" data-anim-type="fadeInUp" data-anim-delay="500">The clean code allows you to
                         easily copy code blocks from content <br>modules and past
@@ -271,8 +271,8 @@
             <img src="{{ asset('assets/frontend/images/home-slider/slide-3.jpg') }}" alt="logo_img" class="img-fluid">
             <div class="container">
                 <div class="carousel-caption vertical-top text-right">
-                    <h4 class="animate" data-anim-type="fadeInDown" data-anim-delay="600">One stap solution for</h4>
-                    <h1 class="animate" data-anim-type="fadeInDown" data-anim-delay="600">WorldWide<br><span>Transportation</span>
+                    <h4 class="animate" data-anim-type="fadeInDown" data-anim-delay="600">সহজ এবং নিখুঁত সমাধান</h4>
+                    <h1 class="animate" data-anim-type="fadeInDown" data-anim-delay="600">ট্রান্সপোর্ট এজেন্সি<br><span>ম্যানেজমেন্ট সফটওয়্যার</span>
                     </h1>
                     <p class="animate" data-anim-type="fadeInUp" data-anim-delay="600">The clean code allows you to
                         easily copy code blocks from content <br>modules and past
@@ -678,90 +678,83 @@
         </div>
     </div>
     <div class="col-lg-6 col-md-12 faq-details">
-        <form>
+        <form id="companyRegistrationForm" action="{{ route('frontend.companyRegistration') }}" method="post">
+            @csrf
             <div class="service-form">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 faq-section-title center pb-60">
-                        <h2>Get Quotation</h2>
-                        <h3><span>REQUEST A FREE QUOTE</span></h3>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
-                        <div class="form-group service-form-group">
-                            <label class="control-label sr-only" for="name"></label>
-                            <input id="name" type="text" placeholder="First Name" class="form-control" required>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12 faq-section-title center pb-60">
+                            <h2>ট্রান্সপোর্ট এজেন্সি সফটওয়্যারে </h2>
+                            <h3><span>আপনার কোম্পানি একাউন্ট খুলুন</span></h3>
                         </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12  ">
-                        <div class="form-group service-form-group">
-                            <label class="control-label sr-only" for="name"></label>
-                            <input id="lname" type="text" placeholder="Last Name" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
-                        <div class="form-group service-form-group">
-                            <label class="control-label sr-only" for="phone"></label>
-                            <input id="phone" type="text" placeholder="Phone" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
-                        <div class="form-group service-form-group">
-                            <label class="control-label sr-only" for="email"></label>
-                            <input id="email" type="email" placeholder="Email" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12  ">
-                        <div class="form-group service-form-group">
-                            <label class="control-label sr-only" for="load"></label>
-                            <input id="load" type="text" placeholder="Unloading Place" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12  ">
-                        <div class="form-group service-form-group">
-                            <label class="control-label sr-only" for="name"></label>
-                            <input id="unload" type="text" placeholder="Loading Place" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12  ">
-                        <div class="form-group service-form-group">
-                            <label class="control-label sr-only" for="destination"></label>
-                            <input id="destination" type="text" placeholder="Destination" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12  ">
-                        <div class="form-group service-form-group">
-                            <label class="control-label sr-only" for="loadkg"></label>
-                            <input id="loadkg" type="text" placeholder="Payload in Kg" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 ">
-                        <div class="form-group">
-                            <label class="control-label sr-only" for="select"></label>
-                            <div class="select">
-                                <select name="select" class="form-control">
-                                    <option value="cargo">Type of cargo</option>
-                                    <option value="">$1000</option>
-                                    <option value="">$5000</option>
-                                    <option value="">$10000</option>
-                                </select>
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                            <div class="form-group service-form-group">
+                                <label class="control-label sr-only" for="company_name"></label>
+                                <input id="company_name" name="company_name" type="text" placeholder="আপনার কোম্পানির নাম" title="আপনার কোম্পানির নাম" class="form-control" required>
+                                @error('company_name')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
+                                @endif
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 ">
-                        <div class="form-group">
-                            <label class="control-label sr-only" for="select"></label>
-                            <div class="select">
-                                <select id="select" name="select" class="form-control">
-                                    <option value="">Type of transportation</option>
-                                    <option value="">$1000</option>
-                                    <option value="">$5000</option>
-                                    <option value="">$10000</option>
-                                </select>
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12  ">
+                            <div class="form-group service-form-group">
+                                <label class="control-label sr-only" for="name"></label>
+                                <input id="name" name="name" type="text" placeholder="আপনার পূর্ণাঙ্গ নাম" title="আপনার পূর্ণাঙ্গ নাম" class="form-control" required>
+                                @error('name')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
+                                @endif
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 submit-btn">
-                        <a href="#" class="send-btn">Submit quote</a>
-                    </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
+                            <div class="form-group service-form-group">
+                                <label class="control-label sr-only" for="phone"></label>
+                                <input id="phone" name="phone" type="text" placeholder="আপনার মোবাইল নাম্বার" title="আপনার মোবাইল নাম্বার" class="form-control" required>
+                                @error('phone')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
+                            <div class="form-group service-form-group">
+                                <label class="control-label sr-only" for="email"></label>
+                                <input id="email" name="email" type="email" placeholder="আপনার ইমেইল এড্রেস" title="আপনার ইমেইল এড্রেস" class="form-control" required>
+                                @error('email')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12  ">
+                            <div class="form-group service-form-group">
+                                <label class="control-label sr-only" for="password"></label>
+                                <input id="password" name="password" type="password" placeholder="একটি নতুন পাসপোর্ট লিখুন" title="একটি নতুন পাসপোর্ট লিখুন" class="form-control" required>
+                                @error('password')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12  ">
+                            <div class="form-group service-form-group">
+                                <label class="control-label sr-only" for="password_confirmation"></label>
+                                <input id="password_confirmation" name="password_confirmation" type="password" placeholder="পাসওয়ার্ডটি পুনরায় লিখুন"  title="পাসওয়ার্ডটি পুনরায় লিখুন" class="form-control" required>
+                                @error('password_confirmation')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 submit-btn">
+                            <button type="submit" style="cursor: pointer;" class="send-btn col-12"> সাবমিট </button>
+                        </div>
                 </div>
             </div>
         </form>

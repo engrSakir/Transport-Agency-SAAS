@@ -60,7 +60,7 @@ class BranchController extends Controller
             'custom_inv_counter_min_value' => 'required|numeric|min:0',
             'status' => 'required|boolean',
             'head_office' => 'required|boolean',
-            'linked_branches' => 'required',
+            'linked_branches' => 'nullable|exists:branches,id',
         ]);
 
         $branch = new Branch();
@@ -81,14 +81,16 @@ class BranchController extends Controller
             if (BranchLink::where('from_branch_id', $branch->id)->count() > 0){
                 BranchLink::where('from_branch_id', $branch->id)->delete();
             }
-            foreach ($request->linked_branches as $linked_branch){
-                if (auth()->user()->company->id != Branch::find($linked_branch)->company->id){
-                    return back()->withErrors('You have not access');
+            if ($request->linked_branches){
+                foreach ($request->linked_branches as $linked_branch){
+                    if (auth()->user()->company->id != Branch::find($linked_branch)->company->id){
+                        return back()->withErrors('You have not access');
+                    }
+                    $branch_link = new BranchLink();
+                    $branch_link->from_branch_id    =   $branch->id;
+                    $branch_link->to_branch_id  =   $linked_branch;
+                    $branch_link->save();
                 }
-                $branch_link = new BranchLink();
-                $branch_link->from_branch_id    =   $branch->id;
-                $branch_link->to_branch_id  =   $linked_branch;
-                $branch_link->save();
             }
             return redirect()->route('admin.branch.index')->withSuccess('Branch successfully added');
         } catch (\Exception $exception) {
@@ -148,7 +150,7 @@ class BranchController extends Controller
             'custom_inv_counter_min_value' => 'required|numeric|min:0',
             'status' => 'required|boolean',
             'head_office' => 'required|boolean',
-            'linked_branches' => 'required',
+            'linked_branches' => 'nullable|exists:branches,id',
             'invoice_heading_one' => 'required|string',
             'invoice_heading_two' => 'required|string',
             'invoice_watermark' => 'nullable|image',
@@ -186,15 +188,16 @@ class BranchController extends Controller
             if (BranchLink::where('from_branch_id', $branch->id)->count() > 0){
                 BranchLink::where('from_branch_id', $branch->id)->delete();
             }
-            //dd($request->linked_branches);
-            foreach ($request->linked_branches as $linked_branch){
-                if (auth()->user()->company->id != Branch::find($linked_branch)->company->id){
-                    return back()->withErrors('You have not access');
+            if ($request->linked_branches) {
+                foreach ($request->linked_branches as $linked_branch) {
+                    if (auth()->user()->company->id != Branch::find($linked_branch)->company->id) {
+                        return back()->withErrors('You have not access');
+                    }
+                    $branch_link = new BranchLink();
+                    $branch_link->from_branch_id = $branch->id;
+                    $branch_link->to_branch_id = $linked_branch;
+                    $branch_link->save();
                 }
-                $branch_link = new BranchLink();
-                $branch_link->from_branch_id    =   $branch->id;
-                $branch_link->to_branch_id  =   $linked_branch;
-                $branch_link->save();
             }
             return redirect()->route('admin.branch.index')->withSuccess('Branch successfully updated');
         } catch (\Exception $exception) {
