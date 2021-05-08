@@ -5,7 +5,7 @@
         @if(Auth::check())
             <div class="user-profile">
                 <div class="user-pro-body">
-                    <div><img src="{{ asset( auth()->user()->moreInfo->avatar ?? get_static_option('no_image') ) }}" alt="" class="img-circle"></div>
+                    <div><img src="{{ asset( auth()->user()->image ?? get_static_option('no_image') ) }}" alt="" class="img-circle"></div>
                     <div class="dropdown">
                         <a href="javascript:void(0)" class="dropdown-toggle u-dropdown link hide-menu"
                            data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}<span class="caret"></span></a>
