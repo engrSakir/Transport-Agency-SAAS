@@ -57,7 +57,7 @@
                                         <h3>Login</h3>
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="email" name="email"
-                                                   placeholder="Enter Phone Or Email" value="{{ old('email') }}"/>
+                                                   placeholder="Enter Phone Or Email Or Username" value="{{ old('email') }}"/>
                                             <span class="help-block"></span>
                                             @error('email')
                                             <div class="alert alert-danger" role="alert">

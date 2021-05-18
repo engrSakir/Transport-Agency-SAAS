@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Blog;
 use App\Models\CallToAction;
 use App\Models\Company;
@@ -21,7 +22,11 @@ use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\WebsiteMessage;
 use App\Models\WebsiteSubscribe;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class FrontendController extends Controller
@@ -146,22 +151,30 @@ class FrontendController extends Controller
             return back()->withErrors('এই মুহূর্তে কোম্পানী রেজিষ্ট্রেশন সম্পন্ন হচ্ছে না');
         }
 
-        $user = new User();
-        $user->type = 'Admin';
-        $user->company_id = $company->id;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->password = Hash::make($request->password);
+        $purchase_package = new PurchasePackage();
+        $purchase_package->company_id   =   $company->id;
+        $purchase_package->package_id   =   1;
         try {
-            $user->save();
-            $purchase_package = new PurchasePackage();
-            $purchase_package->company_id   =   $company->id;
-            $purchase_package->package_id   =   1;
             $purchase_package->save();
-            return back()->withSuccess('কোম্পানি রেজিস্ট্রেশন সম্পন্ন হয়েছে আপনি এখন লগ-ইন করে এই সফটওয়্যারটি ব্যাবহার করতে পারবেন');
         }catch (\Exception $exception){
-            return back()->withErrors('এই মুহূর্তে কোম্পানী রেজিষ্ট্রেশন সম্পন্ন হচ্ছে না');
+            return back()->withErrors('এই মুহূর্তে অ্যাডমিন প্যাঁকেজ রেজিষ্ট্রেশন সম্পন্ন হচ্ছে না');
         }
+
+        Auth::login($admin = User::create([
+            'type' => 'Admin',
+            'company_id' => $company->id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]));
+
+        try {
+            event(new Registered($admin));
+            return redirect()->intended(RouteServiceProvider::ADMIN);
+            // এডমিন হিসেবে রেজিস্ট্রেশন সম্পন্ন হয়েছে এবং ড্যাশবোর্ডে চলে যাবে
+        }catch (\Exception $exception){
+            return back()->withErrors('এই মুহূর্তে অ্যাডমিন লগিন সম্পন্ন হচ্ছে না'.$exception->getMessage());
+        }
+
     }
 }

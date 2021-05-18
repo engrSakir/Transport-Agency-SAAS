@@ -15,7 +15,7 @@
                         <h3 class="text-center m-b-20">Login</h3>
                         <div class="form-group ">
                             <div class="col-xs-12">
-                                <input id="email" name="email" @if(env('DEMO_MOOD') == "On") value="admin@gmail.com" @else value="{{ old('email') }}" @endif class="form-control" type="email" required="" autofocus placeholder="Email">
+                                <input id="email" name="email" @if(env('DEMO_MOOD') == "On") value="admin@gmail.com" @else value="{{ old('email') }}" @endif class="form-control" type="text" required="" autofocus placeholder="Email/Phone/Username">
                             </div>
                         </div>
                         <div class="form-group">
