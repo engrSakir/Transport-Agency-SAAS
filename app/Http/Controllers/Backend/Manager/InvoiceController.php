@@ -60,7 +60,7 @@ class InvoiceController extends Controller
         $request->validate([
            'sender_name'        =>  'required|string',
            'receiver_name'      =>  'required|string',
-           'receiver_phone'     =>  'nullable|string|min:6|max:16',
+           'receiver_phone'     =>  'nullable|string',
            'receiver_email'     =>  'nullable|email',
            'branch'             =>  'required|exists:branches,id',
            'description'        =>  'required|string',
@@ -155,14 +155,17 @@ class InvoiceController extends Controller
 
         $invoice->custom_counter        = $custom_counter;
 
-        $invoice->creator_ip        = geoip()->getClientIP();
-        $invoice->creator_browser   = get_client_browser();
-        $invoice->creator_device    = get_client_device();
-        $invoice->creator_os        = get_client_os();
-        $invoice->creator_location  = geoip()->getLocation(geoip()->getClientIP())->city;
+        try {
+            $invoice->creator_ip        = geoip()->getClientIP();
+            $invoice->creator_browser   = get_client_browser();
+            $invoice->creator_device    = get_client_device();
+            $invoice->creator_os        = get_client_os();
+            $invoice->creator_location  = geoip()->getLocation(geoip()->getClientIP())->city;
+        }catch (\Exception $exception){
+
+        }
 
         //# Step 4 SMS
-
         try {
             $invoice->save();
 
