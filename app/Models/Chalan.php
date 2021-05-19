@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Chalan extends Model
 {
     use HasFactory;
+
+    public function fromBranch(){
+        return $this->belongsTo(Branch::class, 'from_branch_id', 'id');
+    }
+
+    public function toBranch(){
+        return $this->belongsTo(Branch::class, 'to_branch_id', 'id');
+    }
 }

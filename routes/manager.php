@@ -20,6 +20,7 @@ Route::group(['middleware' => 'manager', 'as' => 'manager.', 'prefix' => 'backen
     Route::get('/invoice/status/{status}/branch/{branch}', [Manager\InvoiceController::class, 'statusAndBranchConstant'])->name('invoice.statusAndBranchConstant');
 
     Route::resource('invoice', Manager\InvoiceController::class);
+    Route::resource('chalan', Manager\ChalanController::class);
 
 });
 

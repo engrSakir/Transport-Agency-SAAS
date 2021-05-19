@@ -134,16 +134,16 @@
             </div>
         </div>
         <!-- example large modal -->
-        <div class="modal bs-example-modal-lg" id="invoice-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal bs-example-modal-lg" id="inv-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="invoice-modal-title">
+                        <h4 class="modal-title" id="inv-modal-title">
                             {{-- Assign by ajax--}}
                         </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
-                    <div class="modal-body" id="invoice-modal-body">
+                    <div class="modal-body" id="inv-modal-body">
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
@@ -154,26 +154,23 @@
                                             <div class="form-group">
                                                 <label for="branch-office">Branch office</label>
                                                 <select class="form-control custom-select" id="branch-office">
-                                                    <option>--Select your branch office--</option>
+                                                    <option selected value="">--Select your branch office--</option>
                                                     @foreach($invoices->groupBy('to_branch_id') as $branch_id => $invoice_items)
-                                                        <option>{{ \App\Models\Branch::find($branch_id)->name }}</option>
+                                                        <option value="{{ $branch_id }}">{{ \App\Models\Branch::find($branch_id)->name }}</option>
                                                     @endforeach
-                                                    <option>Sri Lanka</option>
-                                                    <option>USA</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                                <label for="driver-name">Driver-name</label>
+                                                <input type="text" class="form-control" id="driver-name" placeholder="Driver name">
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputPassword1">Password</label>
-                                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                                <label for="driver-phone">Driver-phone</label>
+                                                <input type="text" class="form-control" id="driver-phone" placeholder="Driver phone">
                                             </div>
-                                            <div class="custom-control custom-checkbox mr-sm-2 mb-3">
-                                                <input type="checkbox" class="custom-control-input" id="checkbox0" value="check">
-                                                <label class="custom-control-label" for="checkbox0">Check Me Out !</label>
+                                            <div class="form-group">
+                                                <label for="car-number">Car-number</label>
+                                                <input type="text" class="form-control" id="car-number" placeholder="car-number">
                                             </div>
                                             <button id="make-as-on-going-submit-btn" type="button" class="btn btn-primary">Submit</button>
                                         </div>
@@ -191,7 +188,6 @@
             <!-- /.modal-dialog -->
         </div>
         <!-- /.example large modal -->
-
     </div>
 @endsection
 @push('script')
@@ -207,17 +203,82 @@
             });
 
             $(".make-as-on-going-btn").click( function (){
-                $('#invoice-modal-title').text( "Make as on going" );
-                $('#invoice-modal').modal('show');
-
-
+                $('#inv-modal-title').text( "Make as on going" );
+                $('#inv-modal').modal('show');
             });
 
             $("#make-as-on-going-submit-btn").click( function (){
-                $('.invoice-table input:checkbox[name=invoice]:checked').each(function()
-                {
-                    alert($(this).val());
-                });
+                if($('.invoice-table input:checkbox[name=invoice]:checked').length < 1){
+                    alert('Please chose invoice');
+                }else{
+                    var invoices = []
+                    $('.invoice-table input:checkbox[name=invoice]:checked').each(function()
+                    {
+                        invoices.push($(this).val())
+                    });
+
+                    var this_btn = $(this);
+                    var formData = new FormData();
+                    formData.append('invoices', invoices);
+                    formData.append('branch_office', $('#branch-office').val());
+                    formData.append('driver_name', $('#driver-name').val());
+                    formData.append('driver_phone', $('#driver-phone').val());
+                    formData.append('car_number', $('#car-number').val());
+                    $.ajax({
+                        method: 'POST',
+                        url: '{{ route('manager.chalan.store') }}',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function (){
+                            //this_btn.html('Please wait ---- ');
+                            this_btn.prop("disabled",true);
+                        },
+                        complete: function (){
+                            //this_btn.html('Edit now');
+                            this_btn.prop("disabled",false);
+                        },
+                        success: function (data) {
+                            if (data.type == 'success'){
+                                $('#inv-modal').modal('hide');
+                                var html_embed_code = `<embed type="text/html" src="`+data.url+`" width="750" height="800">`;
+                                $('#extra-large-modal-body').html(html_embed_code);
+                                $('#extra-large-modal-body').addClass( "text-center" );
+                                $('#extra-large-modal-title').text( "Chalan" );
+                                $('#extra-large-modal').modal('show');
+                                Swal.fire({
+                                    icon: data.type,
+                                    title: 'INVOICE',
+                                    text: data.message,
+                                });
+                            }else{
+                                Swal.fire({
+                                    icon: data.type,
+                                    title: 'Oops...',
+                                    text: data.message,
+                                    footer: 'Something went wrong!'
+                                });
+                            }
+                        },
+                        error: function (xhr) {
+                            var errorMessage = '<div class="card bg-danger">\n' +
+                                '                        <div class="card-body text-center p-5">\n' +
+                                '                            <span class="text-white">';
+                            $.each(xhr.responseJSON.errors, function(key,value) {
+                                errorMessage +=(''+value+'<br>');
+                            });
+                            errorMessage +='</span>\n' +
+                                '                        </div>\n' +
+                                '                    </div>';
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                footer: errorMessage
+                            });
+                        },
+                    });
+                }
             });
         });
     </script>
