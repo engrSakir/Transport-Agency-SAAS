@@ -56,11 +56,11 @@ class InvoiceController extends Controller
            'receiver_email'     =>  'nullable|email',
            'branch'             =>  'required|exists:branches,id',
            'description'        =>  'required|string',
-           'quantity'           =>  'required|numeric|min:0',
-           'price'              =>  'required|numeric|min:0',
-           'advance'            =>  'required|numeric|min:0',
-           'home'               =>  'required|numeric|min:0',
-           'labour'             =>  'required|numeric|min:0',
+           'quantity'           =>  'required|string|min:0',
+           'price'              =>  'required|string|min:0',
+           'advance'            =>  'required|string|min:0',
+           'home'               =>  'required|string|min:0',
+           'labour'             =>  'required|string|min:0',
         ]);
 
         //# Step 0 CHECK TO_BRANCH IS VALID OR NOT
@@ -90,7 +90,7 @@ class InvoiceController extends Controller
             $customer = new User();
             $customer->name = $request->receiver_name;
             $customer->email = $request->receiver_email;
-            $customer->phone = $request->receiver_phone;
+            $customer->phone = bn_to_en($request->receiver_phone);
             $customer->password = Str::random(20);
             $customer->creator_id = auth()->user()->id;
             try {
@@ -122,11 +122,11 @@ class InvoiceController extends Controller
         $invoice->receiver_id       = $customer->id;
 
         $invoice->description       = $request->description;
-        $invoice->quantity          = $request->quantity;
-        $invoice->price             = $request->price;
-        $invoice->home              = $request->home;
-        $invoice->labour            = $request->labour;
-        $invoice->paid              = $request->advance;
+        $invoice->quantity          = bn_to_en($request->quantity);
+        $invoice->price             = bn_to_en($request->price);
+        $invoice->home              = bn_to_en($request->home);
+        $invoice->labour            = bn_to_en($request->labour);
+        $invoice->paid              = bn_to_en($request->advance);
 
         $invoice->creator_id        = auth()->user()->id;
 

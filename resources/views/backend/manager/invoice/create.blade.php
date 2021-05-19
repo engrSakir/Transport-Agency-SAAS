@@ -124,7 +124,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="input-quantity">Quantity</span>
                                 </div>
-                                <input type="number" class="form-control" onClick="this.select();" min="0" id="quantity" v-model="quantity">
+                                <input type="text" class="form-control" onClick="this.select();" min="0" id="quantity" v-model="quantity">
                             </div>
                         </div>
                         <div class="form-group col-md-3">
@@ -132,7 +132,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="input-price">Price</span>
                                 </div>
-                                <input type="number" class="form-control" onClick="this.select();" min="0" id="price" v-model="price">
+                                <input type="text" class="form-control" onClick="this.select();" min="0" id="price" v-model="price">
                             </div>
                         </div>
                         <div class="form-group col-md-3">
@@ -140,7 +140,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="input-advance">Advance</span>
                                 </div>
-                                <input type="number" class="form-control" onClick="this.select();" min="0" id="advance" v-model="advance">
+                                <input type="text" class="form-control" onClick="this.select();" min="0" id="advance" v-model="advance">
                             </div>
                         </div>
                         <div class="form-group col-md-3">
@@ -148,7 +148,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="input-home">Home</span>
                                 </div>
-                                <input type="number" class="form-control" onClick="this.select();" min="0" id="home" v-model="home">
+                                <input type="text" class="form-control" onClick="this.select();" min="0" id="home" v-model="home">
                             </div>
                         </div>
                         <div class="form-group col-md-3">
@@ -156,7 +156,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="input-labour">Labour</span>
                                 </div>
-                                <input type="number" class="form-control" onClick="this.select();" min="0" id="labour" v-model="labour">
+                                <input type="text" class="form-control" onClick="this.select();" min="0" id="labour" v-model="labour">
                             </div>
                         </div>
                         <div class="form-group col-md-3">
@@ -164,7 +164,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="input-due">Due</span>
                                 </div>
-                                <input type="number" class="form-control bg-danger" id="due" v-bind:value="due" disabled readonly>
+                                <input type="text" class="form-control bg-danger" id="due" v-bind:value="due" disabled readonly>
                             </div>
                         </div>
                         <div class="form-group col-md-3">
@@ -172,7 +172,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="input-total" >Total</span>
                                 </div>
-                                <input type="number" class="form-control bg-success" min="0" id="total" v-bind:value="total" disabled readonly>
+                                <input type="text" class="form-control bg-success" min="0" id="total" v-bind:value="total" disabled readonly>
                             </div>
                         </div>
                         <div class="form-group col-md-3">
@@ -253,7 +253,8 @@
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $(function() {
+        $(document).ready(function(){
+
             $( "#sender-name" ).autocomplete({
                 source: function(request, response) {
                     // console.log(request.term);
@@ -318,6 +319,7 @@
                     $('#branch-'+ui.item.sender_branch).attr('checked', true);
                 }
             });
+
             $( "#receiver-phone" ).autocomplete({
                 source: function(request, response) {
                     // console.log(request.term);
@@ -355,6 +357,7 @@
                     $('#branch-'+ui.item.sender_branch).attr('checked', true);
                 }
             });
+
             $( "#receiver-email" ).autocomplete({
                 source: function(request, response) {
                     // console.log(request.term);
