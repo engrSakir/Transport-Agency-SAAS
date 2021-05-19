@@ -27,6 +27,8 @@ class CreateBranchesTable extends Migration
             $table->integer('global_search_length')->default(2);
             $table->integer('custom_inv_counter_max_value')->default(999);
             $table->integer('custom_inv_counter_min_value')->default(1);
+            $table->integer('custom_chalan_counter_max_value')->default(999);
+            $table->integer('custom_chalan_counter_min_value')->default(1);
             $table->text('invoice_heading_one')->nullable();
             $table->text('invoice_heading_two')->nullable();
             $table->string('invoice_watermark')->nullable()->comment('Invoice watermark image');

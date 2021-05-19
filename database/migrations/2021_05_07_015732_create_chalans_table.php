@@ -18,7 +18,7 @@ class CreateChalansTable extends Migration
             $table->foreignId('from_branch_id');
             $table->foreignId('to_branch_id');
             $table->foreignId('created_by');
-
+            $table->integer('custom_counter')->nullable()->comment('Custom ID like 1-999');
             $table->string('driver_name')->nullable();
             $table->string('driver_phone')->nullable();
             $table->string('car_number')->nullable();

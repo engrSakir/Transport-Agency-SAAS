@@ -77,6 +77,17 @@ class ChalanController extends Controller
         $chalan->driver_name    =   $request->driver_name;
         $chalan->driver_phone   =   $request->driver_phone;
         $chalan->car_number     =   $request->car_number;
+
+        //Logic for custom counter
+        $custom_counter = Chalan::where('from_branch_id', auth()->user()->branch->id)->orderBy('id', 'desc')->first()->custom_counter ?? 0;
+        if ($custom_counter >= auth()->user()->branch->custom_chalan_counter_max_value){
+            $custom_counter = auth()->user()->branch->custom_chalan_counter_min_value;
+        }else{
+            $custom_counter++;
+        }
+
+        $chalan->custom_counter        = $custom_counter;
+
         $chalan->save();
 
         foreach(explode(',', $request->invoices) as $invoice_id){
