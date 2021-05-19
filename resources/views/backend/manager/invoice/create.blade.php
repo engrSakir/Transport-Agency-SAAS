@@ -108,7 +108,7 @@
                         <div class="btn-group">
                             <label class="btn btn-outline btn-info button-group">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" id="branch-{{ $linked_branch->toBranch->id }}" name="branch" value="{{ $linked_branch->toBranch->id }}" class="custom-control-input">
+                                    <input type="radio" id="branch-{{ $linked_branch->toBranch->id }}" name="branch" value="{{ $linked_branch->toBranch->id }}" class="custom-control-input branch">
                                     <label class="custom-control-label" for="branch-{{ $linked_branch->toBranch->id }}"> <i class="ti-check text-active" aria-hidden="true"></i> {{ $linked_branch->toBranch->name }} </label>
                                 </div>
                             </label>
@@ -314,6 +314,7 @@
                     //console.log(ui.item);
                     $('#receiver-phone').val(ui.item.phone);
                     $('#receiver-email').val(ui.item.email);
+                    $('.branch').attr('checked', false);
                     $('#branch-'+ui.item.sender_branch).attr('checked', true);
                 }
             });
@@ -349,6 +350,7 @@
                     //console.log(ui.item);
                     $('#receiver-name').val(ui.item.name);
                     $('#receiver-email').val(ui.item.email);
+                    $('.branch').attr('checked', false);
                     $('#branch-'+ui.item.sender_branch).attr('checked', true);
                 }
             });
@@ -384,6 +386,7 @@
                     //console.log(ui.item);
                     $('#receiver-phone').val(ui.item.phone);
                     $('#receiver-name').val(ui.item.name);
+                    $('.branch').attr('checked', false);
                     $('#branch-'+ui.item.sender_branch).attr('checked', true);
                 }
             });
