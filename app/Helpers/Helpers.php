@@ -122,5 +122,12 @@ if (!function_exists('random_code')){
        return str_replace($search, $replace_by, $en_value);
    }
 
+   function bn_to_en($bn_value){
+       $replace_by  = array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+       $search      =  array('১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯', '০');
+       return str_replace($search, $replace_by, $bn_value);
+       //return filter_var(str_replace($search, $replace_by, $bn_value), FILTER_SANITIZE_NUMBER_INT);
+   }
+
 
 }
