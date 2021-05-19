@@ -123,21 +123,21 @@
                     confirmButtonText: 'Yes, delete!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        if($('.invoice-table input:checkbox[name=invoice]:checked').length < 1){
-                            alert('Please chose invoice');
+                        if($('.invoice-table input:checkbox[name=chalan]:checked').length < 1){
+                            alert('Please chose chalan');
                         }else{
-                            var invoices = []
-                            $('.invoice-table input:checkbox[name=invoice]:checked').each(function()
+                            var chalans = []
+                            $('.invoice-table input:checkbox[name=chalan]:checked').each(function()
                             {
-                                invoices.push($(this).val())
+                                chalans.push($(this).val())
                             });
 
                             var this_btn = $(this);
                             var formData = new FormData();
-                            formData.append('invoices', invoices);
+                            formData.append('chalans', chalans);
                             $.ajax({
                                 method: 'POST',
-                                url: '{{ route('manager.invoice.makeAsDeleted') }}',
+                                url: '{{ route('manager.chalan.makeAsDeleted') }}',
                                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                                 data: formData,
                                 processData: false,

@@ -159,6 +159,57 @@ class ChalanController extends Controller
      */
     public function destroy(Chalan $chalan)
     {
-        //
+        if ($chalan->from_branch_id == auth()->user()->branch->id || $chalan->to_branch_id == auth()->user()->branch->id){
+            try {
+                $chalan->delete();
+                return response()->json([
+                    'type' => 'success',
+                    'message' => ''
+                ]);
+            }catch (\Exception$exception){
+                return response()->json([
+                    'type' => 'error',
+                    'message' => ''
+                ]);
+            }
+        }else{
+            return back()->withErrors('Your are not permitted to check this chalan.');
+        }
+    }
+
+    public function makeAsDeleted(Request $request)
+    {
+        $request->validate([
+            'chalans' => 'required',
+        ]);
+
+        $chalans_counter = 0;
+        foreach(explode(',', $request->chalans) as $chalan_id){
+            $chalan = Chalan::findOrFail($chalan_id);
+            //ইনভয়েসের ভ্যালিডেশন চেক হচ্ছে যে ইনভয়েস টি এই ব্রাঞ্চ থেকেই তৈরি করা হয়েছে কিনা
+            if ($chalan !=null && $chalan->from_branch_id == auth()->user()->branch->id){
+                $chalans_counter++;
+            }
+        }
+
+        if($chalans_counter >! 0){
+            return response()->json([
+                'type' => 'error',
+                'message' => 'Chose your chalan items.',
+            ]);
+        }
+
+        foreach(explode(',', $request->chalans) as $chalan_id){
+            $chalan = Chalan::findOrFail($chalan_id);
+            //ইনভয়েসের ভ্যালিডেশন চেক হচ্ছে যে ইনভয়েস টি এই ব্রাঞ্চ থেকেই তৈরি করা হয়েছে কিনা
+            if ($chalan !=null && $chalan->from_branch_id == auth()->user()->branch->id){
+                $chalan->delete();
+            }
+        }
+
+        return response()->json([
+            'type' => 'success',
+            'message' => 'Successfully deleted',
+        ]);
     }
 }
