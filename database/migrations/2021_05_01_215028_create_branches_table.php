@@ -31,6 +31,9 @@ class CreateBranchesTable extends Migration
             $table->integer('custom_chalan_counter_min_value')->default(1);
             $table->text('invoice_heading_one')->nullable();
             $table->text('invoice_heading_two')->nullable();
+            $table->text('chalan_heading_one')->nullable();
+            $table->text('chalan_heading_two')->nullable();
+            $table->text('chalan_heading_three')->nullable();
             $table->string('invoice_watermark')->nullable()->comment('Invoice watermark image');
             $table->string('invoice_style')->default('A5')->comment('A5|A4');
             $table->timestamps();

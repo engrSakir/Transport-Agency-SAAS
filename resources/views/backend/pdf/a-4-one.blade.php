@@ -47,6 +47,12 @@
         .items td.cost {
             text-align: "." center;
         }
+        .m-5 {
+            margin: -5px;
+        }
+        .m-1 {
+            margin: -1px;
+        }
     </style>
 </head>
 <body>
@@ -58,7 +64,15 @@ Page {PAGENO} of {nb}
 </htmlpagefooter>
 <sethtmlpagefooter name="myfooter" value="on" />
 mpdf-->
-<div style="text-align: center">Date: 13th November 2008</div>
+<div style="text-align: center">
+    <h4 class="m-1"><b>Entry Chalan</b></h4>
+    <img src="{{ asset($chalan->fromBranch->company->logo ?? get_static_option('no_image')) }}" width="17%" height="50px">
+    <h2 class="m-1"><b>{{ $chalan->fromBranch->company->name ?? '' }}</b></h2>
+    <b class="m-5">{!! $chalan->fromBranch->chalan_heading_one ?? '' !!}</b>
+    <p class="m-5">{!! $chalan->fromBranch->chalan_heading_two ?? ''  !!}</p>
+    <p class="m-5">{!! $chalan->fromBranch->chalan_heading_three ?? ''  !!}</p>
+</div>
+<br>
 
 <table width="100%" style="font-family: serif;" cellpadding="10">
     <tr>
@@ -80,8 +94,8 @@ mpdf-->
     <thead>
     <tr>
         <td width="5%">#</td>
-        <td width="15%">Sender</td>
-        <td width="20%">Number</td>
+        <td width="20%">Sender</td>
+        <td width="15%">Number</td>
         <td width="32%">Description</td>
         <td width="8%">QT</td>
         <td width="10%">Advance</td>

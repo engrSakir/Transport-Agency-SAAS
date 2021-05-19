@@ -97,8 +97,8 @@
                                 <b class=""> নং: </b><b class="">{{ $invoice->custom_counter }}</b>
                             </td>
                             <td class="" style="text-align: center; font-size: 80%;">
-                                <b>{!! $invoice->fromBranch->invoice_heading_one ?? '---' !!}</b>
-                                <p>{!! $invoice->fromBranch->invoice_heading_two ?? '---'  !!}</p>
+                                <b>{!! $invoice->fromBranch->invoice_heading_one ?? '' !!}</b>
+                                <p>{!! $invoice->fromBranch->invoice_heading_two ?? ''  !!}</p>
                             </td>
                         </tr>
                     </table>
