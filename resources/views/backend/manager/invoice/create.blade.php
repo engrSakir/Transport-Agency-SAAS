@@ -116,7 +116,7 @@
                         @endforeach
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+                        <textarea class="form-control" rows="5" id="description" name="description" placeholder="Description"></textarea>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-3">
@@ -338,7 +338,8 @@
                                     value: obj.phone, //Filable in input field
                                     label: obj.name + '-' + obj.phone + '-' + obj.email,  //Show as label of input field
                                     name: obj.name,
-                                    email: obj.email
+                                    email: obj.email,
+                                    sender_branch: obj.to_branch_id
                                 }
                             })
                             response($.ui.autocomplete.filter(array, request.term));
@@ -374,7 +375,8 @@
                                     value: obj.email, //Filable in input field
                                     label: obj.name + '-' + obj.phone + '-' + obj.email,  //Show as label of input field
                                     phone: obj.phone,
-                                    name: obj.name
+                                    name: obj.name,
+                                    sender_branch: obj.to_branch_id
                                 }
                             })
                             response($.ui.autocomplete.filter(array, request.term));
