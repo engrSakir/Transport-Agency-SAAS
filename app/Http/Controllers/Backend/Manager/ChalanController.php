@@ -17,7 +17,8 @@ class ChalanController extends Controller
      */
     public function index()
     {
-        //
+        $chalans = auth()->user()->branch->fromChalans()->orderBy('id', 'desc')->paginate(100);
+        return view('backend.manager.chalan.index', compact('chalans'));
     }
 
     /**

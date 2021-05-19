@@ -29,3 +29,8 @@
         <i class="far fa-circle text-success"></i><span class="hide-menu">Delivered Invoices</span>
     </a>
 </li>
+<li>
+    <a class="waves-effect waves-dark" href="{{ route('manager.chalan.index') }}">
+        <i class="far fa-circle text-success"></i><span class="hide-menu">Chalan</span>
+    </a>
+</li>

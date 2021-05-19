@@ -25,6 +25,14 @@ class Branch extends Model
         return $this->hasMany(Invoice::class, 'to_branch_id', 'id');
     }
 
+    public function fromChalans(){
+        return $this->hasMany(Chalan::class, 'from_branch_id', 'id');
+    }
+
+    public function toChalans(){
+        return $this->hasMany(Chalan::class, 'to_branch_id', 'id');
+    }
+
     public function messages(){
         return $this->hasMany(MessageHistory::class, 'branch_id', 'id');
     }
