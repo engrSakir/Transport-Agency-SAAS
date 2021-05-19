@@ -71,7 +71,7 @@
                         </div>
                         @endif
                     </div>
-                    <div class="table-responsive">
+                    <div class="invoice-table table-responsive">
                         <table class="table color-bordered-table primary-bordered-table">
                             <thead>
                             <tr>
@@ -88,7 +88,7 @@
                                 <td>
                                     <label class="btn btn-info active">
                                         <div class="custom-control custom-checkbox mr-sm-2">
-                                            <input type="checkbox" class="custom-control-input" id="invoice-{{ $loop->iteration }}">
+                                            <input type="checkbox" value="{{ $invoice->id }}" name="invoice" class="custom-control-input" id="invoice-{{ $loop->iteration }}">
                                             <label class="custom-control-label font-weight-bold" for="invoice-{{ $loop->iteration }}">#{{ $invoice->custom_counter }}</label>
                                         </div>
                                     </label>
@@ -99,7 +99,7 @@
                                     {{ $invoice->receiver->phone ?? '' }}<br>
                                     {{ $invoice->receiver->email ?? '' }}<br>
                                     <span class="badge badge-success">
-                                        {{ $invoice->sender->name ?? '' }}
+                                        {{ $invoice->sender_name ?? '' }}
                                     </span>
                                 </td>
                                 <td style="font-size: 16px;">
@@ -133,6 +133,65 @@
                 </div>
             </div>
         </div>
+        <!-- example large modal -->
+        <div class="modal bs-example-modal-lg" id="invoice-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="invoice-modal-title">
+                            {{-- Assign by ajax--}}
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body" id="invoice-modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Hello {{ auth()->user()->name }} !!</h4>
+                                        <h6 class="card-subtitle"> Make a chalan sheet </h6>
+                                        <div class="mt-4">
+                                            <div class="form-group">
+                                                <label for="branch-office">Branch office</label>
+                                                <select class="form-control custom-select" id="branch-office">
+                                                    <option>--Select your branch office--</option>
+                                                    @foreach($invoices->groupBy('to_branch_id') as $branch_id => $invoice_items)
+                                                        <option>{{ \App\Models\Branch::find($branch_id)->name }}</option>
+                                                    @endforeach
+                                                    <option>Sri Lanka</option>
+                                                    <option>USA</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Email address</label>
+                                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Password</label>
+                                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                            </div>
+                                            <div class="custom-control custom-checkbox mr-sm-2 mb-3">
+                                                <input type="checkbox" class="custom-control-input" id="checkbox0" value="check">
+                                                <label class="custom-control-label" for="checkbox0">Check Me Out !</label>
+                                            </div>
+                                            <button id="make-as-on-going-submit-btn" type="button" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.example large modal -->
+
     </div>
 @endsection
 @push('script')
@@ -148,49 +207,17 @@
             });
 
             $(".make-as-on-going-btn").click( function (){
-                var html_embed_code = `
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">General Form</h4>
-                                <h6 class="card-subtitle"> All with bootstrap element classies </h6>
-                                <form class="mt-4">
-                                    <div class="form-group">
-                                        <label for="branch-office">Email address</label>
-                                         <select class="form-control custom-select" id="branch-office">
-                                         <option>--Select your Country--</option>
-                                         @foreach($invoices->groupBy('to_branch_id') as $branch_id => $invoice_items)
-                                         <option>{{ \App\Models\Branch::find($branch_id)->name }}</option>
-                                         @endforeach
-                                         <option>Sri Lanka</option>
-                                         <option>USA</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                    </div>
-                                    <div class="custom-control custom-checkbox mr-sm-2 mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="checkbox0" value="check">
-                                        <label class="custom-control-label" for="checkbox0">Check Me Out !</label>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                `;
-                $('#extra-large-modal-body').html(html_embed_code);
-                $('#extra-large-modal-body').addClass( "text-center" );
-                $('#extra-large-modal-title').text( "Make as on going" );
-                $('#extra-large-modal').modal('show');
+                $('#invoice-modal-title').text( "Make as on going" );
+                $('#invoice-modal').modal('show');
+
+
+            });
+
+            $("#make-as-on-going-submit-btn").click( function (){
+                $('.invoice-table input:checkbox[name=invoice]:checked').each(function()
+                {
+                    alert($(this).val());
+                });
             });
         });
     </script>

@@ -15,6 +15,13 @@ class CreateChalansTable extends Migration
     {
         Schema::create('chalans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('from_branch_id');
+            $table->foreignId('to_branch_id');
+            $table->foreignId('created_by');
+
+            $table->string('driver_name')->nullable();
+            $table->string('driver_phone')->nullable();
+            $table->string('car_number')->nullable();
             $table->timestamps();
         });
     }
