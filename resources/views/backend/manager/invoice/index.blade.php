@@ -203,6 +203,84 @@
                 $('#extra-large-modal-title').text( "INVOICE" );
                 $('#extra-large-modal').modal('show');
             });
+
+            $(".delete-selected-all").click( function (){
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#74051e',
+                    cancelButtonColor: '#aad9e2',
+                    confirmButtonText: 'Yes, delete!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if($('.invoice-table input:checkbox[name=invoice]:checked').length < 1){
+                            alert('Please chose invoice');
+                        }else{
+                            var invoices = []
+                            $('.invoice-table input:checkbox[name=invoice]:checked').each(function()
+                            {
+                                invoices.push($(this).val())
+                            });
+
+                            var this_btn = $(this);
+                            var formData = new FormData();
+                            formData.append('invoices', invoices);
+                            $.ajax({
+                                method: 'POST',
+                                url: '{{ route('manager.invoice.makeAsDeleted') }}',
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                beforeSend: function (){
+                                    //this_btn.html('Please wait ---- ');
+                                    this_btn.prop("disabled",true);
+                                },
+                                complete: function (){
+                                    //this_btn.html('Edit now');
+                                    this_btn.prop("disabled",false);
+                                },
+                                success: function (data) {
+                                    if (data.type == 'success'){
+                                        Swal.fire({
+                                            icon: data.type,
+                                            title: 'DELETED',
+                                            text: data.message,
+                                        });
+                                        location.reload();
+                                    }else{
+                                        Swal.fire({
+                                            icon: data.type,
+                                            title: 'Oops...',
+                                            text: data.message,
+                                            footer: 'Something went wrong!'
+                                        });
+                                    }
+                                },
+                                error: function (xhr) {
+                                    var errorMessage = '<div class="card bg-danger">\n' +
+                                        '                        <div class="card-body text-center p-5">\n' +
+                                        '                            <span class="text-white">';
+                                    $.each(xhr.responseJSON.errors, function(key,value) {
+                                        errorMessage +=(''+value+'<br>');
+                                    });
+                                    errorMessage +='</span>\n' +
+                                        '                        </div>\n' +
+                                        '                    </div>';
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        footer: errorMessage
+                                    });
+                                },
+                            });
+                        }
+                    }
+                })
+
+            });
         });
     </script>
     @if (Request::is('*/manager/invoice/status/received') || Request::is('*/manager/invoice/status/received/branch/*'))

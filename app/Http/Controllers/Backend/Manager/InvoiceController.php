@@ -352,4 +352,40 @@ class InvoiceController extends Controller
             'message' => 'Successfully status changed',
         ]);
     }
+
+    public function makeAsDeleted(Request $request)
+    {
+        $request->validate([
+            'invoices' => 'required',
+        ]);
+
+        $invoice_counter = 0;
+        foreach(explode(',', $request->invoices) as $invoice_id){
+            $invoice = Invoice::findOrFail($invoice_id);
+            //ইনভয়েসের ভ্যালিডেশন চেক হচ্ছে যে ইনভয়েস টি এই ব্রাঞ্চ থেকেই তৈরি করা হয়েছে কিনা
+            if ($invoice !=null && $invoice->from_branch_id == auth()->user()->branch->id && $invoice->status == 'Received'){
+                $invoice_counter++;
+            }
+        }
+
+        if($invoice_counter >! 0){
+            return response()->json([
+                'type' => 'error',
+                'message' => 'Chose your invoice items.',
+            ]);
+        }
+
+        foreach(explode(',', $request->invoices) as $invoice_id){
+            $invoice = Invoice::findOrFail($invoice_id);
+            //ইনভয়েসের ভ্যালিডেশন চেক হচ্ছে যে ইনভয়েস টি এই ব্রাঞ্চ থেকেই তৈরি করা হয়েছে কিনা
+            if ($invoice !=null && $invoice->from_branch_id == auth()->user()->branch->id && $invoice->status == 'On Going'){
+                $invoice->delete();
+            }
+        }
+
+        return response()->json([
+            'type' => 'success',
+            'message' => 'Successfully deleted',
+        ]);
+    }
 }

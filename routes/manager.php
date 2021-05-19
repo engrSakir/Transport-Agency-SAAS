@@ -19,6 +19,7 @@ Route::group(['middleware' => 'manager', 'as' => 'manager.', 'prefix' => 'backen
     Route::get('/invoice/branch/{branch}', [Manager\InvoiceController::class, 'branchConstant'])->name('invoice.branchConstant');
     Route::get('/invoice/status/{status}/branch/{branch}', [Manager\InvoiceController::class, 'statusAndBranchConstant'])->name('invoice.statusAndBranchConstant');
     Route::post('/invoice/maker-as-delivered', [Manager\InvoiceController::class, 'makeAsDelivered'])->name('invoice.makeAsDelivered');
+    Route::post('/invoice/maker-as-deleted', [Manager\InvoiceController::class, 'makeAsDeleted'])->name('invoice.makeAsDeleted');
 
     Route::resource('invoice', Manager\InvoiceController::class);
     Route::resource('chalan', Manager\ChalanController::class);

@@ -45,8 +45,8 @@
                 text: "You can login again in this system!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
+                confirmButtonColor: '#061a6c',
+                cancelButtonColor: '#b8c7c1',
                 confirmButtonText: 'Yes, logout it!'
             }).then((result) => {
                 if (result.value) {
@@ -310,8 +310,8 @@
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#74051e',
+            cancelButtonColor: '#aad9e2',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
