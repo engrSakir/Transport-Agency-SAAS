@@ -9,6 +9,9 @@ class Invoice extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'status'
+    ];
     public function fromBranch(){
         return $this->belongsTo(Branch::class, 'from_branch_id', 'id');
     }

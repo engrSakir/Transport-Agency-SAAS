@@ -264,41 +264,32 @@ class InvoiceController extends Controller
             return redirect()->back()->withErrors('Request no allowed');
         }
     }
-    public function receiverName(Request $request)
+
+    public function receiverInfo(Request $request)
     {
         if ($request->ajax()){
-            return DB::table('customer_and_branches')
-                ->where('customer_and_branches.branch_id', auth()->user()->branch->id)
-                ->rightJoin('users', 'customer_and_branches.user_id', '=', 'users.id')
-                ->where('name', 'LIKE', '%'. $request->name. '%')
-                ->select('name', 'phone', 'email')
-                ->get();
-        }else{
-            return redirect()->back()->withErrors('Request no allowed');
-        }
-    }
-    public function receiverPhone(Request $request)
-    {
-        if ($request->ajax()){
-            return DB::table('customer_and_branches')
-                ->where('customer_and_branches.branch_id', auth()->user()->branch->id)
-                ->rightJoin('users', 'customer_and_branches.user_id', '=', 'users.id')
-                ->where('phone', 'LIKE', '%'. $request->phone. '%')
-                ->select('name', 'phone', 'email')
-                ->get();
-        }else{
-            return redirect()->back()->withErrors('Request no allowed');
-        }
-    }
-    public function receiverEmail(Request $request)
-    {
-        if ($request->ajax()){
-            return DB::table('customer_and_branches')
-                ->where('customer_and_branches.branch_id', auth()->user()->branch->id)
-                ->rightJoin('users', 'customer_and_branches.user_id', '=', 'users.id')
-                ->where('email', 'LIKE', '%'. $request->email. '%')
-                ->select('name', 'phone', 'email')
-                ->get();
+            if ($request->search_type == 'name'){
+                return Invoice::groupBy('receiver_id')
+                    ->where('from_branch_id', auth()->user()->branch->id)
+                    ->join('users', 'invoices.receiver_id', '=', 'users.id')
+                    ->where('name', 'LIKE', '%'. $request->name. '%')
+                    ->select('name', 'phone', 'email', 'to_branch_id')
+                    ->get();
+            }else if($request->search_type == 'phone'){
+                return Invoice::groupBy('receiver_id')
+                    ->where('from_branch_id', auth()->user()->branch->id)
+                    ->join('users', 'invoices.receiver_id', '=', 'users.id')
+                    ->where('phone', 'LIKE', '%'. $request->phone. '%')
+                    ->select('name', 'phone', 'email', 'to_branch_id')
+                    ->get();
+            }else if($request->search_type == 'email'){
+                return Invoice::groupBy('receiver_id')
+                    ->where('from_branch_id', auth()->user()->branch->id)
+                    ->join('users', 'invoices.receiver_id', '=', 'users.id')
+                    ->where('email', 'LIKE', '%'. $request->email. '%')
+                    ->select('name', 'phone', 'email', 'to_branch_id')
+                    ->get();
+            }
         }else{
             return redirect()->back()->withErrors('Request no allowed');
         }

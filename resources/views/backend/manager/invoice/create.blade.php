@@ -108,8 +108,8 @@
                         <div class="btn-group">
                             <label class="btn btn-outline btn-info button-group">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" id="branch-{{ $loop->iteration }}" name="branch" value="{{ $linked_branch->toBranch->id }}" class="custom-control-input">
-                                    <label class="custom-control-label" for="branch-{{ $loop->iteration }}"> <i class="ti-check text-active" aria-hidden="true"></i> {{ $linked_branch->toBranch->name }} </label>
+                                    <input type="radio" id="branch-{{ $linked_branch->toBranch->id }}" name="branch" value="{{ $linked_branch->toBranch->id }}" class="custom-control-input">
+                                    <label class="custom-control-label" for="branch-{{ $linked_branch->toBranch->id }}"> <i class="ti-check text-active" aria-hidden="true"></i> {{ $linked_branch->toBranch->name }} </label>
                                 </div>
                             </label>
                         </div>
@@ -270,7 +270,7 @@
                             // console.log(data)
                             var array = $.map(data,function(obj){
                                 return{
-                                    value: obj.name, //Filable in input field
+                                    value: obj.name, //Fillable in input field
                                     label: obj.name  //Show as label of input field
                                 }
                             })
@@ -286,21 +286,23 @@
                     // console.log(request.term);
                     var formData = new FormData();
                     formData.append('name', request.term)
+                    formData.append('search_type','name')
                     $.ajax({
                         method: 'POST',
-                        url: "{{ route('manager.receiverName') }}",
+                        url: "{{ route('manager.receiverInfo') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         data: formData,
                         processData: false,
                         contentType: false,
                         success:function(data){
-                            // console.log(data)
+                            console.log(data)
                             var array = $.map(data,function(obj){
                                 return{
                                     value: obj.name, //Filable in input field
                                     label: obj.name + '<br>' + obj.phone + '<br>' + obj.email,  //Show as label of input field
                                     phone: obj.phone,
-                                    email: obj.email
+                                    email: obj.email,
+                                    sender_branch: obj.to_branch_id
                                 }
                             })
                             response($.ui.autocomplete.filter(array, request.term));
@@ -312,16 +314,18 @@
                     //console.log(ui.item);
                     $('#receiver-phone').val(ui.item.phone);
                     $('#receiver-email').val(ui.item.email);
+                    $('#branch-'+ui.item.sender_branch).attr('checked', true);
                 }
             });
             $( "#receiver-phone" ).autocomplete({
                 source: function(request, response) {
                     // console.log(request.term);
                     var formData = new FormData();
+                     formData.append('search_type','phone')
                     formData.append('phone', request.term)
                     $.ajax({
                         method: 'POST',
-                        url: "{{ route('manager.receiverPhone') }}",
+                        url: "{{ route('manager.receiverInfo') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         data: formData,
                         processData: false,
@@ -345,6 +349,7 @@
                     //console.log(ui.item);
                     $('#receiver-name').val(ui.item.name);
                     $('#receiver-email').val(ui.item.email);
+                    $('#branch-'+ui.item.sender_branch).attr('checked', true);
                 }
             });
             $( "#receiver-email" ).autocomplete({
@@ -352,9 +357,10 @@
                     // console.log(request.term);
                     var formData = new FormData();
                     formData.append('email', request.term)
+                     formData.append('search_type','email')
                     $.ajax({
                         method: 'POST',
-                        url: "{{ route('manager.receiverEmail') }}",
+                        url: "{{ route('manager.receiverInfo') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         data: formData,
                         processData: false,
@@ -378,6 +384,7 @@
                     //console.log(ui.item);
                     $('#receiver-phone').val(ui.item.phone);
                     $('#receiver-name').val(ui.item.name);
+                    $('#branch-'+ui.item.sender_branch).attr('checked', true);
                 }
             });
 
@@ -449,6 +456,11 @@
                         });
                     },
                 });
+            });
+
+            $('.ui-autocomplete li').mouseover(function(){
+               alert('');
+               console.log($(this).html())
             });
 
         });
