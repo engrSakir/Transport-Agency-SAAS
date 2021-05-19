@@ -16,4 +16,8 @@ class Chalan extends Model
     public function toBranch(){
         return $this->belongsTo(Branch::class, 'to_branch_id', 'id');
     }
+
+    public function invoices(){
+        return $this->hasMany(Invoice::class, 'chalan_id', 'id');
+    }
 }

@@ -1,98 +1,98 @@
-{{--https://github.com/mpdf/mpdf-examples/blob/master/example34_invoice_example.php--}}
 <html>
 <head>
     <style>
-        @page {
-            size: auto;
-            odd-header-name: html_myHeader1;
-            even-header-name: html_myHeader2;
-            odd-footer-name: html_myFooter1;
-            even-footer-name: html_myFooter2;
+        body {font-family: sans-serif;
+            font-size: 10pt;
         }
-        @page chapter2 {
-            odd-header-name: html_Chapter2HeaderOdd;
-            even-header-name: html_Chapter2HeaderEven;
-            odd-footer-name: html_Chapter2FooterOdd;
-            even-footer-name: html_Chapter2FooterEven;
+        p {	margin: 0pt; }
+        table.items {
+            border: 0.1mm solid #000000;
         }
-        @page noheader {
-            odd-header-name: _blank;
-            even-header-name: _blank;
-            odd-footer-name: _blank;
-            even-footer-name: _blank;
+        td { vertical-align: top; }
+        .items td {
+            border-left: 0.1mm solid #000000;
+            border-right: 0.1mm solid #000000;
         }
-        div.chapter2 {
-            page-break-before: right;
-            page: chapter2;
+        table thead td { background-color: #EEEEEE;
+            text-align: center;
+            border: 0.1mm solid #000000;
+            font-variant: small-caps;
         }
-        div.noheader {
-            page-break-before: right;
-            page: noheader;
+        .items td.blanktotal {
+            background-color: #EEEEEE;
+            border: 0.1mm solid #000000;
+            background-color: #FFFFFF;
+            border: 0mm none #000000;
+            border-top: 0.1mm solid #000000;
+            border-right: 0.1mm solid #000000;
+        }
+        .items td.totals {
+            text-align: right;
+            border: 0.1mm solid #000000;
+        }
+        .items td.cost {
+            text-align: "." center;
         }
     </style>
 </head>
-
 <body>
-
-<htmlpageheader name="myHeader1" style="display:none">
-    <div style="text-align: right; border-bottom: 1px solid #000000; font-weight: bold; font-size: 10pt;">
-        My document
-    </div>
+<!--mpdf
+<htmlpageheader name="myheader">
+<table width="100%"><tr>
+<td width="50%" style="color:#0000BB; "><span style="font-weight: bold; font-size: 14pt;">Acme Trading Co.</span><br />123 Anystreet<br />Your City<br />GD12 4LP<br /><span style="font-family:dejavusanscondensed;">&#9742;</span> 01777 123 567</td>
+<td width="50%" style="text-align: right;">Invoice No.<br /><span style="font-weight: bold; font-size: 12pt;">0012345</span></td>
+</tr></table>
 </htmlpageheader>
-
-<htmlpageheader name="myHeader2" style="display:none">
-    <div style="border-bottom: 1px solid #000000; font-weight: bold;  font-size: 10pt;">
-        My document
-    </div>
-</htmlpageheader>
-
-<htmlpagefooter name="myFooter1" style="display:none">
-    <table width="100%">
-        <tr>
-            <td width="33%">
-                <span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span>
-            </td>
-            <td width="33%" align="center" style="font-weight: bold; font-style: italic;">
-                {PAGENO}/{nbpg}
-            </td>
-            <td width="33%" style="text-align: right;">
-                My document
-            </td>
-        </tr>
-    </table>
+<htmlpagefooter name="myfooter">
+<div style="border-top: 1px solid #000000; font-size: 9pt; text-align: center; padding-top: 3mm; ">
+Page {PAGENO} of {nb}
+</div>
 </htmlpagefooter>
-
-<htmlpagefooter name="myFooter2" style="display:none">
-    <table width="100%">
-        <tr>
-            <td width="33%">My document</td>
-            <td width="33%" align="center">{PAGENO}/{nbpg}</td>
-            <td width="33%" style="text-align: right;">{DATE j-m-Y}</td>
-        </tr>
-    </table>
-</htmlpagefooter>
-
-<htmlpageheader name="Chapter2HeaderOdd" style="display:none">
-    <div style="text-align: right;">Chapter 2</div>
-</htmlpageheader>
-
-<htmlpageheader name="Chapter2HeaderEven" style="display:none">
-    <div>Chapter 2</div>
-</htmlpageheader>
-
-<htmlpagefooter name="Chapter2FooterOdd" style="display:none">
-    <div style="text-align: right;">Chapter 2 Footer</div>
-</htmlpagefooter>
-
-<htmlpagefooter name="Chapter2FooterEven" style="display:none">
-    <div>Chapter 2 Footer</div>
-</htmlpagefooter>
-
-Hello World
-
-<div class="chapter2">Text of Chapter 2</div>
-
-<div class="noheader">No-Header page</div>
-
+<sethtmlpageheader name="myheader" value="on" show-this-page="1" />
+<sethtmlpagefooter name="myfooter" value="on" />
+mpdf-->
+<div style="text-align: right">Date: 13th November 2008</div>
+<table width="100%" style="font-family: serif;" cellpadding="10"><tr>
+        <td width="45%" style="border: 0.1mm solid #888888; "><span style="font-size: 7pt; color: #555555; font-family: sans;">SOLD TO:</span><br /><br />345 Anotherstreet<br />Little Village<br />Their City<br />CB22 6SO</td>
+        <td width="10%">&nbsp;</td>
+        <td width="45%" style="border: 0.1mm solid #888888;"><span style="font-size: 7pt; color: #555555; font-family: sans;">SHIP TO:</span><br /><br />345 Anotherstreet<br />Little Village<br />Their City<br />CB22 6SO</td>
+    </tr></table>
+<br />
+<table class="items" width="100%" style="font-size: 9pt; border-collapse: collapse; " cellpadding="8">
+    <thead>
+    <tr>
+        <td width="5%">#</td>
+        <td width="15%">Sender</td>
+        <td width="20%">Number</td>
+        <td width="32%">Description</td>
+        <td width="8%">QT</td>
+        <td width="10%">Advance</td>
+        <td width="10%">Due</td>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- ITEMS HERE -->
+    @foreach($chalan->invoices as $invoice)
+    <tr @if($loop->even) style="background-color:rgba(156,156,156,0.2)" @endif>
+        <td align="center">{{ $loop->iteration }}</td>
+        <td align="center">{{ $invoice->sender_name ?? '--' }}</td>
+        <td align="center">{{ $invoice->custom_counter ?? '--' }}/{{ $invoice->created_at->format('d/m/Y') }}</td>
+        <td>{{ $invoice->description ?? '--' }}</td>
+        <td align="center">{{ $invoice->quantity ?? '--' }}</td>
+        <td class="cost">{{ $invoice->paid ?? '--' }}</td>
+        <td class="cost">{{  $invoice->price +  $invoice->home +  $invoice->labour - $invoice->paid }}</td>
+    </tr>
+    @endforeach
+    <!-- END ITEMS HERE -->
+    <tr>
+        <td class="blanktotal" colspan="3" rowspan="1"></td>
+        <td class="totals"><b>TOTAL:</b></td>
+        <td class="totals"><b>{{ $chalan->invoices->sum('quantity') }}</b></td>
+        <td class="totals"><b>{{ $chalan->invoices->sum('paid') }}</b></td>
+        <td class="totals cost"><b>{{ $chalan->invoices->sum('price') + $chalan->invoices->sum('home') + $chalan->invoices->sum('labour') - $chalan->invoices->sum('paid') }}</b></td>
+    </tr>
+    </tbody>
+</table>
+<div style="text-align: center; font-style: italic;">Payment terms: payment due in 30 days</div>
 </body>
 </html>
