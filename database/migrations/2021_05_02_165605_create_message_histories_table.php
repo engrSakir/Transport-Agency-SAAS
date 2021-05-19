@@ -17,7 +17,7 @@ class CreateMessageHistoriesTable extends Migration
             $table->id();
             $table->foreignId('company_id');
             $table->foreignId('branch_id')->nullable();
-            $table->foreignId('sender_id')->nullable();
+            $table->foreignId('sender_id')->comment('message sender user id')->nullable();
             $table->foreignId('receiver_id')->nullable();
             $table->string('number');
             $table->longText('message');

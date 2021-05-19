@@ -103,21 +103,14 @@ class InvoiceController extends Controller
             }
         }
 
-        //# Step 2 SENDER
-        //পার্সেল প্রেরকের নাম যদি লিস্টে না থেকে থাকে তাহলে নতুন তৈরি হবে
-        $sender = Sender::firstOrCreate(
-            ['name' => $request->sender_name],
-            ['creator_id' => auth()->user()->id]
-        );
-
-        //# Step 3 LINKED
+        //# Step 2 LINKED
         //কাস্টমার যদি এই ব্রাঞ্চ এর সাথে যুক্ত হয়ে না থাকে তাহলে যুক্ত হয়ে যাবে
         $customer_and_branch = CustomerAndBranch::firstOrCreate(
             ['user_id' => $customer->id],
             ['branch_id' => auth()->user()->branch->id]
         );
 
-        //# Step 4 INVOICE
+        //# Step 3 INVOICE
         //এখন কাস্টমারের আইডি নিয়ে ভাউচার তৈরি করা হবে
         $invoice = new Invoice();
 
@@ -125,7 +118,7 @@ class InvoiceController extends Controller
 
         $invoice->from_branch_id    = auth()->user()->branch->id;
         $invoice->to_branch_id      = $request->branch;
-        $invoice->sender_id         = $sender->id;
+        $invoice->sender_name       = $request->sender_name;
         $invoice->receiver_id       = $customer->id;
 
         $invoice->description       = $request->description;
@@ -247,10 +240,10 @@ class InvoiceController extends Controller
     public function senderName(Request $request)
     {
         if ($request->ajax()){
-            return DB::table('customer_and_branches')
-                ->where('customer_and_branches.branch_id', auth()->user()->branch->id)
-                ->rightJoin('users', 'customer_and_branches.user_id', '=', 'users.id')
-                ->select('name', 'phone', 'email')
+            return Invoice::groupBy('sender_name')
+                ->where('from_branch_id', auth()->user()->branch->id)
+                ->where('sender_name', 'LIKE', '%'. $request->name. '%')
+                ->select('sender_name')
                 ->get();
         }else{
             return redirect()->back()->withErrors('Request no allowed');

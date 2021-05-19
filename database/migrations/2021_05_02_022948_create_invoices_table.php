@@ -21,11 +21,11 @@ class CreateInvoicesTable extends Migration
 
             $table->foreignId('chalan_id')->nullable()->comment('Chalan Paper ID');
             $table->foreignId('creator_id')->nullable()->comment('Admin/manager who create invoice');
-            $table->foreignId('sender_id')->comment('Sender name');
             $table->foreignId('receiver_id')->comment('Customer/Receiver');
             $table->foreignId('from_branch_id');
             $table->foreignId('to_branch_id');
 
+            $table->string('sender_name')->nullable()->comment('Sender name');
             $table->longText('description')->nullable()->comment('Product note');
             $table->string('quantity')->default('0');
             $table->double('price')->default(0)->comment('Main price');

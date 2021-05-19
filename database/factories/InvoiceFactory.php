@@ -25,7 +25,7 @@ class InvoiceFactory extends Factory
             'status' => 'Received',
             'from_branch_id' => $this->faker->numberBetween(1,50),
             'to_branch_id' => $this->faker->numberBetween(1,50),
-            'sender_id' => $this->faker->numberBetween(1,20),
+            'sender_name' => $this->faker->name(),
             'receiver_id' => $this->faker->numberBetween(1,50),
             'description' => $this->faker->text(50),
             'quantity' => $this->faker->numberBetween(1,50),

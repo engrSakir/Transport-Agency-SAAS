@@ -270,8 +270,8 @@
                             // console.log(data)
                             var array = $.map(data,function(obj){
                                 return{
-                                    value: obj.name, //Fillable in input field
-                                    label: obj.name  //Show as label of input field
+                                    value: obj.sender_name, //Fillable in input field
+                                    label: obj.sender_name  //Show as label of input field
                                 }
                             })
                             response($.ui.autocomplete.filter(array, request.term));
@@ -295,7 +295,7 @@
                         processData: false,
                         contentType: false,
                         success:function(data){
-                            console.log(data)
+                            // console.log(data)
                             var array = $.map(data,function(obj){
                                 return{
                                     value: obj.name, //Filable in input field
@@ -332,7 +332,7 @@
                         processData: false,
                         contentType: false,
                         success:function(data){
-                            console.log(data)
+                            // console.log(data)
                             var array = $.map(data,function(obj){
                                 return{
                                     value: obj.phone, //Filable in input field
@@ -462,12 +462,6 @@
                     },
                 });
             });
-
-            $('.ui-autocomplete li').mouseover(function(){
-               alert('');
-               console.log($(this).html())
-            });
-
         });
     </script>
 @endpush

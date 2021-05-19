@@ -28,10 +28,6 @@ class Invoice extends Model
         return $this->belongsTo(User::class, 'creator_id', 'id');
     }
 
-    public function sender(){
-        return $this->belongsTo(Sender::class, 'sender_id', 'id');
-    }
-
     public function receiver(){
         return $this->belongsTo(User::class, 'receiver_id', 'id');
     }

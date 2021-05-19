@@ -24,12 +24,12 @@
 @section('content')
     <div class="row">
         <!-- Column 1-->
-        @foreach($invoices->groupBy('to_branch_id') as $invoice_group => $invoice_items)
+        @foreach($invoices->groupBy('to_branch_id') as $branch_id => $invoice_items)
         <div class="col-md-6 col-lg-4 col-xlg-2">
-            <a href="{{ route('manager.invoice.statusAndBranchConstant', [\Illuminate\Support\Str::slug($status, ' ', '-'), $invoice_group]) }}">
+            <a href="{{ route('manager.invoice.statusAndBranchConstant', [\Illuminate\Support\Str::slug($status, ' ', '-'), $branch_id]) }}">
                 <div class="card">
                     <div class="box bg-info text-center">
-                        <h4 class="font-light text-white font-weight-bold"> {{ \App\Models\Branch::find($invoice_group)->name }}</h4>
+                        <h4 class="font-light text-white font-weight-bold"> {{ \App\Models\Branch::find($branch_id)->name }}</h4>
                         <h6 class="text-white"> Invoice: {{ $invoice_items->count() }} </h6>
                         <h6 class="text-white">
                             Price : {{ $invoice_items->sum('price') + $invoice_items->sum('home') + $invoice_items->sum('labour') }}
@@ -50,6 +50,27 @@
                 <div class="card-body">
                     <h4 class="card-title">Invoice List</h4>
 {{--                    <h6 class="card-subtitle">Add class <code>.color-bordered-table .primary-bordered-table</code></h6>--}}
+                    <div class="row button-group">
+                        <div class="col-lg-2 col-md-4">
+                            <button type="button" class="btn waves-effect waves-light btn-block btn-info select-all">Select all</button>
+                        </div>
+                        <div class="col-lg-2 col-md-4">
+                            <button type="button" class="btn waves-effect waves-light btn-block btn-success un-select-all">Un select all</button>
+                        </div>
+                        <div class="col-lg-2 col-md-4">
+                            <button type="button" class="btn waves-effect waves-light btn-block btn-danger delete-selected-all">Delete selected</button>
+                        </div>
+                        @if (Request::is('*/manager/invoice/status/received' || '*/manager/invoice/status/received/branch/*'))
+                        <div class="col-lg-2 col-md-4">
+                            <button type="button" class="btn waves-effect waves-light btn-block btn-info make-as-on-going-btn">Make as On Going</button>
+                        </div>
+                        @endif
+                        @if (Request::is('*/manager/invoice/status/on-going'))
+                        <div class="col-lg-2 col-md-4">
+                            <button type="button" class="btn waves-effect waves-light btn-block btn-info delete-selected-all">Make as Delivered</button>
+                        </div>
+                        @endif
+                    </div>
                     <div class="table-responsive">
                         <table class="table color-bordered-table primary-bordered-table">
                             <thead>
@@ -64,7 +85,15 @@
                             <tbody>
                             @foreach($invoices as $invoice)
                             <tr>
-                                <td>{{ $invoice->custom_counter }}</td>
+                                <td>
+                                    <label class="btn btn-info active">
+                                        <div class="custom-control custom-checkbox mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="invoice-{{ $loop->iteration }}">
+                                            <label class="custom-control-label font-weight-bold" for="invoice-{{ $loop->iteration }}">#{{ $invoice->custom_counter }}</label>
+                                        </div>
+                                    </label>
+
+                                </td>
                                 <td>
                                     <b style="font-size: 18px;">{{ $invoice->receiver->name ?? '' }}</b><br>
                                     {{ $invoice->receiver->phone ?? '' }}<br>
@@ -115,6 +144,52 @@
                 $('#extra-large-modal-body').html(html_embed_code);
                 $('#extra-large-modal-body').addClass( "text-center" );
                 $('#extra-large-modal-title').text( "INVOICE" );
+                $('#extra-large-modal').modal('show');
+            });
+
+            $(".make-as-on-going-btn").click( function (){
+                var html_embed_code = `
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">General Form</h4>
+                                <h6 class="card-subtitle"> All with bootstrap element classies </h6>
+                                <form class="mt-4">
+                                    <div class="form-group">
+                                        <label for="branch-office">Email address</label>
+                                         <select class="form-control custom-select" id="branch-office">
+                                         <option>--Select your Country--</option>
+                                         @foreach($invoices->groupBy('to_branch_id') as $branch_id => $invoice_items)
+                                         <option>{{ \App\Models\Branch::find($branch_id)->name }}</option>
+                                         @endforeach
+                                         <option>Sri Lanka</option>
+                                         <option>USA</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email address</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Password</label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                    </div>
+                                    <div class="custom-control custom-checkbox mr-sm-2 mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="checkbox0" value="check">
+                                        <label class="custom-control-label" for="checkbox0">Check Me Out !</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+                $('#extra-large-modal-body').html(html_embed_code);
+                $('#extra-large-modal-body').addClass( "text-center" );
+                $('#extra-large-modal-title').text( "Make as on going" );
                 $('#extra-large-modal').modal('show');
             });
         });
