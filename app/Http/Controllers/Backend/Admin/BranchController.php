@@ -148,11 +148,16 @@ class BranchController extends Controller
             'global_search_length' => 'required|numeric|min:0',
             'custom_inv_counter_max_value' => 'required|numeric|min:0',
             'custom_inv_counter_min_value' => 'required|numeric|min:0',
+            'custom_chalan_counter_max_value' => 'required|numeric|min:0',
+            'custom_chalan_counter_min_value' => 'required|numeric|min:0',
             'status' => 'required|boolean',
             'head_office' => 'required|boolean',
             'linked_branches' => 'nullable|exists:branches,id',
-            'invoice_heading_one' => 'required|string',
-            'invoice_heading_two' => 'required|string',
+            'invoice_heading_one' => 'nullable|string',
+            'invoice_heading_two' => 'nullable|string',
+            'chalan_heading_one' => 'nullable|string',
+            'chalan_heading_two' => 'nullable|string',
+            'chalan_heading_three' => 'nullable|string',
             'invoice_watermark' => 'nullable|image',
         ]);
 
@@ -160,15 +165,27 @@ class BranchController extends Controller
         $branch->email = $request->email;
         $branch->phone = $request->phone;
         $branch->address = $request->address;
+
         $branch->sender_search_length = $request->sender_search_length;
         $branch->receiver_search_length = $request->receiver_search_length;
         $branch->global_search_length = $request->global_search_length;
+
         $branch->custom_inv_counter_max_value = $request->custom_inv_counter_max_value;
         $branch->custom_inv_counter_min_value = $request->custom_inv_counter_min_value;
+
+        $branch->custom_chalan_counter_max_value = $request->custom_chalan_counter_max_value;
+        $branch->custom_chalan_counter_min_value = $request->custom_chalan_counter_min_value;
+
         $branch->invoice_heading_one = $request->invoice_heading_one;
         $branch->invoice_heading_two = $request->invoice_heading_two;
+
+        $branch->chalan_heading_one = $request->chalan_heading_one;
+        $branch->chalan_heading_two = $request->chalan_heading_two;
+        $branch->chalan_heading_three = $request->chalan_heading_three;
+
         $branch->is_active = $request->status;
         $branch->is_head_office = $request->head_office;
+
         if($request->hasFile('invoice_watermark')){
             if ($branch->invoice_watermark != null)
                 File::delete(public_path($branch->invoice_watermark)); //Old image delete
@@ -199,7 +216,7 @@ class BranchController extends Controller
                     $branch_link->save();
                 }
             }
-            return redirect()->route('admin.branch.index')->withSuccess('Branch successfully updated');
+            return back()->withSuccess('Branch successfully updated');
         } catch (\Exception $exception) {
             return back()->withErrors( $exception->getMessage());
         }
