@@ -26,7 +26,7 @@
         <!-- Column 1-->
         @foreach($invoices->groupBy('to_branch_id') as $branch_id => $invoice_items)
         <div class="col-md-6 col-lg-4 col-xlg-2">
-            <a href="{{ route('manager.invoice.statusAndBranchConstant', [\Illuminate\Support\Str::slug($status, ' ', '-'), $branch_id]) }}">
+            <a href="{{ route('manager.invoice.statusAndBranchConstant', [\Illuminate\Support\Str::slug($status, '-'), $branch_id]) }}">
                 <div class="card">
                     <div class="box bg-info text-center">
                         <h4 class="font-light text-white font-weight-bold"> {{ \App\Models\Branch::find($branch_id)->name }}</h4>
@@ -60,14 +60,14 @@
                         <div class="col-lg-2 col-md-4">
                             <button type="button" class="btn waves-effect waves-light btn-block btn-danger delete-selected-all">Delete selected</button>
                         </div>
-                        @if (Request::is('*/manager/invoice/status/received' || '*/manager/invoice/status/received/branch/*'))
+                        @if (Request::is('*/manager/invoice/status/received') || Request::is('*/manager/invoice/status/received/branch/*'))
                         <div class="col-lg-2 col-md-4">
                             <button type="button" class="btn waves-effect waves-light btn-block btn-info make-as-on-going-btn">Make as On Going</button>
                         </div>
                         @endif
-                        @if (Request::is('*/manager/invoice/status/on-going'))
+                        @if (Request::is('*/manager/invoice/status/on-going') || Request::is('*/manager/invoice/status/on-going/branch/*'))
                         <div class="col-lg-2 col-md-4">
-                            <button type="button" class="btn waves-effect waves-light btn-block btn-info delete-selected-all">Make as Delivered</button>
+                            <button type="button" class="btn waves-effect waves-light btn-block btn-info make-as-delivered-btn">Make as Delivered</button>
                         </div>
                         @endif
                     </div>
@@ -133,7 +133,8 @@
                 </div>
             </div>
         </div>
-        <!-- example large modal -->
+        @if (Request::is('*/manager/invoice/status/received') || Request::is('*/manager/invoice/status/received/branch/*'))
+        <!-- inv large modal -->
         <div class="modal bs-example-modal-lg" id="inv-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -188,6 +189,7 @@
             <!-- /.modal-dialog -->
         </div>
         <!-- /.example large modal -->
+        @endif
     </div>
 @endsection
 @push('script')
@@ -201,7 +203,11 @@
                 $('#extra-large-modal-title').text( "INVOICE" );
                 $('#extra-large-modal').modal('show');
             });
-
+        });
+    </script>
+    @if (Request::is('*/manager/invoice/status/received') || Request::is('*/manager/invoice/status/received/branch/*'))
+    <script>
+        $(document).ready(function(){
             $(".make-as-on-going-btn").click( function (){
                 $('#inv-modal-title').text( "Make as on going" );
                 $('#inv-modal').modal('show');
@@ -282,4 +288,88 @@
             });
         });
     </script>
+    @endif
+    @if (Request::is('*/manager/invoice/status/on-going') || Request::is('*/manager/invoice/status/on-going/branch/*'))
+    <script>
+        $(document).ready(function(){
+            $(".make-as-delivered-btn").click( function (){
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#2ba809',
+                    cancelButtonColor: '#003cef',
+                    confirmButtonText: 'Yes, delivered it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if($('.invoice-table input:checkbox[name=invoice]:checked').length < 1){
+                            alert('Please chose invoice');
+                        }else{
+                            var invoices = []
+                            $('.invoice-table input:checkbox[name=invoice]:checked').each(function()
+                            {
+                                invoices.push($(this).val())
+                            });
+
+                            var this_btn = $(this);
+                            var formData = new FormData();
+                            formData.append('invoices', invoices);
+                            $.ajax({
+                                method: 'POST',
+                                url: '{{ route('manager.invoice.makeAsDelivered') }}',
+                                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                beforeSend: function (){
+                                    //this_btn.html('Please wait ---- ');
+                                    this_btn.prop("disabled",true);
+                                },
+                                complete: function (){
+                                    //this_btn.html('Edit now');
+                                    this_btn.prop("disabled",false);
+                                },
+                                success: function (data) {
+                                    if (data.type == 'success'){
+                                        Swal.fire({
+                                            icon: data.type,
+                                            title: 'DELIVERED',
+                                            text: data.message,
+                                        });
+                                        location.reload();
+                                    }else{
+                                        Swal.fire({
+                                            icon: data.type,
+                                            title: 'Oops...',
+                                            text: data.message,
+                                            footer: 'Something went wrong!'
+                                        });
+                                    }
+                                },
+                                error: function (xhr) {
+                                    var errorMessage = '<div class="card bg-danger">\n' +
+                                        '                        <div class="card-body text-center p-5">\n' +
+                                        '                            <span class="text-white">';
+                                    $.each(xhr.responseJSON.errors, function(key,value) {
+                                        errorMessage +=(''+value+'<br>');
+                                    });
+                                    errorMessage +='</span>\n' +
+                                        '                        </div>\n' +
+                                        '                    </div>';
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        footer: errorMessage
+                                    });
+                                },
+                            });
+                        }
+                    }
+                })
+
+            });
+        });
+    </script>
+    @endif
 @endpush
