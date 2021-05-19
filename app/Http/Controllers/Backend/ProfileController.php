@@ -54,53 +54,28 @@ class ProfileController extends Controller
             'map' => 'nullable',
 
             'name' => 'required|string',
-            'email' => 'required|string|unique:users,email,'.Auth::user()->id
+            'email' => 'required|string|unique:users,email,'.Auth::user()->id,
+            'username' => 'required|string|unique:users,username,'.Auth::user()->id
         ]);
 
-        $user = User::findOrFail(Auth::user()->id);
-        $user->email = $request->email;
+        $user = Auth::user();
         $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->username = $request->username;
 
-        if($user->moreInfo){
-            $userMoreInfo = MoreUserInfo::where('user_id', Auth::user()->id)->first();
-            $userMoreInfo->phone = $request->phone;
-            $userMoreInfo->address = $request->address;
-            $userMoreInfo->facebook = $request->facebook;
-            $userMoreInfo->twitter = $request->twitter;
-            $userMoreInfo->youtube = $request->youtube;
-            $userMoreInfo->map = $request->map;
-            if($request->hasFile('avatar')){
-                if ($userMoreInfo->avatar != null)
-                    File::delete(public_path($userMoreInfo->avatar)); //Old image delete
-                $image             = $request->file('avatar');
-                $folder_path       = 'uploads/images/user/avatar/';
-                $image_new_name    = Str::random(20).'-'.now()->timestamp.'.'.$image->getClientOriginalExtension();
-                //resize and save to server
-                Image::make($image->getRealPath())->save($folder_path.$image_new_name);
-                $userMoreInfo->avatar = $folder_path.$image_new_name;
-            }
-        }else{
-            $userMoreInfo = new MoreUserInfo();
-            $userMoreInfo->phone = $request->phone;
-            $userMoreInfo->address = $request->address;
-            $userMoreInfo->facebook = $request->facebook;
-            $userMoreInfo->twitter = $request->twitter;
-            $userMoreInfo->youtube = $request->youtube;
-            $userMoreInfo->map = $request->map;
-            $userMoreInfo->user_id = Auth::user()->id;
-            if($request->hasFile('avatar')){
-                $image             = $request->file('avatar');
-                $folder_path       = 'uploads/images/user/avatar/';
-                $image_new_name    = Str::random(20).'-'.now()->timestamp.'.'.$image->getClientOriginalExtension();
-                //resize and save to server
-                Image::make($image->getRealPath())->save($folder_path.$image_new_name);
-                $userMoreInfo->avatar = $folder_path.$image_new_name;
-            }
+        if($request->hasFile('avatar')){
+            if ($user->image != null)
+                File::delete(public_path($user->image)); //Old image delete
+            $image             = $request->file('avatar');
+            $folder_path       = 'uploads/images/user/avatar/';
+            $image_new_name    = Str::random(20).'-'.now()->timestamp.'.'.$image->getClientOriginalExtension();
+            //resize and save to server
+            Image::make($image->getRealPath())->save($folder_path.$image_new_name);
+            $user->image = $folder_path.$image_new_name;
         }
-
         try {
             $user->save();
-            $userMoreInfo->save();
             return back()->withSuccess('Profile updated successfully');
         } catch (\Exception $exception) {
             return back()->withErrors( 'Something went wrong !'.$exception->getMessage());
