@@ -14,10 +14,10 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Testimonial</li>
                 </ol>
-                <a href="{{ route('superadmin.testimonial.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create Testimonial</a>
+                <a href="{{ route('admin.testimonial.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create Testimonial</a>
             </div>
         </div>
     </div>
@@ -73,7 +73,7 @@
                 responsive: true,
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('superadmin.testimonial.index') !!}',
+                ajax: '{!! route('admin.testimonial.index') !!}',
                 columns: [{
                         data: 'writer_avatar',
                         name: 'writer_avatar'

@@ -18,10 +18,10 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Service create</li>
                 </ol>
-                <a href="{{ route('superadmin.service.index') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Back to list</a>
+                <a href="{{ route('admin.service.index') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Back to list</a>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
                 <h5 class="card-title text-white">Service create</h5>
             </div>
             <div class="card-body">
-                <form class="row justify-content-center" method="POST" action="{{ route('superadmin.service.store') }}"
+                <form class="row justify-content-center" method="POST" action="{{ route('admin.service.store') }}"
                       enctype="multipart/form-data">
                     @csrf
                     <div class="col-lg-10">

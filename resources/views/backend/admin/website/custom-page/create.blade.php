@@ -13,10 +13,10 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Custom page create</li>
                 </ol>
-                <a href="{{ route('superadmin.faq.index') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Back to list</a>
+                <a href="{{ route('admin.faq.index') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Back to list</a>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
                 <h5 class="card-title">Custom page create</h5>
             </div>
             <div class="card-body">
-                <form class="row justify-content-center" method="POST" action="{{  route('superadmin.customPage.store') }}" enctype="multipart/form-data">
+                <form class="row justify-content-center" method="POST" action="{{  route('admin.customPage.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="col-12">
                         <div class="form-group">

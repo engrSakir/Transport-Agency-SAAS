@@ -14,10 +14,10 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Custom pages</li>
                 </ol>
-                <a href="{{ route('superadmin.customPage.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create Custom pages</a>
+                <a href="{{ route('admin.customPage.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create Custom pages</a>
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
             responsive: true,
             processing: true,
             serverSide: true,
-            ajax: '{!! route('superadmin.customPage.index') !!}',
+            ajax: '{!! route('admin.customPage.index') !!}',
             columns: [{
                     data: 'name',
                     name: 'name'

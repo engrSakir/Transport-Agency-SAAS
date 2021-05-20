@@ -13,10 +13,10 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active"><b>Edit </b> {{ $customPage->name }}</li>
                 </ol>
-                <a href="{{ route('superadmin.customPage.index') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Back to list</a>
+                <a href="{{ route('admin.customPage.index') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Back to list</a>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
                 <h5 class="card-title"><b>Edit </b> {{ $customPage->name }}</h5>
             </div>
             <div class="card-body">
-                <form class="row justify-content-center" method="POST" action="{{  route('superadmin.customPage.update', $customPage) }}" enctype="multipart/form-data">
+                <form class="row justify-content-center" method="POST" action="{{  route('admin.customPage.update', $customPage) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <div class="col-12">

@@ -13,7 +13,7 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Messages</li>
                 </ol>
             </div>
@@ -64,7 +64,7 @@
                     <h5 class="card-title text-white">Messages</h5>
                 </div>
                 <div class="card-body">
-                    <form class="row justify-content-center" method="POST" action="{{ route('superadmin.messageUpdate') }}"
+                    <form class="row justify-content-center" method="POST" action="{{ route('admin.messageUpdate') }}"
                           enctype="multipart/form-data">
                         @csrf
                         <div class="col-lg-10">
@@ -108,7 +108,7 @@
                 responsive: true,
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('superadmin.websiteMessage.index') !!}',
+                ajax: '{!! route('admin.websiteMessage.index') !!}',
                 columns: [{
                         data: 'name',
                         name: 'name'
@@ -163,7 +163,7 @@
                     formData.append('status',  status)
                     $.ajax({
                         method: 'POST',
-                        url: "{{ route('superadmin.messageStatusChange') }}",
+                        url: "{{ route('admin.messageStatusChange') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         data: formData,
                         processData: false,

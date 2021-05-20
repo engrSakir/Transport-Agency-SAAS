@@ -32,10 +32,10 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Portfolio edit</li>
                 </ol>
-                <a href="{{ route('superadmin.portfolio.index') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Back to list</a>
+                <a href="{{ route('admin.portfolio.index') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Back to list</a>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
                 <h5 class="card-title text-white">Portfolio edit</h5>
             </div>
             <div class="card-body">
-                <form class="row justify-content-center" method="POST" action="{{ route('superadmin.portfolio.update', $portfolio) }}"
+                <form class="row justify-content-center" method="POST" action="{{ route('admin.portfolio.update', $portfolio) }}"
                       enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
@@ -123,7 +123,7 @@
                 </form>
                 <br>
                 <hr class="bg-danger mb-3">
-                <form method="post" action="{{ route('superadmin.addPortfolioImages', $portfolio) }}" enctype="multipart/form-data"
+                <form method="post" action="{{ route('admin.addPortfolioImages', $portfolio) }}" enctype="multipart/form-data"
                       class="dropzone" id="dropzone">
                     @csrf
                     @method('PATCH')
@@ -169,7 +169,7 @@
                     var portfolio = {{ $portfolio->id }}
                     $.ajax({
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        url: '{{ route('superadmin.getPortfolioImages') }}',
+                        url: '{{ route('admin.getPortfolioImages') }}',
                         type: 'POST',
                         data: {portfolio: portfolio},
                         dataType: 'json',

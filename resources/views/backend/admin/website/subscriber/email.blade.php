@@ -13,7 +13,7 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Subscriber</li>
                 </ol>
             </div>
@@ -28,10 +28,10 @@
                         <!-- Start col -->
             <div class="card m-b-30 col-12 mb-3">
                 <div class="card-header bg-info">
-                    <h5 class="card-title text-white">Send email to <a href="{{ route('superadmin.subscriber.index') }}" target="_blank">{{ $subscriber }} emails</a></h5>
+                    <h5 class="card-title text-white">Send email to <a href="{{ route('admin.subscriber.index') }}" target="_blank">{{ $subscriber }} emails</a></h5>
                 </div>
                 <div class="card-body">
-                    <form class="row justify-content-center" method="POST" action="{{ route('superadmin.subscriberEmailSend') }}"
+                    <form class="row justify-content-center" method="POST" action="{{ route('admin.subscriberEmailSend') }}"
                           enctype="multipart/form-data">
                         @csrf
                         <div class="col-lg-10">
@@ -75,7 +75,7 @@
                 responsive: true,
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('superadmin.subscriber.index') !!}',
+                ajax: '{!! route('admin.subscriber.index') !!}',
                 columns: [{
                         data: 'email',
                         name: 'email'

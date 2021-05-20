@@ -14,10 +14,10 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Faq</li>
                 </ol>
-                <a href="{{ route('superadmin.faq.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create Faq</a>
+                <a href="{{ route('admin.faq.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create Faq</a>
             </div>
         </div>
     </div>
@@ -70,7 +70,7 @@
                 responsive: true,
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('superadmin.faq.index') !!}',
+                ajax: '{!! route('admin.faq.index') !!}',
                 columns: [{
                     data: 'question',
                     name: 'question'

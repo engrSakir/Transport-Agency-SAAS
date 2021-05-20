@@ -14,7 +14,7 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Call To Action</li>
                 </ol>
             </div>
@@ -70,7 +70,7 @@
                 responsive: true,
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('superadmin.callToAction.index') !!}',
+                ajax: '{!! route('admin.callToAction.index') !!}',
 
                 columns: [{
                         data: 'title',

@@ -13,10 +13,10 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Banner</li>
                 </ol>
-                <a href="{{ route('superadmin.dashboard') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i>Back to Dashboard </a>
+                <a href="{{ route('admin.dashboard') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i>Back to Dashboard </a>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
                     <h5 class="card-title text-white">Update website banner</h5>
                 </div>
                 <div class="card-body">
-                    <form class="row justify-content-center" method="POST" action="{{ route('superadmin.bannerUpdate') }}"
+                    <form class="row justify-content-center" method="POST" action="{{ route('admin.bannerUpdate') }}"
                           enctype="multipart/form-data">
                         @csrf
                         <div class="col-lg-10">
@@ -71,7 +71,7 @@
                                     <input name="no_image" type="file" accept="image/*"  id="no_image" class="form-control image-importer">
                                     <br>
                                     <button type="button" class="btn btn-info btn-circle image-chose-btn"><i class="fa fa-plus"></i> </button>
-                                    <button value="{{ route('superadmin.bannerImageUpdate') }}" type="button" class="btn btn-info btn-circle image-submit-btn"><i class="fa fa-check"></i> </button>
+                                    <button value="{{ route('admin.bannerImageUpdate') }}" type="button" class="btn btn-info btn-circle image-submit-btn"><i class="fa fa-check"></i> </button>
                                     <button type="button" class="btn btn-warning btn-circle image-reset-btn"  value="{{ asset(get_static_option('banner_image')) }}"><i class="fa fa-times "></i> </button>
                                 </div>
                             </div>

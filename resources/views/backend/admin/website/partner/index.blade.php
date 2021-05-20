@@ -14,10 +14,10 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Partner</li>
                 </ol>
-                <a href="{{ route('superadmin.partner.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create Partner</a>
+                <a href="{{ route('admin.partner.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create Partner</a>
             </div>
         </div>
     </div>
@@ -72,7 +72,7 @@
             responsive: true,
             processing: true,
             serverSide: true,
-            ajax: '{!! route('superadmin.partner.index') !!}',
+            ajax: '{!! route('admin.partner.index') !!}',
             columns: [{
                 data: 'image',
                 name: 'image'
