@@ -182,7 +182,7 @@
                         </tr>
                         <tr>
                             <th> </th>
-                            <th> www.nsta.com.bd </th>
+                            <th> Powered by DATATECH BD </th>
                             <td style="text-align: right;">লেবার- </td>
                             <td style="text-align: center; ; border: 1px solid black;"><b>{{ en_to_bn($invoice->labour) }}</b></td>
                         </tr>
