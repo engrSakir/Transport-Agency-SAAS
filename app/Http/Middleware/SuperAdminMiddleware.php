@@ -17,7 +17,7 @@ class SuperAdminMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (auth()->user()->type != 'Super Admin'){
-            return redirect()->back()->withErrors('You have not supper access permission');
+            return redirect()->back()->withErrors('You have not access permission');
         }
         return $next($request);
     }

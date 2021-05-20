@@ -17,7 +17,7 @@ class CustomerMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (auth()->user()->type != 'Customer'){
-            return redirect()->back()->withErrors('You have not customer access permission');
+            return redirect()->back()->withErrors('You have not access permission');
         }
         return $next($request);
     }

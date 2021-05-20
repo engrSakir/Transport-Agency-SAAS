@@ -17,7 +17,7 @@ class ManagerMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (auth()->user()->type != 'Manager'){
-            return redirect()->back()->withErrors('You have not manager access permission');
+            return redirect()->back()->withErrors('You have not access permission');
         }
         return $next($request);
     }
