@@ -4,7 +4,7 @@
         <!-- Logo -->
         <!-- ============================================================== -->
         <div class="navbar-header text-center">
-            <a class="navbar-brand" href="{{ route('superadmin.dashboard') }}">
+            <a class="navbar-brand" href="{{ route('login') }}">
                 <!-- Logo icon -->
                 <b>{{ config('app.name') }}</b>
                 <!--End Logo icon -->
