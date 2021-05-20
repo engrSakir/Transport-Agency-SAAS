@@ -24,7 +24,11 @@
                     </ul>
                 </li>
                 <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                <li><a class="getstarted scrollto" href="#about">Get Started</a></li>
+                @guest
+                    <li><a class="getstarted scrollto" href="{{ route('login') }}">Login</a></li>
+                @else
+                    <li><a class="getstarted scrollto" href="{{ route('login') }}">{{ 'My Panel' }}</a></li>
+                @endguest
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
