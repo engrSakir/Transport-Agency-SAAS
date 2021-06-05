@@ -17,21 +17,27 @@ class CreateInvoicesTable extends Migration
             $table->id();
 
             $table->string('barcode')->nullable()->comment('barcode');
-            $table->string('status')->default('Received')->comment('Received|On Going|Delivered');
+            $table->string('status')->default('Received')->comment('Received|On Going|Delivered|Break');
 
             $table->foreignId('chalan_id')->nullable()->comment('Chalan Paper ID');
             $table->foreignId('creator_id')->nullable()->comment('Admin/manager who create invoice');
+            $table->foreignId('updater_id')->nullable()->comment('Admin/manager who update invoice');
             $table->foreignId('receiver_id')->comment('Customer/Receiver');
             $table->foreignId('from_branch_id');
             $table->foreignId('to_branch_id');
 
             $table->string('sender_name')->nullable()->comment('Sender name');
+            $table->string('sender_phone')->nullable()->comment('sender phone');
+
             $table->longText('description')->nullable()->comment('Product note');
             $table->string('quantity')->default('0');
             $table->double('price')->default(0)->comment('Main price');
             $table->double('home')->default(0)->comment('Home delivery charge');
             $table->double('labour')->default(0)->comment('Labour charge');
             $table->double('paid')->default(0)->comment('Paid amount');
+
+            $table->double('condition_amount')->default(0)->comment('Only for condition type inv');
+            $table->double('condition_charge')->default(0)->comment('Only for condition type inv');
 
             $table->integer('custom_counter')->nullable()->comment('Custom ID like 1-999');
 
