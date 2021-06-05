@@ -16,8 +16,8 @@ class CreateBranchesTable extends Migration
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id');
-            $table->boolean('is_active')->default(true);
-            $table->boolean('is_head_office')->default(false);
+            $table->boolean('is_active')->default(true)->comment('0 inactive | 1 Active');
+            $table->boolean('is_head_office')->default(false)->comment('0 inactive | 1 Active');
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
@@ -38,6 +38,10 @@ class CreateBranchesTable extends Migration
             $table->string('invoice_paid_watermark')->nullable()->comment('Invoice paid watermark image');
             $table->string('invoice_head_design')->nullable()->comment('Invoice head image');
             $table->string('chalan_head_design')->nullable()->comment('Chalan head image');
+            $table->boolean('active_image_head_invoice')->default(false)->comment('0 inactive | 1 Active');
+            $table->boolean('active_image_head_chalan')->default(false)->comment('0 inactive | 1 Active');
+            $table->boolean('active_conditional_booking')->default(false)->comment('0 inactive | 1 Active');
+            $table->boolean('active_expense_system')->default(false)->comment('0 inactive | 1 Active');
             $table->string('invoice_style')->default('A5')->comment('A5|A4');
             $table->timestamps();
         });

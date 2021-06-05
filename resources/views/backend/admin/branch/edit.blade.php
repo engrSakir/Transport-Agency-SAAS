@@ -298,45 +298,103 @@
                             </div>
                             <hr class="bg-success m-3">
                             <div class="row">
-                                <!--/span-->
+                                <!--/Head office-->
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="head_office" class="col-form-label">Head office</label>
-                                        <select name="head_office" id="head_office" class="select2-single form-control">
-                                            <option @if ($branch->is_head_office == true) selected @endif value="1">Yes
-                                            </option>
-                                            <option @if ($branch->is_head_office == false) selected @endif value="0">No
-                                            </option>
-                                        </select>
-                                        @error('head_office')
-                                        <div class="alert alert-danger" role="alert">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="head_office" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="head_office"
+                                                       value="1"
+                                                       @if($branch->head_office) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="head_office">Make as Head office</label>
+                                            </div>
+                                            @error('is_head_office')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
                                     </div>
                                 </div>
-                                <!--/span-->
+                                <!--/Head office-->
+                                <!--Branch status-->
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="status" class="col-form-label">Status</label>
-                                        <select name="status" id="status" class="select2-single form-control">
-                                            <option @if ($branch->is_active == true) selected @endif value="1">Active
-                                            </option>
-                                            <option @if ($branch->is_active == false) selected @endif value="0">Inactive
-                                            </option>
-                                        </select>
-                                        @error('status')
-                                        <div class="alert alert-danger" role="alert">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="status" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="status"
+                                                       value="1"
+                                                       @if($branch->is_active) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="status">Make as active branch</label>
+                                            </div>
+                                            @error('status')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
                                     </div>
                                 </div>
-                                <!--/span-->
+                                <!--/Branch status-->
+
+                                <!--Conditional Invoice-->
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="active_conditional_booking" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="active_conditional_booking"
+                                                       value="1"
+                                                       @if($branch->active_conditional_booking) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="active_conditional_booking">Active conditional bill</label>
+                                            </div>
+                                            @error('status')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <!--/Conditional Invoice-->
+
+                                <!--Expense manage-->
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="active_expense_system" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="active_expense_system"
+                                                       value="1"
+                                                       @if($branch->active_expense_system) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="active_expense_system">Active expense system</label>
+                                            </div>
+                                            @error('status')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <!--/Expense manage-->
+                            </div>
+                            <hr class="bg-success m-3">
+                            <div class="row">
+                                <!--Invoice due watermark-->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="invoice_due_watermark" class="col-form-label">Invoice due
-                                            watermark</label>
+                                        <label for="invoice_due_watermark" class="col-form-label">Invoice due watermark</label>
                                         <img src="{{ asset($branch->invoice_due_watermark ?? get_static_option('no_image')) }}"
                                             alt="" width="70px" class="img-circle">
                                         <input name="invoice_due_watermark" accept="image/*" type="file"
@@ -349,10 +407,11 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <!--/Invoice due watermark-->
+                                <!--Invoice paid watermark-->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="invoice_paid_watermark" class="col-form-label">Invoice paid
-                                            watermark</label>
+                                        <label for="invoice_paid_watermark" class="col-form-label">Invoice paid watermark</label>
                                         <img src="{{ asset($branch->invoice_paid_watermark ?? get_static_option('no_image')) }}"
                                             alt="" width="70px" class="img-circle">
                                         <input name="invoice_paid_watermark" accept="image/*" type="file"
@@ -365,6 +424,8 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <!--/Invoice paid watermark-->
+                                <!--Invoice head design-->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="invoice_head_design" class="col-form-label">Invoice head design</label>
@@ -376,6 +437,19 @@
                                             {{ $message }}
                                         </div>
                                         @enderror
+                                        <div class="btn-group">
+                                            <label class="btn btn-warning">
+                                                <div class="custom-control custom-checkbox mr-sm-2">
+                                                    <input name="active_image_head_invoice" type="checkbox"
+                                                           class="custom-control-input"
+                                                           id="active_image_head_invoice"
+                                                           value="1"
+                                                           @if($branch->active_image_head_invoice) checked="" @endif>
+                                                    <label class="custom-control-label"
+                                                           for="active_image_head_invoice">Active this image</label>
+                                                </div>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -389,6 +463,19 @@
                                             {{ $message }}
                                         </div>
                                         @enderror
+                                        <div class="btn-group">
+                                            <label class="btn btn-warning">
+                                                <div class="custom-control custom-checkbox mr-sm-2">
+                                                    <input name="active_image_head_chalan" type="checkbox"
+                                                           class="custom-control-input"
+                                                           id="active_image_head_chalan"
+                                                           value="1"
+                                                           @if($branch->active_image_head_chalan) checked="" @endif>
+                                                    <label class="custom-control-label"
+                                                           for="active_image_head_chalan">Active this image</label>
+                                                </div>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <!--/span-->

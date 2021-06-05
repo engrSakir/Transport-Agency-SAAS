@@ -1,8 +1,14 @@
 <html>
 <head>
     <style>
+        @page {
+            margin-top: 0.2cm; /* <any of the usual CSS values for margins> */
+            margin-left: 0.2cm; /* <any of the usual CSS values for margins> */
+            margin-right: 0.2cm; /* <any of the usual CSS values for margins> */
+            margin-bottom: 0.2cm; /* <any of the usual CSS values for margins> */
+        }
         body {
-            font-family: sans-serif;
+            font-family: bengali_englisg, sans-serif;
             font-size: 10pt;
         }
 
@@ -65,27 +71,31 @@ Page {PAGENO} of {nb}
 <sethtmlpagefooter name="myfooter" value="on" />
 mpdf-->
 <div style="text-align: center">
-    <h4 class="m-1"><b>Entry Chalan</b></h4>
+    @if($chalan->fromBranch->active_image_head_chalan)
+    <img src="{{ asset($chalan->fromBranch->chalan_head_design ?? get_static_option('no_image')) }}" alt="" style="width: 100%;">
+    @else
+    <h4 class="m-1"><b>চালান</b></h4>
     <img src="{{ asset($chalan->fromBranch->company->logo ?? get_static_option('no_image')) }}" width="17%" height="50px">
     <h2 class="m-1"><b>{{ $chalan->fromBranch->company->name ?? '' }}</b></h2>
     <b class="m-5">{!! $chalan->fromBranch->chalan_heading_one ?? '' !!}</b>
     <p class="m-5">{!! $chalan->fromBranch->chalan_heading_two ?? ''  !!}</p>
     <p class="m-5">{!! $chalan->fromBranch->chalan_heading_three ?? ''  !!}</p>
+    @endif
 </div>
 <br>
 
-<table width="100%" style="font-family: serif;" cellpadding="10">
+<table width="100%" cellpadding="10">
     <tr>
         <td width="45%" style="border: 0.1mm solid #888888; ">
-            No.: {{ $chalan->custom_counter ?? '--' }}<br/>
-            Date: {{ $chalan->created_at->format('d/m/Y') ?? '--' }}<br/>
-            Office: {{ $chalan->toBranch->name ?? '--' }}
+            নং: {{ en_to_bn($chalan->custom_counter) ?? '--' }}<br/>
+            তারিখ: {{ en_to_bn($chalan->created_at->format('d/m/Y')) ?? '--' }}<br/>
+            অফিস: {{ $chalan->toBranch->name ?? '--' }}
         </td>
         <td width="10%">&nbsp;</td>
         <td width="45%" style="border: 0.1mm solid #888888;">
-            Driver Name: {{ $chalan->driver_name ?? '--' }}<br/>
-            Phone: {{ $chalan->driver_phone ?? '--' }}<br/>
-            Car: {{ $chalan->car_number ?? '--' }}
+            গাড়ি: {{ $chalan->car_number ?? '--' }}<br/>
+            ফোন: {{ $chalan->driver_phone ?? '--' }}<br/>
+            ড্রাইভার: {{ $chalan->driver_name ?? '--' }}
         </td>
     </tr>
 </table>
@@ -94,39 +104,39 @@ mpdf-->
     <thead>
     <tr>
         <td width="5%">#</td>
-        <td width="20%">Sender</td>
-        <td width="15%">Number</td>
-        <td width="32%">Description</td>
-        <td width="8%">QT</td>
-        <td width="10%">Advance</td>
-        <td width="10%">Due</td>
+        <td width="20%">পার্টির নাম</td>
+        <td width="15%">বিল নং</td>
+        <td width="32%">মালের বর্ণনা</td>
+        <td width="8%">সংখ্যা</td>
+        <td width="10%">অগ্রীম</td>
+        <td width="10%">বাকি</td>
     </tr>
     </thead>
     <tbody>
     <!-- ITEMS HERE -->
     @foreach($chalan->invoices as $invoice)
         <tr @if($loop->even) style="background-color:rgba(156,156,156,0.2)" @endif>
-            <td align="center">{{ $loop->iteration }}</td>
+            <td align="center">{{ en_to_bn($loop->iteration) }}</td>
             <td align="center">{{ $invoice->sender_name ?? '--' }}</td>
-            <td align="center">{{ $invoice->custom_counter ?? '--' }}/{{ $invoice->created_at->format('d/m/Y') }}</td>
+            <td align="center">{{ en_to_bn($invoice->custom_counter) ?? '--' }}/{{ en_to_bn($invoice->created_at->format('d/m/Y')) }}</td>
             <td>{{ $invoice->description ?? '--' }}</td>
-            <td align="center">{{ $invoice->quantity ?? '--' }}</td>
-            <td class="cost">{{ $invoice->paid ?? '--' }}</td>
-            <td class="cost">{{  $invoice->price +  $invoice->home +  $invoice->labour - $invoice->paid }}</td>
+            <td align="center">{{ en_to_bn($invoice->quantity) ?? '--' }}</td>
+            <td class="cost">{{ en_to_bn($invoice->paid) ?? '--' }}</td>
+            <td class="cost">{{  en_to_bn($invoice->price +  $invoice->home +  $invoice->labour - $invoice->paid) }}</td>
         </tr>
     @endforeach
     <!-- END ITEMS HERE -->
     <tr>
         <td class="blanktotal" colspan="3" rowspan="1"></td>
-        <td class="totals"><b>TOTAL:</b></td>
-        <td class="totals"><b>{{ $chalan->invoices->sum('quantity') }}</b></td>
-        <td class="totals"><b>{{ $chalan->invoices->sum('paid') }}</b></td>
+        <td class="totals"><b>মোট:</b></td>
+        <td class="totals"><b>{{ en_to_bn($chalan->invoices->sum('quantity')) }}</b></td>
+        <td class="totals"><b>{{ en_to_bn($chalan->invoices->sum('paid')) }}</b></td>
         <td class="totals cost">
-            <b>{{ $chalan->invoices->sum('price') + $chalan->invoices->sum('home') + $chalan->invoices->sum('labour') - $chalan->invoices->sum('paid') }}</b>
+            <b>{{ en_to_bn($chalan->invoices->sum('price') + $chalan->invoices->sum('home') + $chalan->invoices->sum('labour') - $chalan->invoices->sum('paid')) }}</b>
         </td>
     </tr>
     </tbody>
 </table>
-<div style="text-align: center; font-style: italic;">Payment terms: payment due in 30 days</div>
+<div style="text-align: center; font-style: italic;">Powered by DataTech BD Ltd.</div>
 </body>
 </html>

@@ -152,8 +152,7 @@ class BranchController extends Controller
             'custom_inv_counter_min_value' => 'required|numeric|min:0',
             'custom_chalan_counter_max_value' => 'required|numeric|min:0',
             'custom_chalan_counter_min_value' => 'required|numeric|min:0',
-            'status' => 'required|boolean',
-            'head_office' => 'required|boolean',
+
             'linked_branches' => 'nullable|exists:branches,id',
             'invoice_heading_one' => 'nullable|string',
             'invoice_heading_two' => 'nullable|string',
@@ -166,6 +165,15 @@ class BranchController extends Controller
 
             'invoice_head_design' => 'nullable|image',
             'chalan_head_design' => 'nullable|image',
+
+            'status' => 'nullable|boolean',
+            'head_office' => 'nullable|boolean',
+
+            'active_conditional_booking' => 'nullable|boolean',
+            'active_expense_system' => 'nullable|boolean',
+
+            'active_image_head_invoice' => 'nullable|boolean',
+            'active_image_head_chalan' => 'nullable|boolean',
         ]);
 
         $branch->name = $request->name;
@@ -190,8 +198,14 @@ class BranchController extends Controller
         $branch->chalan_heading_two = $request->chalan_heading_two;
         $branch->chalan_heading_three = $request->chalan_heading_three;
 
-        $branch->is_active = $request->status;
-        $branch->is_head_office = $request->head_office;
+        $branch->is_active = $request->status ?? null;
+        $branch->is_head_office = $request->head_office ?? null;
+
+        $branch->active_conditional_booking = $request->active_conditional_booking ?? null;
+        $branch->active_expense_system = $request->active_expense_system ?? null;
+
+        $branch->active_image_head_invoice = $request->active_image_head_invoice ?? null;
+        $branch->active_image_head_chalan = $request->active_image_head_chalan ?? null;
 
         if($request->hasFile('invoice_due_watermark')){
             if ($branch->invoice_due_watermark != null)
@@ -232,7 +246,7 @@ class BranchController extends Controller
             $image_new_name    = Str::random(20).'-'.now()->timestamp.'.'.$image->getClientOriginalExtension();
             //resize and save to server
             Image::make($image->getRealPath())->save($folder_path.$image_new_name);
-            $branch->invoice_paid_watermark = $folder_path.$image_new_name;
+            $branch->invoice_head_design = $folder_path.$image_new_name;
         }
 
         if($request->hasFile('chalan_head_design')){
@@ -246,7 +260,7 @@ class BranchController extends Controller
             $image_new_name    = Str::random(20).'-'.now()->timestamp.'.'.$image->getClientOriginalExtension();
             //resize and save to server
             Image::make($image->getRealPath())->save($folder_path.$image_new_name);
-            $branch->invoice_paid_watermark = $folder_path.$image_new_name;
+            $branch->chalan_head_design = $folder_path.$image_new_name;
         }
         try {
             $branch->save();

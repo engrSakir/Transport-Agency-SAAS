@@ -9,22 +9,19 @@
         @page {
             sheet-size: A5-L;
             background-color: azure;
-            vertical-align: top;
             margin-top: 0.5cm; /* <any of the usual CSS values for margins> */
-            margin-left: 1cm; /* <any of the usual CSS values for margins> */
-            margin-right: 1cm; /* <any of the usual CSS values for margins> */
-            margin-bottom: 0.5cm; /* <any of the usual CSS values for margins> */
-            margin-header: 0; /* <any of the usual CSS values for margins> */
-            margin-footer: 0; /* <any of the usual CSS values for margins> */
-            marks: none;/*crop | cross | none*/
-
-            /*https://mpdf.github.io/css-stylesheets/supported-css.html*/
-            /*https://mpdf.github.io/paging/different-page-sizes.html*/
+            margin-left: 0.5cm; /* <any of the usual CSS values for margins> */
+            margin-right: 0.5cm; /* <any of the usual CSS values for margins> */
+            margin-bottom: 0.5cm; /* <any of the usual CSS values for margins> */ /
         }
 
         .inv-description {
             /* The image used */
-            background-image: url("{{ asset($invoice->fromBranch->invoice_watermark ?? get_static_option('no_image')) }}");
+            @if(($invoice->price + $invoice->home + $invoice->labour) > $invoice->paid)
+                background-image: url("{{ asset($invoice->fromBranch->invoice_due_watermark ?? get_static_option('no_image')) }}");
+            @else
+                background-image: url("{{ asset($invoice->fromBranch->invoice_paid_watermark ?? get_static_option('no_image')) }}");
+            @endif
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -75,6 +72,9 @@
 <body class="vertical-layout">
 <!-- Start Containerbar  -->
 <div class="row">
+    @if($invoice->fromBranch->active_image_head_invoice)
+        <img src="{{ asset($invoice->fromBranch->invoice_head_design ?? get_static_option('no_image')) }}" alt="" style="width: 100%;">
+    @else
     <div class="col-12" style="margin-top: -5px; margin-bottom: -5px;">
         <table class="table table-bordered table-striped" style="width: 100%;">
             <tr>
@@ -94,7 +94,7 @@
                     <table class="" style="width: 100%; height: 100%; ">
                         <tr>
                             <td class="" style="width: 20%; text-align: left">
-                                <b class=""> নং: </b><b class="">{{ $invoice->custom_counter }}</b>
+
                             </td>
                             <td class="" style="text-align: center; font-size: 80%;">
                                 <b>{!! $invoice->fromBranch->invoice_heading_one ?? '' !!}</b>
@@ -111,17 +111,20 @@
             </tr>
         </table>
     </div>
+    @endif
     <div class="col-12">
-        <table class="table table-bordered table-striped" style="width: 100%;">
+        <table class="table table-bordered table-striped" style="width: 100%; margin: -5px;">
             <tr>
                 <td style="width: 50%; text-align: left" >
+                    <b class=""> বিল নং: </b><b class="">{{ $invoice->custom_counter }}</b> <br>
                     প্রেরকঃ <b>{{ $invoice->sender_name ?? '---' }}</b>
                 </td>
                 <td class="" style=" width: 0%; text-align: center">
                     <!--Time-->
                 </td>
                 <td class="" style=" width: 50%; text-align: right">
-                    প্রাপকঃ <b> {{ $invoice->receiver->name ?? '---' }}</b> <br> মোবাইলঃ<b> {{ $invoice->receiver->phone ?? '---' }}</b>
+                    প্রাপকঃ <b> {{ $invoice->receiver->name ?? '---' }}</b> <br>
+                    মোবাইলঃ<b> {{ $invoice->receiver->phone ?? '---' }}</b>
                 </td>
             </tr>
         </table>
@@ -182,7 +185,7 @@
                         </tr>
                         <tr>
                             <th> </th>
-                            <th> Powered by DATATECH BD </th>
+                            <th> Powered by DataTech BD Ltd. </th>
                             <td style="text-align: right;">লেবার- </td>
                             <td style="text-align: center; ; border: 1px solid black;"><b>{{ en_to_bn($invoice->labour) }}</b></td>
                         </tr>
