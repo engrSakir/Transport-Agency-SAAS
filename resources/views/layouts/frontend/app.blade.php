@@ -30,9 +30,9 @@
             <ul class="top-content float-right">
                 <li><a href="#">Track</a></li>
                 @if(auth()->check())
-                <li><a href="#" data-toggle="modal" data-target="#login" class="logout-btn">Logout</a></li>
+                <li><a href="{{ route('login') }}">My Panel</a></li>
                 @else
-                <li><a href="#" data-toggle="modal" data-target="#login">Login</a></li>
+                <li><a href="javascript:0" data-toggle="modal" data-target="#login">Login</a></li>
                 @endif
             </ul>
         </div>
