@@ -394,9 +394,9 @@
                                 <!--Invoice due watermark-->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="invoice_due_watermark" class="col-form-label">Invoice due watermark</label>
+                                        <label for="invoice_due_watermark" class="col-form-label">Invoice due watermark</label><br>
                                         <img src="{{ asset($branch->invoice_due_watermark ?? get_static_option('no_image')) }}"
-                                            alt="" width="70px" class="img-circle">
+                                            alt="" width="70px" class="">
                                         <input name="invoice_due_watermark" accept="image/*" type="file"
                                                class="form-control"
                                                id="invoice_due_watermark" placeholder="invoice due watermark">
@@ -411,9 +411,9 @@
                                 <!--Invoice paid watermark-->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="invoice_paid_watermark" class="col-form-label">Invoice paid watermark</label>
+                                        <label for="invoice_paid_watermark" class="col-form-label">Invoice paid watermark</label><br>
                                         <img src="{{ asset($branch->invoice_paid_watermark ?? get_static_option('no_image')) }}"
-                                            alt="" width="70px" class="img-circle">
+                                            alt="" width="70px" class="">
                                         <input name="invoice_paid_watermark" accept="image/*" type="file"
                                                class="form-control"
                                                id="invoice_paid_watermark" placeholder="invoice paid watermark">
@@ -428,9 +428,9 @@
                                 <!--Invoice head design-->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="invoice_head_design" class="col-form-label">Invoice head design</label>
+                                        <label for="invoice_head_design" class="col-form-label">Invoice head design</label><br>
                                         <img src="{{ asset($branch->invoice_head_design ?? get_static_option('no_image')) }}"
-                                            alt="" width="70px" class="img-circle">
+                                            alt=""  height="50px" width="250px" class="border border-primary">
                                         <input name="invoice_head_design" accept="image/*" type="file" class="form-control" id="invoice_head_design">
                                         @error('invoice_head_design')
                                         <div class="alert alert-danger" role="alert">
@@ -454,9 +454,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="chalan_head_design" class="col-form-label">Chalan head design</label>
+                                        <label for="chalan_head_design" class="col-form-label">Chalan head design</label><br>
                                         <img src="{{ asset($branch->chalan_head_design ?? get_static_option('no_image')) }}"
-                                            alt="" width="70px" class="img-circle">
+                                            alt="" height="50px" width="250px" class="border border-primary">
                                         <input name="chalan_head_design" accept="image/*" type="file" class="form-control" id="chalan_head_design">
                                         @error('chalan_head_design')
                                         <div class="alert alert-danger" role="alert">
