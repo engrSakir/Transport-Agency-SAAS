@@ -1,5 +1,5 @@
 @push('title')
-    Dashboard
+    ভাউচার লিস্ট
 @endpush
 @extends('layouts.backend.app')
 @push('style')
@@ -8,15 +8,15 @@
 @section('breadcrumb')
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h4 class="text-themecolor font-weight-bold">Status: {{ $status ?? '' }}/Branch: {{ $branch_name ?? '' }}</h4>
+            <h4 class="text-themecolor font-weight-bold">অবস্থা: {{ $status ?? '' }}/শাখা: {{ $branch_name ?? '' }}</h4>
         </div>
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('manager.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Invoice</li>
+                    <li class="breadcrumb-item"><a href="{{ route('manager.dashboard') }}">ড্যাশবোর্ড</a></li>
+                    <li class="breadcrumb-item active">ভাউচার</li>
                 </ol>
-                <a href="{{ route('manager.invoice.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create Invoice</a>
+                <a href="{{ route('manager.invoice.create') }}" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i>ভাউচার তৈরি</a>
             </div>
         </div>
     </div>
@@ -29,14 +29,14 @@
             <a href="{{ route('manager.invoice.statusAndBranchConstant', [\Illuminate\Support\Str::slug($status, '-'), $branch_id]) }}">
                 <div class="card">
                     <div class="box bg-info text-center">
-                        <h4 class="font-light text-white font-weight-bold"> {{ \App\Models\Branch::find($branch_id)->name }}</h4>
-                        <h6 class="text-white"> Invoice: {{ $invoice_items->count() }} </h6>
+                        <h4 class="font-light text-white font-weight-bold"> {{ \App\Models\Branch::find($branch_id)->name ?? '#'}}</h4>
+                        <h6 class="text-white"> ভাউচার: {{ en_to_bn($invoice_items->count()) }} </h6>
                         <h6 class="text-white">
-                            Price : {{ $invoice_items->sum('price') + $invoice_items->sum('home') + $invoice_items->sum('labour') }}
+                            মোট টাকা : {{ en_to_bn($invoice_items->sum('price') + $invoice_items->sum('home') + $invoice_items->sum('labour')) }}
                             <br>
-                            Due : {{ $invoice_items->sum('price') + $invoice_items->sum('home') + $invoice_items->sum('labour') - $invoice_items->sum('paid') }}
+                            বাকি টাকা : {{ en_to_bn($invoice_items->sum('price') + $invoice_items->sum('home') + $invoice_items->sum('labour') - $invoice_items->sum('paid')) }}
                             <br>
-                            Paid : {{ $invoice_items->sum('paid') }}
+                            পরিশোধিত টাকা : {{ en_to_bn($invoice_items->sum('paid')) }}
                         </h6>
                     </div>
                 </div>
@@ -48,38 +48,69 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Invoice List</h4>
+{{--                    <h4 class="card-title">ভাউচার লিস্ট</h4>--}}
 {{--                    <h6 class="card-subtitle">Add class <code>.color-bordered-table .primary-bordered-table</code></h6>--}}
                     <div class="row button-group">
                         <div class="col-lg-2 col-md-4">
-                            <button type="button" class="btn waves-effect waves-light btn-block btn-info select-all">Select all</button>
+                            <button type="button" class="btn waves-effect waves-light btn-block btn-info select-all">সবগুলো পছন্দ</button>
                         </div>
                         <div class="col-lg-2 col-md-4">
-                            <button type="button" class="btn waves-effect waves-light btn-block btn-success un-select-all">Un select all</button>
+                            <button type="button" class="btn waves-effect waves-light btn-block btn-success un-select-all">সবগুলো অপছন্দ</button>
                         </div>
                         <div class="col-lg-2 col-md-4">
-                            <button type="button" class="btn waves-effect waves-light btn-block btn-danger delete-selected-all">Delete selected</button>
+                            <button type="button" class="btn waves-effect waves-light btn-block btn-danger delete-selected-all">পছন্দ গুলো ডিলেট</button>
                         </div>
                         @if (Request::is('*/manager/invoice/status/received') || Request::is('*/manager/invoice/status/received/branch/*'))
                         <div class="col-lg-2 col-md-4">
-                            <button type="button" class="btn waves-effect waves-light btn-block btn-info make-as-on-going-btn">Make as On Going</button>
+                            <button type="button" class="btn waves-effect waves-light btn-block btn-info make-as-on-going-btn">মালামাল ট্রাকে উঠান</button>
                         </div>
                         @endif
                         @if (Request::is('*/manager/invoice/status/on-going') || Request::is('*/manager/invoice/status/on-going/branch/*'))
                         <div class="col-lg-2 col-md-4">
-                            <button type="button" class="btn waves-effect waves-light btn-block btn-info make-as-delivered-btn">Make as Delivered</button>
+                            <button type="button" class="btn waves-effect waves-light btn-block btn-info make-as-delivered-btn">মালামাল পৌঁছে গেছে</button>
                         </div>
                         @endif
+                        @if (Request::is('*/manager/condition-invoice'))
+                        <div class="col-lg-2 col-md-4">
+                            <button type="button" class="btn waves-effect waves-light btn-block btn-info make-as-break-btn">কন্ডিশন ভাঙ্গন</button>
+                        </div>
+                        @endif
+
                     </div>
                     <div class="invoice-table table-responsive">
                         <table class="table color-bordered-table primary-bordered-table">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Customer</th>
-                                <th>Office</th>
-                                <th>Payment</th>
-                                <th>Action</th>
+                                @if (Request::is('*/manager/condition-invoice'))
+                                    <th>
+                                        অবস্থা
+                                    </th>
+                                @endif
+                                <th>তারিখ</th>
+                                <th>অফিস</th>
+                                <th>প্রেরক</th>
+                                @if (Request::is('*/manager/condition-invoice'))
+                                    <th>
+                                        প্রেরক ফোন
+                                    </th>
+                                @endif
+                                <th>প্রাপক</th>
+                                <th>প্রাপক মোবাইল</th>
+                                <th>স্টাফ</th>
+                                <th>
+                                    <span class="badge badge-pill badge-danger">বাকি</span>
+                                    <span class="badge badge-pill badge-success">পরিশোধিত</span>
+                                    <span class="badge badge-pill badge-secondary">মোট</span>
+                                </th>
+                                @if (Request::is('*/manager/condition-invoice'))
+                                    <th>
+                                        <span class="badge badge-pill badge-danger">কন্ডিশন</span>
+                                        <span class="badge badge-pill badge-success">চার্জ</span>
+                                        <span class="badge badge-pill badge-secondary">মোট</span>
+                                    </th>
+                                @endif
+                                <th>প্রিন্ট/এডিট/ডিলিট</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -89,31 +120,56 @@
                                     <label class="btn btn-info active">
                                         <div class="custom-control custom-checkbox mr-sm-2">
                                             <input type="checkbox" value="{{ $invoice->id }}" name="invoice" class="custom-control-input" id="invoice-{{ $loop->iteration }}">
-                                            <label class="custom-control-label font-weight-bold" for="invoice-{{ $loop->iteration }}">#{{ $invoice->custom_counter }}</label>
+                                            <label class="custom-control-label font-weight-bold" for="invoice-{{ $loop->iteration }}"># {{ en_to_bn($invoice->custom_counter) }}</label>
                                         </div>
                                     </label>
-
+                                    <br>
+                                    @if($invoice->chalan_id)
+                                        <button type="button" class="btn btn-outline-success btn-rounded show-chalan" value="{{ route('manager.chalan.show', $invoice->chalan) }}">
+                                            <i class="mdi mdi-receipt"></i>
+                                            {{ $invoice->chalan->custom_counter ?? '--' }}
+                                        </button>
+                                    @endif
+                                </td>
+                                @if (Request::is('*/manager/condition-invoice'))
+                                    <td>
+                                        {{ $invoice->status ?? '' }}
+                                    </td>
+                                @endif
+                                <td>
+                                    <b>{{ en_to_bn($invoice->created_at->format('d/m/Y')) }}</b><br>
                                 </td>
                                 <td>
-                                    <b style="font-size: 18px;">{{ $invoice->receiver->name ?? '' }}</b><br>
-                                    {{ $invoice->receiver->phone ?? '' }}<br>
-                                    {{ $invoice->receiver->email ?? '' }}<br>
-                                    <span class="badge badge-success">
-                                        {{ $invoice->sender_name ?? '' }}
-                                    </span>
+                                    {{ $invoice->toBranch->name ?? '' }}
+                                </td>
+                                <td>{{ $invoice->sender_name ?? '' }}</td>
+                                @if (Request::is('*/manager/condition-invoice'))
+                                    <td>{{ $invoice->sender_phone ?? '' }}</td>
+                                @endif
+                                <td>
+                                  {{ $invoice->receiver->name ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $invoice->receiver->phone ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $invoice->creator->name ?? '' }}
                                 </td>
                                 <td style="font-size: 16px;">
-                                    {{ $invoice->toBranch->name ?? '' }}<br>
-                                    <b>{{ $invoice->created_at->format('d/m/Y') }}</b>
+                                    <span class="badge badge-pill badge-danger">{{ en_to_bn($invoice->price + $invoice->home + $invoice->labour - $invoice->paid) }}</span>
+                                    <span class="badge badge-pill badge-success">{{ en_to_bn($invoice->paid) }}</span>
+                                    <span class="badge badge-pill badge-secondary">{{ en_to_bn($invoice->price + $invoice->home + $invoice->labour) }}</span>
                                 </td>
-                                <td style="font-size: 16px;">
-                                    <span class="text-danger">Due: {{ $invoice->price + $invoice->home + $invoice->labour - $invoice->paid }}</span><br>
-                                    <span class="text-info">Paid: {{ $invoice->paid }}</span><br>
-                                    <span class="text-success">Total: {{ $invoice->price + $invoice->home + $invoice->labour }}</span>
-                                </td>
+                                @if (Request::is('*/manager/condition-invoice'))
+                                    <td>
+                                        <span class="badge badge-pill badge-danger">{{ en_to_bn($invoice->condition_amount) }}</span>
+                                        <span class="badge badge-pill badge-success">{{ en_to_bn($invoice->condition_charge) }}</span>
+                                        <span class="badge badge-pill badge-secondary">{{ en_to_bn($invoice->condition_amount + $invoice->condition_charge) }}</span>
+                                    </td>
+                                @endif
                                 <td>
                                     <button type="button" class="btn btn-info btn-circle btn-lg show-inv" value="{{ route('manager.invoice.show', $invoice) }}"><i class="mdi mdi-cloud-print"></i> </button>
-                                    <button type="button" class="btn btn-warning btn-circle btn-lg"><i class="mdi mdi-tooltip-edit"></i> </button>
+                                    <button type="button" class="btn btn-warning btn-circle btn-lg edit-inv" value="{{ route('manager.invoice.edit', $invoice) }}"><i class="mdi mdi-tooltip-edit"></i> </button>
                                     <button type="button" class="btn btn-danger btn-circle btn-lg" onclick="delete_function(this)" value="{{ route('manager.invoice.destroy', $invoice) }}"><i class="mdi mdi-delete-circle"></i> </button>
                                 </td>
                             </tr>
@@ -121,10 +177,35 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Customer</th>
-                                <th>Office</th>
-                                <th>Payment</th>
-                                <th>Action</th>
+                                @if (Request::is('*/manager/condition-invoice'))
+                                    <th>
+                                        অবস্থা
+                                    </th>
+                                @endif
+                                <th>তারিখ</th>
+                                <th>অফিস</th>
+                                <th>প্রেরক</th>
+                                @if (Request::is('*/manager/condition-invoice'))
+                                    <th>
+                                        প্রেরক ফোন
+                                    </th>
+                                @endif
+                                <th>প্রাপক</th>
+                                <th>প্রাপক মোবাইল</th>
+                                <th>স্টাফ</th>
+                                <th>
+                                    <span class="badge badge-pill badge-danger">বাকি</span>
+                                    <span class="badge badge-pill badge-success">পরিশোধিত</span>
+                                    <span class="badge badge-pill badge-secondary">মোট</span>
+                                </th>
+                                @if (Request::is('*/manager/condition-invoice'))
+                                    <th>
+                                        <span class="badge badge-pill badge-danger">কন্ডিশন</span>
+                                        <span class="badge badge-pill badge-success">চার্জ</span>
+                                        <span class="badge badge-pill badge-secondary">মোট</span>
+                                    </th>
+                                @endif
+                                <th>প্রিন্ট/এডিট/ডিলিট</th>
                             </tr>
                             </thead>
                             </tbody>
@@ -149,29 +230,31 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title">Hello {{ auth()->user()->name }} !!</h4>
-                                        <h6 class="card-subtitle"> Make a chalan sheet </h6>
                                         <div class="mt-4">
                                             <div class="form-group">
-                                                <label for="branch-office">Branch office</label>
+                                                <label for="branch-office">ব্রাঞ্চ অফিস</label>
                                                 <select class="form-control custom-select" id="branch-office">
                                                     <option selected value="">--Select your branch office--</option>
                                                     @foreach($invoices->groupBy('to_branch_id') as $branch_id => $invoice_items)
-                                                        <option value="{{ $branch_id }}">{{ \App\Models\Branch::find($branch_id)->name }}</option>
+                                                        <option value="{{ $branch_id }}">{{ \App\Models\Branch::find($branch_id)->name ?? '#'}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="driver-name">Driver-name</label>
+                                                <label for="driver-name">ড্রাইভারের নাম </label>
                                                 <input type="text" class="form-control" id="driver-name" placeholder="Driver name">
                                             </div>
                                             <div class="form-group">
-                                                <label for="driver-phone">Driver-phone</label>
+                                                <label for="driver-phone">ড্রাইভারের ফোন</label>
                                                 <input type="text" class="form-control" id="driver-phone" placeholder="Driver phone">
                                             </div>
                                             <div class="form-group">
-                                                <label for="car-number">Car-number</label>
+                                                <label for="car-number">গাড়ির নাম্বার</label>
                                                 <input type="text" class="form-control" id="car-number" placeholder="car-number">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description">চালান নোট</label>
+                                                <textarea name="description" type="text" class="form-control" id="description"></textarea>
                                             </div>
                                             <button id="make-as-on-going-submit-btn" type="button" class="btn btn-primary">Submit</button>
                                         </div>
@@ -196,27 +279,43 @@
     <script>
         $(document).ready(function(){
             // Get current page and set current in nav
+            $(".edit-inv").click( function (){
+                var html_embed_code = `<embed type="text/html" src="`+$(this).val()+`" width="100%" height="500">`;
+                $('#extra-large-modal-body').html(html_embed_code);
+                $('#extra-large-modal-body').addClass( "text-center" );
+                $('#extra-large-modal-title').text( "ভাউচার" );
+                $('#extra-large-modal').modal('show');
+            });
+
             $(".show-inv").click( function (){
                 var html_embed_code = `<embed type="text/html" src="`+$(this).val()+`" width="750" height="500">`;
                 $('#extra-large-modal-body').html(html_embed_code);
                 $('#extra-large-modal-body').addClass( "text-center" );
-                $('#extra-large-modal-title').text( "INVOICE" );
+                $('#extra-large-modal-title').text( "ভাউচার" );
+                $('#extra-large-modal').modal('show');
+            });
+
+            $(".show-chalan").click( function (){
+                var html_embed_code = `<embed type="text/html" src="`+$(this).val()+`" width="750" height="500">`;
+                $('#extra-large-modal-body').html(html_embed_code);
+                $('#extra-large-modal-body').addClass( "text-center" );
+                $('#extra-large-modal-title').text( "এন্ট্রি চালান" );
                 $('#extra-large-modal').modal('show');
             });
 
             $(".delete-selected-all").click( function (){
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'আপনি কি নিশ্চিত?',
+                    text: "একবার ডিলিট করে ফেললে এটিকে আর ফিরিয়ে আনতে পারবেন না!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#74051e',
                     cancelButtonColor: '#aad9e2',
-                    confirmButtonText: 'Yes, delete!'
+                    confirmButtonText: 'হ্যাঁ ডিলিট হোক!'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         if($('.invoice-table input:checkbox[name=invoice]:checked').length < 1){
-                            alert('Please chose invoice');
+                            alert('দয়া করে কিছু সংখ্যক ভাউচার পছন্দ করুন');
                         }else{
                             var invoices = []
                             $('.invoice-table input:checkbox[name=invoice]:checked').each(function()
@@ -246,16 +345,16 @@
                                     if (data.type == 'success'){
                                         Swal.fire({
                                             icon: data.type,
-                                            title: 'DELETED',
+                                            title: 'ডিলিট',
                                             text: data.message,
                                         });
                                         location.reload();
                                     }else{
                                         Swal.fire({
                                             icon: data.type,
-                                            title: 'Oops...',
+                                            title: 'দুঃখিত...',
                                             text: data.message,
-                                            footer: 'Something went wrong!'
+                                            footer: 'কোথাও কিছু একটা সমস্যা হয়েছে!'
                                         });
                                     }
                                 },
@@ -271,7 +370,7 @@
                                         '                    </div>';
                                     Swal.fire({
                                         icon: 'error',
-                                        title: 'Oops...',
+                                        title: 'দুঃখিত...',
                                         footer: errorMessage
                                     });
                                 },
@@ -287,13 +386,13 @@
     <script>
         $(document).ready(function(){
             $(".make-as-on-going-btn").click( function (){
-                $('#inv-modal-title').text( "Make as on going" );
+                $('#inv-modal-title').text( "মালামাল ট্রাকে উঠানোর জন্য ড্রাইভার এর তথ্য লিপিবদ্ধ করুন" );
                 $('#inv-modal').modal('show');
             });
 
             $("#make-as-on-going-submit-btn").click( function (){
                 if($('.invoice-table input:checkbox[name=invoice]:checked').length < 1){
-                    alert('Please chose invoice');
+                    alert('দয়া করে কিছু সংখ্যক ভাউচার পছন্দ করুন');
                 }else{
                     var invoices = []
                     $('.invoice-table input:checkbox[name=invoice]:checked').each(function()
@@ -308,6 +407,7 @@
                     formData.append('driver_name', $('#driver-name').val());
                     formData.append('driver_phone', $('#driver-phone').val());
                     formData.append('car_number', $('#car-number').val());
+                    formData.append('chalan_note', $('#description').val());
                     $.ajax({
                         method: 'POST',
                         url: '{{ route('manager.chalan.store') }}',
@@ -326,22 +426,25 @@
                         success: function (data) {
                             if (data.type == 'success'){
                                 $('#inv-modal').modal('hide');
+                                $('.invoice-table input:checkbox[name=invoice]:checked')
+                                    .parentsUntil('td')
+                                    .html( "<h3><b>On Going ...</b></h3>" );
                                 var html_embed_code = `<embed type="text/html" src="`+data.url+`" width="750" height="800">`;
                                 $('#extra-large-modal-body').html(html_embed_code);
                                 $('#extra-large-modal-body').addClass( "text-center" );
-                                $('#extra-large-modal-title').text( "Chalan" );
+                                $('#extra-large-modal-title').text( "এন্ট্রি চালান" );
                                 $('#extra-large-modal').modal('show');
                                 Swal.fire({
                                     icon: data.type,
-                                    title: 'INVOICE',
+                                    title: 'এন্ট্রি চালান',
                                     text: data.message,
                                 });
                             }else{
                                 Swal.fire({
                                     icon: data.type,
-                                    title: 'Oops...',
+                                    title: 'দুঃখিত...',
                                     text: data.message,
-                                    footer: 'Something went wrong!'
+                                    footer: 'কোথাও কিছু একটা সমস্যা হয়েছে!'
                                 });
                             }
                         },
@@ -357,7 +460,7 @@
                                 '                    </div>';
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Oops...',
+                                title: 'দুঃখিত...',
                                 footer: errorMessage
                             });
                         },
@@ -372,17 +475,17 @@
         $(document).ready(function(){
             $(".make-as-delivered-btn").click( function (){
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'আপনি কি নিশ্চিত?',
+                    text: "সত্যই ট্রাকের মালগুলো ডেলিভারি হয়ে গেছে!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#2ba809',
                     cancelButtonColor: '#003cef',
-                    confirmButtonText: 'Yes, delivered it!'
+                    confirmButtonText: 'হ্যাঁ ডেলিভারি সম্পন্ন!'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         if($('.invoice-table input:checkbox[name=invoice]:checked').length < 1){
-                            alert('Please chose invoice');
+                            alert('দয়া করে কিছু সংখ্যক ভাউচার পছন্দ করুন');
                         }else{
                             var invoices = []
                             $('.invoice-table input:checkbox[name=invoice]:checked').each(function()
@@ -412,16 +515,16 @@
                                     if (data.type == 'success'){
                                         Swal.fire({
                                             icon: data.type,
-                                            title: 'DELIVERED',
+                                            title: 'ডেলিভারি সম্পন্ন',
                                             text: data.message,
                                         });
                                         location.reload();
                                     }else{
                                         Swal.fire({
                                             icon: data.type,
-                                            title: 'Oops...',
+                                            title: 'দুঃখিত...',
                                             text: data.message,
-                                            footer: 'Something went wrong!'
+                                            footer: 'কোথাও কিছু একটা সমস্যা হয়েছে!'
                                         });
                                     }
                                 },
@@ -437,7 +540,7 @@
                                         '                    </div>';
                                     Swal.fire({
                                         icon: 'error',
-                                        title: 'Oops...',
+                                        title: 'দুঃখিত...',
                                         footer: errorMessage
                                     });
                                 },
@@ -450,4 +553,104 @@
         });
     </script>
     @endif
+    @if (Request::is('*/manager/condition-invoice'))
+        <script>
+            $(document).ready(function(){
+                $(".make-as-break-btn").click( function (){
+                    Swal.fire({
+                        title: 'আপনি কি নিশ্চিত?',
+                        text: "কন্ডিশন ভাঙলে মেসেজ যাবে !",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#2ba809',
+                        cancelButtonColor: '#003cef',
+                        confirmButtonText: 'হ্যাঁ ডকন্ডিশন ভাঙ্গন!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            if($('.invoice-table input:checkbox[name=invoice]:checked').length < 1){
+                                alert('দয়া করে কিছু সংখ্যক ভাউচার পছন্দ করুন');
+                            }else{
+                                var invoices = []
+                                $('.invoice-table input:checkbox[name=invoice]:checked').each(function()
+                                {
+                                    invoices.push($(this).val())
+                                });
+
+                                var this_btn = $(this);
+                                var formData = new FormData();
+                                formData.append('invoices', invoices);
+                                $.ajax({
+                                    method: 'POST',
+                                    url: '{{ route('manager.invoice.makeAsBreak') }}',
+                                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    beforeSend: function (){
+                                        //this_btn.html('Please wait ---- ');
+                                        this_btn.prop("disabled",true);
+                                    },
+                                    complete: function (){
+                                        //this_btn.html('Edit now');
+                                        this_btn.prop("disabled",false);
+                                    },
+                                    success: function (data) {
+                                        if (data.type == 'success'){
+                                            Swal.fire({
+                                                icon: data.type,
+                                                title: 'কন্ডিশন ভাঙ্গন সম্পন্ন',
+                                                text: data.message,
+                                            });
+                                            location.reload();
+                                        }else{
+                                            Swal.fire({
+                                                icon: data.type,
+                                                title: 'দুঃখিত...',
+                                                text: data.message,
+                                                footer: 'কোথাও কিছু একটা সমস্যা হয়েছে!'
+                                            });
+                                        }
+                                    },
+                                    error: function (xhr) {
+                                        var errorMessage = '<div class="card bg-danger">\n' +
+                                            '                        <div class="card-body text-center p-5">\n' +
+                                            '                            <span class="text-white">';
+                                        $.each(xhr.responseJSON.errors, function(key,value) {
+                                            errorMessage +=(''+value+'<br>');
+                                        });
+                                        errorMessage +='</span>\n' +
+                                            '                        </div>\n' +
+                                            '                    </div>';
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'দুঃখিত...',
+                                            footer: errorMessage
+                                        });
+                                    },
+                                });
+                            }
+                        }
+                    })
+
+                });
+            });
+        </script>
+    @endif
+@endpush
+@push('summer-note')
+    <script>
+        $('#description').summernote({
+            placeholder: 'Hello stand alone ui',
+            tabsize: 2,
+            height: 300,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link']],
+                ['view', ['fullscreen',]]
+            ]
+        });
+    </script>
 @endpush

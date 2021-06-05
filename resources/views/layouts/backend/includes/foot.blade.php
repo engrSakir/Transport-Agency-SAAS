@@ -20,6 +20,8 @@
 <script src="{{ asset('assets/helpers/helper.js') }}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 @include('sweetalert::alert')
+<!-- UI Auto complete -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- Page JS -->
 @stack('script')
 

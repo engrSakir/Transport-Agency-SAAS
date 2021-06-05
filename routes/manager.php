@@ -23,6 +23,8 @@ Route::group(['middleware' => 'manager', 'as' => 'manager.', 'prefix' => 'backen
     Route::post('/chalan/maker-as-deleted', [Manager\ChalanController::class, 'makeAsDeleted'])->name('chalan.makeAsDeleted');
 
     Route::resource('invoice', Manager\InvoiceController::class);
+    Route::get('condition-invoice/create', [Manager\InvoiceController::class, 'conditionInvoiceCreate'])->name('conditionInvoice.create');
+    Route::get('condition-invoice', [Manager\InvoiceController::class, 'conditionInvoiceGet'])->name('conditionInvoice.get');
     Route::resource('chalan', Manager\ChalanController::class);
 
 });
