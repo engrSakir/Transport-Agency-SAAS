@@ -137,6 +137,6 @@ mpdf-->
     </tr>
     </tbody>
 </table>
-<div style="text-align: center; font-style: italic;">Powered by DataTech BD Ltd.</div>
+<div style="text-align: center; font-style: italic;">Prepared by DataTech BD Ltd.</div>
 </body>
 </html>

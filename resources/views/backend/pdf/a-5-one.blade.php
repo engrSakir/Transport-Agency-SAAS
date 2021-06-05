@@ -185,7 +185,7 @@
                         </tr>
                         <tr>
                             <th> </th>
-                            <th> Powered by DataTech BD Ltd. </th>
+                            <th>  </th>
                             <td style="text-align: right;">লেবার- </td>
                             <td style="text-align: center; ; border: 1px solid black;"><b>{{ en_to_bn($invoice->labour) }}</b></td>
                         </tr>
@@ -200,7 +200,7 @@
                         <tr>
                             <th></th>
                             <th>
-                                বুকিং সময়- {{ en_to_bn($invoice->created_at->format('H:i A')) }}
+                                বুকিং সময়- {{ en_to_bn($invoice->created_at->format('h:i A')) }}
                             </th>
                             <td style="text-align: right">
                                 অগ্রীম-
@@ -229,7 +229,7 @@
                     প্রেরকের স্বাক্ষর-
                 </td>
                 <td style="width: 40%; text-align: center;">
-                    <b>কন্ডিশনে মাল বুকিং করা হয়। </b>
+                    <b>Prepared by DataTech BD Ltd.</b>
                 </td>
                 <td style="width: 30%; text-align: right;">
                     কর্মকর্তার স্বাক্ষর-{{ $invoice->creator->name }}
