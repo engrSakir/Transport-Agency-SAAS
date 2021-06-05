@@ -7,6 +7,7 @@ Route::group(['middleware' => 'manager', 'as' => 'manager.', 'prefix' => 'backen
 
     Route::get('/dashboard', [Manager\DashboardController::class, 'index'])->name('dashboard');
     Route::post('/ui-autocomplete/sender-name', [Manager\InvoiceController::class, 'senderName'])->name('senderName');
+    Route::post('/ui-autocomplete/sender-phone', [Manager\InvoiceController::class, 'senderPhone'])->name('senderPhone');
     Route::post('/ui-autocomplete/receiver-info', [Manager\InvoiceController::class, 'receiverInfo'])->name('receiverInfo');
 
 //    Route::get('/invoice/received', [Manager\InvoiceController::class, 'received'])->name('invoice.received');
@@ -20,6 +21,7 @@ Route::group(['middleware' => 'manager', 'as' => 'manager.', 'prefix' => 'backen
     Route::get('/invoice/status/{status}/branch/{branch}', [Manager\InvoiceController::class, 'statusAndBranchConstant'])->name('invoice.statusAndBranchConstant');
     Route::post('/invoice/maker-as-delivered', [Manager\InvoiceController::class, 'makeAsDelivered'])->name('invoice.makeAsDelivered');
     Route::post('/invoice/maker-as-deleted', [Manager\InvoiceController::class, 'makeAsDeleted'])->name('invoice.makeAsDeleted');
+    Route::post('/invoice/maker-as-break', [Manager\InvoiceController::class, 'makeAsBreak'])->name('invoice.makeAsBreak');
     Route::post('/chalan/maker-as-deleted', [Manager\ChalanController::class, 'makeAsDeleted'])->name('chalan.makeAsDeleted');
 
     Route::resource('invoice', Manager\InvoiceController::class);

@@ -55,6 +55,9 @@ class InvoiceController extends Controller
            'receiver_phone'     =>  'nullable|string',
            'receiver_email'     =>  'nullable|email',
            'branch'             =>  'required|exists:branches,id',
+            'condition_amount'   => 'required_with_all:condition',
+            'condition_charge'   => 'required_with_all:condition',
+            'sender_phone'       =>  'nullable|string',
            'description'        =>  'required|string',
            'quantity'           =>  'required|string|min:0',
            'price'              =>  'required|string|min:0',
@@ -129,6 +132,13 @@ class InvoiceController extends Controller
         $invoice->paid              = bn_to_en($request->advance);
 
         $invoice->creator_id        = auth()->user()->id;
+
+        //If conditional invoice
+        if($request->condition){
+            $invoice->condition_amount              = bn_to_en($request->condition_amount);
+            $invoice->condition_charge              = bn_to_en($request->condition_charge);
+            $invoice->sender_phone              = bn_to_en($request->sender_phone);
+        }
 
         //Logic for custom counter
         $custom_counter = Invoice::where('from_branch_id', auth()->user()->branch->id)->orderBy('id', 'desc')->first()->custom_counter ?? 0;
@@ -295,10 +305,11 @@ class InvoiceController extends Controller
 
         $invoice->updater_id        = auth()->user()->id;
 
+        //If conditional invoice
         if($request->condition){
-            $invoice->condition_amount      = bn_to_en($request->condition_amount);
-            $invoice->condition_charge      = bn_to_en($request->condition_charge);
-            $invoice->sender_phone          = bn_to_en($request->sender_phone);
+            $invoice->condition_amount              = bn_to_en($request->condition_amount);
+            $invoice->condition_charge              = bn_to_en($request->condition_charge);
+            $invoice->sender_phone              = bn_to_en($request->sender_phone);
         }
 
         //# Step 4 SMS
@@ -350,6 +361,19 @@ class InvoiceController extends Controller
                 ->where('from_branch_id', auth()->user()->branch->id)
                 ->where('sender_name', 'LIKE', '%'. $request->name. '%')
                 ->select('sender_name')
+                ->get();
+        }else{
+            return redirect()->back()->withErrors('Request no allowed');
+        }
+    }
+
+    public function senderPhone(Request $request)
+    {
+        if ($request->ajax()){
+            return Invoice::groupBy('sender_phone')
+                ->where('from_branch_id', auth()->user()->branch->id)
+                ->where('sender_phone', 'LIKE', '%'. $request->phone. '%')
+                ->select('sender_name', 'sender_phone')
                 ->get();
         }else{
             return redirect()->back()->withErrors('Request no allowed');
@@ -493,5 +517,63 @@ class InvoiceController extends Controller
             'type' => 'success',
             'message' => 'Successfully deleted',
         ]);
+    }
+
+    //Only for conditional invoice
+    public function makeAsBreak(Request $request)
+    {
+        $request->validate([
+            'invoices' => 'required',
+        ]);
+
+        $invoice_counter = 0;
+        foreach(explode(',', $request->invoices) as $invoice_id){
+            $invoice = Invoice::findOrFail($invoice_id);
+            //ইনভয়েসের ভ্যালিডেশন চেক হচ্ছে যে ইনভয়েস টি এই ব্রাঞ্চ থেকেই তৈরি করা হয়েছে কিনা
+            if ($invoice !=null && $invoice->from_branch_id == auth()->user()->branch->id && $invoice->status == 'Delivered' && $invoice->condition_amount > 0){
+                $invoice_counter++;
+            }
+        }
+
+        if($invoice_counter  < 1){
+            return response()->json([
+                'type' => 'error',
+                'message' => 'কন্ডিশন ব্রেক করার জন্য দয়া করে ডেলিভারি সম্পন্ন হওয়া ভাউচার গুলো পছন্দ করুন।',
+            ]);
+        }
+
+        $sent_sms_counter = 0;
+        $condition_break_counter = 0;
+        foreach(explode(',', $request->invoices) as $invoice_id){
+            $invoice = Invoice::findOrFail($invoice_id);
+            //ইনভয়েসের ভ্যালিডেশন চেক হচ্ছে যে ইনভয়েস টি এই ব্রাঞ্চ থেকেই তৈরি করা হয়েছে কিনা
+            if ($invoice != null && $invoice->from_branch_id == auth()->user()->branch->id && $invoice->status == 'Delivered' && $invoice->condition_amount > 0){
+                $invoice->status = 'Break';
+                $invoice->save();
+                $condition_break_counter ++;
+                // কন্ডিশন ভাঙ্গার সাথে সাথে মেসেজ পাঠানো
+                if($invoice->receiver->phone != null && sms($invoice->sender_phone, 'নিউ শাপলা ট্রান্সপোর্ট এজেন্সি থেকে আপনার কন্ডিশন টি সম্পূর্ণভাবে ভাঙ্গা হয়েছে। বুকিং নং- '. $invoice->custom_counter) == true){
+                    $sent_sms_counter ++;
+                }
+            }
+        }
+
+        return response()->json([
+            'type' => 'success',
+            'message' => 'কন্ডিশন ভাঙ্গা হয়েছে '.$condition_break_counter.' এবং মেসেজ পাঠানো হয়েছে '.$sent_sms_counter.' জনকে',
+        ]);
+    }
+
+    public function conditionInvoiceCreate(){
+        $linked_branches = auth()->user()->branch->fromLinkedBranchs;
+        return view('backend.manager.invoice.create', compact('linked_branches'));
+    }
+
+    public function conditionInvoiceGet()
+    {
+        $status = 'All';
+        $branch_name = 'All';
+        $invoices = auth()->user()->branch->fromInvoices()->where('condition_amount', '>', '0')->orderBy('id', 'desc')->paginate(100);
+        return view('backend.manager.invoice.index', compact('invoices', 'status', 'branch_name'));
     }
 }

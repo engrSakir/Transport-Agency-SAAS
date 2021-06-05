@@ -6,6 +6,7 @@ use App\Models\CustomPage;
 use App\Models\GlobalImages;
 use App\Models\StaticOption;
 use App\Models\WebsiteMessage;
+use Illuminate\Support\Facades\Http;
 
 
 if (!function_exists('random_code')){
@@ -128,6 +129,19 @@ if (!function_exists('random_code')){
        return str_replace($search, $replace_by, $bn_value);
        //return filter_var(str_replace($search, $replace_by, $bn_value), FILTER_SANITIZE_NUMBER_INT);
    }
+
+    function sms($number, $message){
+        $text = urlencode($message);
+        $user = get_static_option('sms_api_key');
+        $pass = get_static_option('sms_api_pass');
+        $smsresult =  Http::get("http://66.45.237.70/api.php?username=$user&password=$pass&number=$number&message=$text");
+
+        if(strpos($smsresult, '1101') !== false){
+            return true;
+        } else{
+            return false;
+        }
+    }
 
 
 }
