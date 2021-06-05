@@ -134,7 +134,7 @@ class InvoiceController extends Controller
         $invoice->creator_id        = auth()->user()->id;
 
         //If conditional invoice
-        if($request->condition){
+        if(auth()->user()->branch->active_conditional_booking && $request->condition){
             $invoice->condition_amount              = bn_to_en($request->condition_amount);
             $invoice->condition_charge              = bn_to_en($request->condition_charge);
             $invoice->sender_phone              = bn_to_en($request->sender_phone);
@@ -306,7 +306,7 @@ class InvoiceController extends Controller
         $invoice->updater_id        = auth()->user()->id;
 
         //If conditional invoice
-        if($request->condition){
+        if(auth()->user()->branch->active_conditional_booking && $request->condition){
             $invoice->condition_amount              = bn_to_en($request->condition_amount);
             $invoice->condition_charge              = bn_to_en($request->condition_charge);
             $invoice->sender_phone              = bn_to_en($request->sender_phone);
