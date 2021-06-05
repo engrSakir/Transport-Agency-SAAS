@@ -50,6 +50,10 @@ class DashboardController extends Controller
             - auth()->user()->company->messageHistories->sum('message_count');
 
 
+        $current_balance  = auth()->user()->company->transactions()->where('status', 'Approved')->where('type', 'Credit')->sum('amount')
+            - auth()->user()->company->transactions()->where('status', 'Approved')->where('type', 'Debit')->sum('amount');
+
+
         $data = array (
             "used_branch_amount"  => $used_branch_amount,
             "permitted_branch_amount"  =>$permitted_branch_amount,
@@ -62,6 +66,7 @@ class DashboardController extends Controller
             "used_invoice_amount"   => $used_invoice_amount,
             "permitted_invoice_amount"   => $permitted_invoice_amount,
             "usable_message_amount"   => $usable_message_amount,
+            "current_balance"   => $current_balance,
         );
 
         return view('backend.admin.dashboard.index', compact('data'));

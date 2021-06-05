@@ -24,6 +24,7 @@
                 <li class="nav-item"><a
                         class="nav-link sidebartoggler d-none d-lg-block d-md-block waves-effect waves-dark"
                         href="javascript:void(0)"><i class="icon-menu"></i></a></li>
+                @if(auth()->user()->type == 'Manager')
                 <li class="nav-item">
                     <div class="input-group mt-3">
                         <input type="text" class="form-control invoice-search-field" placeholder="ভাউচাার নাম্বার" aria-label="" aria-describedby="basic-addon1">
@@ -32,6 +33,7 @@
                         </div>
                     </div>
                 </li>
+                @endif
                 <!-- ============================================================== -->
             </ul>
             <!-- ============================================================== -->

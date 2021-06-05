@@ -21,6 +21,15 @@
 @endsection
 @section('content')
     <div class="row">
+        <!-- Balance-->
+        <div class="col-md-6 col-lg-4 col-xlg-2">
+            <div class="card">
+                <div class="box bg-danger text-center">
+                    <h1 class="font-light text-white">{{ $data['current_balance'] }} </h1>
+                    <h6 class="text-white"> টাকা </h6>
+                </div>
+            </div>
+        </div>
         <!-- Column 1-->
         <div class="col-md-6 col-lg-4 col-xlg-2">
             <div class="card">
