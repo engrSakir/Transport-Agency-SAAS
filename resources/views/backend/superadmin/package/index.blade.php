@@ -3,8 +3,7 @@
 @endpush
 @extends('layouts.backend.app')
 @push('style')
-    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 @endpush
 @section('breadcrumb')
     <div class="row page-titles">
@@ -42,8 +41,6 @@
                                         <th>Branch</th>
                                         <th>Admin</th>
                                         <th>Manager</th>
-                                        <th>Customer</th>
-                                        <th>Invoice</th>
                                         <th>Duration</th>
                                         <th>SMS Price</th>
                                         <th>Free Sms</th>
@@ -53,7 +50,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{--Assign by ajax--}}
+                                    @foreach($packages as $package)
+                                      <tr>
+                                          <td>{{ $package->name }}</td>
+                                          <td>{{ $package->branch }}</td>
+                                          <td>{{ $package->admin }}</td>
+                                          <td>{{ $package->manager }}</td>
+                                          <td>{{ $package->duration }}</td>
+                                          <td>{{ $package->price_per_message }}</td>
+                                          <td>{{ $package->free_sms }}</td>
+                                          <td>{{ $package->purchases->count() }}</td>
+                                          <td>{{ $package->is_active }}</td>
+                                          <td>
+                                              <a href="{{ route('superadmin.package.edit', $package) }}" class="btn btn-info m-1"><i class="fa fa-edit"></i> </a>
+                                              <button class="btn btn-danger m-1" onclick="delete_function(this)" value="{{ route('superadmin.package.destroy', $package) }}"><i class="fa fa-trash"></i> </button>
+                                          </td>
+                                      </tr>
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -61,13 +74,12 @@
                                         <th>Branch</th>
                                         <th>Admin</th>
                                         <th>Manager</th>
-                                        <th>Customer</th>
-                                        <th>Invoice</th>
                                         <th>Duration</th>
                                         <th>SMS Price</th>
                                         <th>Free Sms</th>
                                         <th>Purchase</th>
                                         <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -83,75 +95,4 @@
 @endsection
 @push('script')
 
-<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-<script>
-    $(function() {
-        $('#datatable').DataTable({
-            responsive: true,
-            processing: true,
-            serverSide: true,
-            ajax: '{!! route('superadmin.package.index') !!}',
-            columns: [
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'branch',
-                    name: 'branch'
-                },
-                {
-                    data: 'admin',
-                    name: 'admin'
-                },
-                {
-                    data: 'manager',
-                    name: 'manager'
-                },
-                {
-                    data: 'customer',
-                    name: 'customer'
-                },
-                {
-                    data: 'invoice',
-                    name: 'invoice'
-                },
-                {
-                    data: 'duration_day',
-                    name: 'duration_day'
-                },
-                {
-                    data: 'price_per_message',
-                    name: 'price_per_message'
-                },
-                {
-                    data: 'free_sms',
-                    name: 'free_sms'
-                },
-                {
-                    data: 'purchase',
-                    name: 'purchase'
-                },
-                {
-                    data: 'status',
-                    name: 'status'
-                },
-                {
-                    data: 'action',
-                    name: 'action'
-                },
-            ],
-            initComplete: function() {
-                this.api().columns().every(function() {
-                    var column = this;
-                    var input = document.createElement("input");
-                    $(input).appendTo($(column.footer()).empty())
-                        .on('change', function() {
-                            column.search($(this).val(), false, false, true).draw();
-                        });
-                });
-            }
-        });
-    });
-</script>
 @endpush

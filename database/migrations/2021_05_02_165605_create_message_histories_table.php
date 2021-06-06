@@ -17,12 +17,14 @@ class CreateMessageHistoriesTable extends Migration
             $table->id();
             $table->foreignId('company_id');
             $table->foreignId('branch_id')->nullable();
+            $table->foreignId('package_id')->nullable();
             $table->foreignId('sender_id')->comment('message sender user id')->nullable();
             $table->foreignId('receiver_id')->nullable();
             $table->string('number');
             $table->longText('message');
             $table->integer('text_count')->default(0);
             $table->integer('message_count')->default(0);
+            $table->integer('message_cost')->default(0);
             $table->timestamps();
         });
     }

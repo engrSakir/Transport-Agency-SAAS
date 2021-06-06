@@ -19,26 +19,8 @@ class PackageController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()){
-            $data = Package::all();
-            return datatables::of($data)
-                ->addColumn('status', function($data) {
-                    if($data->is_active == true){
-                        return '<span class="badge badge-pill badge-success">Active</span>';
-                    }else{
-                        return '<span class="badge badge-pill badge-danger">Inactive</span>';
-                    }
-                })->addColumn('purchase', function($data) {
-                    return $data->purchases->count();
-                })->addColumn('action', function($data) {
-                    return '<a href="'.route('superadmin.package.edit', $data).'" class="btn btn-info m-1"><i class="fa fa-edit"></i> </a>
-                    <button class="btn btn-danger m-1" onclick="delete_function(this)" value="'.route('superadmin.package.destroy', $data).'"><i class="fa fa-trash"></i> </button>';
-                })
-                ->rawColumns(['status', 'purchase', 'action'])
-                ->make(true);
-        }else{
-            return view('backend.superadmin.package.index');
-        }
+        $packages = Package::all();
+        return view('backend.superadmin.package.index', compact('packages'));
     }
 
     /**
