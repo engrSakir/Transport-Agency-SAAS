@@ -54,8 +54,13 @@
                                                 Free sms <i class="h2">{{ $package->free_sms }}</i>
                                             </div>
                                             <div class="price-row">
-                                                <input type="hidden" class="package" value="{{ $package->id }}">
-                                                <button class="btn btn-danger waves-effect waves-light m-t-20 buy-btn">Buy Now</button>
+                                                @if(auth()->user()->company->purchasePackage->package->id == $package->id)
+                                                    <button class="btn btn-success waves-effect waves-light m-t-20 disabled">Activated</button>
+                                                @else
+                                                    <input type="hidden" class="package" value="{{ $package->id }}">
+                                                    <button class="btn btn-danger waves-effect waves-light m-t-20 buy-btn">Buy Now</button>
+                                                @endif
+
                                             </div>
                                         </div>
                                     </div>
