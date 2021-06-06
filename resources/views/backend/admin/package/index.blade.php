@@ -54,7 +54,8 @@
                                                 Free sms <i class="h2">{{ $package->free_sms }}</i>
                                             </div>
                                             <div class="price-row">
-                                                <button class="btn btn-danger waves-effect waves-light m-t-20">Buy Now</button>
+                                                <input type="hidden" class="package" value="{{ $package->id }}">
+                                                <button class="btn btn-danger waves-effect waves-light m-t-20 buy-btn">Buy Now</button>
                                             </div>
                                         </div>
                                     </div>
