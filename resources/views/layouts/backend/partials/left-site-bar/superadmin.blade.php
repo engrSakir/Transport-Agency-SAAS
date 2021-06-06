@@ -27,6 +27,11 @@
         <li><a href="{{ route('superadmin.branch.create') }}">Create </a></li>
     </ul>
 </li>
+<li><a href="javascript:void(0)" class="has-arrow"> <i class="far fa-circle text-success"></i>Transaction</a>
+    <ul aria-expanded="false" class="collapse">
+        <li><a href="{{ route('superadmin.transaction.index') }}">List </a></li>
+    </ul>
+</li>
 <hr class="bg-white">
 <li>
     <a class="waves-effect waves-dark" href="{{ route('superadmin.banner') }}">

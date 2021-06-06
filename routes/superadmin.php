@@ -66,6 +66,7 @@ Route::group(['middleware' => 'superadmin', 'as' => 'superadmin.', 'prefix' => '
         Route::resource('package', SuperAdmin\PackageController::class);
         Route::resource('company', SuperAdmin\CompanyController::class);
         Route::resource('branch', SuperAdmin\BranchController::class);
+        Route::resource('transaction', SuperAdmin\TransactionController::class);
 
     });
 
