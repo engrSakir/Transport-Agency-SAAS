@@ -72,6 +72,333 @@
                                     @enderror
                                 </div>
                             </div>
+                            <hr class="bg-success m-3">
+                            <hr class="bg-danger m-3">
+                            <div class="row">
+                                <!--/Head office-->
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="invoice_sms_to_receiver_at_receive" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="invoice_sms_to_receiver_at_receive"
+                                                       value="1"
+                                                       @if($company->invoice_sms_to_receiver_at_receive) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="invoice_sms_to_receiver_at_receive">invoice_sms_to_receiver_at_receive</label>
+                                            </div>
+                                            @error('invoice_sms_to_receiver_at_receive')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="invoice_sms_to_receiver_at_on_going" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="invoice_sms_to_receiver_at_on_going"
+                                                       value="1"
+                                                       @if($company->invoice_sms_to_receiver_at_on_going) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="invoice_sms_to_receiver_at_on_going">invoice_sms_to_receiver_at_on_going</label>
+                                            </div>
+                                            @error('invoice_sms_to_receiver_at_on_going')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="invoice_sms_to_receiver_at_delivered" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="invoice_sms_to_receiver_at_delivered"
+                                                       value="1"
+                                                       @if($company->invoice_sms_to_receiver_at_delivered) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="invoice_sms_to_receiver_at_delivered">invoice_sms_to_receiver_at_delivered</label>
+                                            </div>
+                                            @error('invoice_sms_to_receiver_at_delivered')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="invoice_sms_to_sender_at_receive" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="invoice_sms_to_sender_at_receive"
+                                                       value="1"
+                                                       @if($company->invoice_sms_to_sender_at_receive) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="invoice_sms_to_sender_at_receive">invoice_sms_to_sender_at_receive</label>
+                                            </div>
+                                            @error('invoice_sms_to_sender_at_receive')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="invoice_sms_to_sender_at_on_going" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="invoice_sms_to_sender_at_on_going"
+                                                       value="1"
+                                                       @if($company->invoice_sms_to_sender_at_on_going) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="invoice_sms_to_sender_at_on_going">invoice_sms_to_sender_at_on_going</label>
+                                            </div>
+                                            @error('invoice_sms_to_sender_at_on_going')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="invoice_sms_to_sender_at_delivered" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="invoice_sms_to_sender_at_delivered"
+                                                       value="1"
+                                                       @if($company->invoice_sms_to_sender_at_delivered) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="invoice_sms_to_sender_at_delivered">invoice_sms_to_sender_at_delivered</label>
+                                            </div>
+                                            @error('invoice_sms_to_sender_at_delivered')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="conditional_invoice_sms_to_receiver_at_receive" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="conditional_invoice_sms_to_receiver_at_receive"
+                                                       value="1"
+                                                       @if($company->conditional_invoice_sms_to_receiver_at_receive) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="conditional_invoice_sms_to_receiver_at_receive">conditional_invoice_sms_to_receiver_at_receive</label>
+                                            </div>
+                                            @error('conditional_invoice_sms_to_receiver_at_receive')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="conditional_invoice_sms_to_receiver_at_on_going" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="conditional_invoice_sms_to_receiver_at_on_going"
+                                                       value="1"
+                                                       @if($company->conditional_invoice_sms_to_receiver_at_on_going) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="conditional_invoice_sms_to_receiver_at_on_going">conditional_invoice_sms_to_receiver_at_on_going</label>
+                                            </div>
+                                            @error('conditional_invoice_sms_to_receiver_at_on_going')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="conditional_invoice_sms_to_receiver_at_delivered" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="conditional_invoice_sms_to_receiver_at_delivered"
+                                                       value="1"
+                                                       @if($company->conditional_invoice_sms_to_receiver_at_delivered) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="conditional_invoice_sms_to_receiver_at_delivered">conditional_invoice_sms_to_receiver_at_delivered</label>
+                                            </div>
+                                            @error('conditional_invoice_sms_to_receiver_at_delivered')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="conditional_invoice_sms_to_receiver_at_break" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="conditional_invoice_sms_to_receiver_at_break"
+                                                       value="1"
+                                                       @if($company->conditional_invoice_sms_to_receiver_at_break) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="conditional_invoice_sms_to_receiver_at_break">conditional_invoice_sms_to_receiver_at_break</label>
+                                            </div>
+                                            @error('conditional_invoice_sms_to_receiver_at_break')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="conditional_invoice_sms_to_sender_at_receive" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="conditional_invoice_sms_to_sender_at_receive"
+                                                       value="1"
+                                                       @if($company->conditional_invoice_sms_to_sender_at_receive) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="conditional_invoice_sms_to_sender_at_receive">conditional_invoice_sms_to_sender_at_receive</label>
+                                            </div>
+                                            @error('conditional_invoice_sms_to_sender_at_receive')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="conditional_invoice_sms_to_sender_at_on_going" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="conditional_invoice_sms_to_sender_at_on_going"
+                                                       value="1"
+                                                       @if($company->conditional_invoice_sms_to_sender_at_on_going) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="conditional_invoice_sms_to_sender_at_on_going">conditional_invoice_sms_to_sender_at_on_going</label>
+                                            </div>
+                                            @error('conditional_invoice_sms_to_sender_at_on_going')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="conditional_invoice_sms_to_sender_at_delivered" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="conditional_invoice_sms_to_sender_at_delivered"
+                                                       value="1"
+                                                       @if($company->conditional_invoice_sms_to_sender_at_delivered) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="conditional_invoice_sms_to_sender_at_delivered">conditional_invoice_sms_to_sender_at_delivered</label>
+                                            </div>
+                                            @error('conditional_invoice_sms_to_sender_at_delivered')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="conditional_invoice_sms_to_sender_at_break" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="conditional_invoice_sms_to_sender_at_break"
+                                                       value="1"
+                                                       @if($company->conditional_invoice_sms_to_sender_at_break) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="conditional_invoice_sms_to_sender_at_break">conditional_invoice_sms_to_sender_at_break</label>
+                                            </div>
+                                            @error('conditional_invoice_sms_to_sender_at_break')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="sms_chalan_information_to_receiver_branch" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="sms_chalan_information_to_receiver_branch"
+                                                       value="1"
+                                                       @if($company->sms_chalan_information_to_receiver_branch) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="sms_chalan_information_to_receiver_branch">sms_chalan_information_to_receiver_branch</label>
+                                            </div>
+                                            @error('sms_chalan_information_to_receiver_branch')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="custom_sms_to_random_number" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="custom_sms_to_random_number"
+                                                       value="1"
+                                                       @if($company->custom_sms_to_random_number) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="custom_sms_to_random_number">custom_sms_to_random_number</label>
+                                            </div>
+                                            @error('custom_sms_to_random_number')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="bg-success m-3">
+                            <hr class="bg-danger m-3">
                             <div class="col-12 text-center">
                                 <button id="submit-btn" class="btn btn-primary">Update</button>
                             </div>
