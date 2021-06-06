@@ -34,7 +34,7 @@
                     <p class="text-danger">** City Bank - Begum rokeya shoroni - DATATECH DB LTD. - <b>A/C:
                             1402924223001</b></p>
                     <p class="text-danger">*** bKash personal: 01857110581</p>
-                    <form action="{{ route('superadmin.transaction.update', $transaction) }}" method="post">
+                    <form action="{{ route('superadmin.transaction.update', $transaction) }}" method="post" enctype="multipart/form-data">
                         @method('patch')
                         @csrf
                         <div class="form-body">

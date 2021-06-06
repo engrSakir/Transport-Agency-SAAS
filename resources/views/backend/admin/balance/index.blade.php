@@ -31,7 +31,7 @@
                     <p class="text-danger">* সঠিকভাবে পেমেন্টের তথ্য দিয়ে সাহায্য করুন, তাতে আপনার পেমেন্ট দ্রুত অ্যাপ্রুভ হবে। যেমন আপনি কত টাকা পেমেন্ট করেছেন এবং কোন ব্যাংক ব্যবহার করে পেমেন্ট করেছেন অথবা কোন মোবাইল ব্যাংকিং ব্যবহার করে পেমেন্ট করেছেন সে সম্পর্কে লিখুন।</p>
                     <p class="text-danger">** City Bank - Begum rokeya shoroni - DATATECH DB LTD. - <b>A/C: 1402924223001</b></p>
                     <p class="text-danger">*** bKash personal: 01857110581</p>
-                    <form action="{{ route('admin.balance.add') }}" method="post">
+                    <form action="{{ route('admin.balance.add') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-body">
                             <div class="row p-t-20">
