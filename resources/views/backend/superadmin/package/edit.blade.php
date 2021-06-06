@@ -85,30 +85,6 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="customer" class="col-sm-4 col-form-label">Customer</label>
-                                <div class="col-sm-8">
-                                    <input value="{{ $package->customer }}" name="customer" type="number" class="form-control"
-                                           id="customer" placeholder="customer">
-                                    @error('customer')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="invoice" class="col-sm-4 col-form-label">Invoice</label>
-                                <div class="col-sm-8">
-                                    <input value="{{ $package->invoice }}" name="invoice" type="number" class="form-control"
-                                           id="invoice" placeholder="invoice">
-                                    @error('invoice')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label for="free_sms" class="col-sm-4 col-form-label">Free SMS</label>
                                 <div class="col-sm-8">
                                     <input value="{{ $package->free_sms }}" name="free_sms" type="number" class="form-control"

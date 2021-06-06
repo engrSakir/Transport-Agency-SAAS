@@ -7,6 +7,7 @@ use App\Models\Branch;
 use App\Models\Package;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 class PackageController extends Controller
@@ -63,8 +64,6 @@ class PackageController extends Controller
            'branch'=>'required|numeric|min:0',
            'admin'=>'required|numeric|min:0',
            'manager'=>'required|numeric|min:0',
-           'customer'=>'required|numeric|min:0',
-           'invoice'=>'required|numeric|min:0',
            'free_sms'=>'required|numeric|min:0',
            'price_per_message'=>'required|numeric|min:0',
            'duration'=>'required|numeric|min:0',
@@ -75,11 +74,10 @@ class PackageController extends Controller
         $package = new Package();
         $package->is_active =   $request->status;
         $package->name  =   $request->name;
+        $package->slug  =   Str::slug($request->name,'-');
         $package->branch    =   $request->branch;
         $package->admin =   $request->admin;
         $package->manager   =   $request->manager;
-        $package->customer  =   $request->customer;
-        $package->invoice   =   $request->invoice;
         $package->free_sms   =   $request->free_sms;
         $package->price_per_message   =   $request->price_per_message;
         $package->duration   =   $request->duration;
@@ -123,13 +121,13 @@ class PackageController extends Controller
      */
     public function update(Request $request, Package $package)
     {
+
         $request->validate([
-            'name'=>'required|string|unique:packages,name,'.$package->id,
+//            'name'=>'required|string|unique:packages,name,'.$package->id,
+            'name'=>'required|string',
             'branch'=>'required|numeric|min:0',
             'admin'=>'required|numeric|min:0',
             'manager'=>'required|numeric|min:0',
-            'customer'=>'required|numeric|min:0',
-            'invoice'=>'required|numeric|min:0',
             'free_sms'=>'required|numeric|min:0',
             'price_per_message'=>'required|numeric|min:0',
             'duration'=>'required|numeric|min:0',
@@ -139,11 +137,10 @@ class PackageController extends Controller
 
         $package->is_active =   $request->status;
         $package->name  =   $request->name;
+        $package->slug  =   Str::slug($request->name,'-');
         $package->branch    =   $request->branch;
         $package->admin =   $request->admin;
         $package->manager   =   $request->manager;
-        $package->customer  =   $request->customer;
-        $package->invoice   =   $request->invoice;
         $package->free_sms   =   $request->free_sms;
         $package->price_per_message   =   $request->price_per_message;
         $package->duration   =   $request->duration;

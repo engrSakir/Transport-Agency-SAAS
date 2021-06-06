@@ -100,7 +100,7 @@
                                         response.message,
                                         response.type
                                     )
-                                    location.replace(response.url);
+                                    location.reload();
                                 }else{
                                     Swal.fire(
                                         'দুঃখিত !',
