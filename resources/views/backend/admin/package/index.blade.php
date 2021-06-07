@@ -31,11 +31,11 @@
                     <div class="card-body">
                         <div class="row pricing-plan">
                             @foreach($packages as $package)
-                            <div class="col-md-3 col-xs-12 col-sm-6 no-padding">
+                            <div class="col-md-3 col-xs-12 col-sm-6 no-padding mb-5">
                                 <div class="pricing-box m-2 bg-secondary">
                                     <div class="pricing-body b-l">
                                         <div class="pricing-header">
-                                            <h4 class="price-lable text-white bg-warning"> Rating {{ $package->purchases->count() }}</h4>
+                                            <h4 class="price-lable text-white bg-warning"> #ID {{ $loop->iteration }}</h4>
                                             <h4 class="text-center">{{ $package->name }}</h4>
                                             <h2 class="text-center"><span class="price-sign">৳</span>{{ $package->price }}</h2>
                                             <hr class="bg-danger">
@@ -47,8 +47,8 @@
                                             <div class="price-row"> Branch {{ $package->branch }}</div>
                                             <div class="price-row"> Admin {{ $package->admin }}</div>
                                             <div class="price-row"> Manager {{ $package->manager }}</div>
-                                            <div class="price-row"> Customer {{ $package->customer }}</div>
-                                            <div class="price-row"> Invoice {{ $package->invoice }}</div>
+                                            <div class="price-row"> Customer <b>Unlimited</b></div>
+                                            <div class="price-row"> Invoice <b>Unlimited</b></div>
                                             <div class="price-row"> Per SMS price {{ $package->price_per_message }}</div>
                                             <div class="price-row bg-cyan rounded text-white font-weight-bold">
                                                 Free sms <i class="h2">{{ $package->free_sms }}</i>
