@@ -289,6 +289,159 @@
     </div><!-- /.owl-carousel -->
 </section>
 
+<!--faq section-->
+<section class="row faq-section" id="faq">
+    <div class="col-lg-6 col-md-12 faq-desc bg-color">
+        <div class="title-section t-border pb-60">
+            <h2>FAQ'S</h2>
+            <p class="title-desc"> Lorem ipsum dolor sit amet, consectetur adipiscing </p>
+        </div>
+        <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+            <div class="card">
+                <div class="card-header" role="tab" id="headingOne1">
+                    <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                       aria-controls="collapseOne1">
+                        <h5 class="mb-0"> How it work ?</h5>
+                    </a>
+                </div>
+                <!-- Card body -->
+                <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+                     data-parent="#accordionEx">
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec sagittis nisi. Duis
+                            rhoncus imperdiet tortor eu sodales</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion card -->
+
+            <!-- Accordion card -->
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header" role="tab" id="headingTwo2">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
+                       aria-expanded="false" aria-controls="collapseTwo2">
+                        <h5 class="mb-0">
+                            There are many variations of passage ?</h5>
+                    </a>
+                </div>
+                <!-- Card body -->
+                <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
+                     data-parent="#accordionEx">
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec sagittis nisi. Duis
+                            rhoncus imperdiet tortor eu sodales</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion card -->
+
+            <!-- Accordion card -->
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header" role="tab" id="headingThree3">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
+                       aria-expanded="false" aria-controls="collapseThree3">
+                        <h5 class="mb-0">Warehosing solutions</h5>
+                    </a>
+                </div>
+                <!-- Card body -->
+                <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
+                     data-parent="#accordionEx">
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec sagittis nisi. Duis
+                            rhoncus imperdiet tortor eu sodales Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Aenean nec sagittis nisi. Duis rhoncus imperdiet tortor eu sodales</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12 faq-details">
+        <form id="companyRegistrationForm" action="{{ route('frontend.companyRegistration') }}" method="post">
+            @csrf
+            <div class="service-form">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 faq-section-title center pb-60">
+                        <h2>ট্রান্সপোর্ট এজেন্সি সফটওয়্যারে </h2>
+                        <h3><span>আপনার কোম্পানি একাউন্ট খুলুন</span></h3>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                        <div class="form-group service-form-group">
+                            <label class="control-label sr-only" for="company_name"></label>
+                            <input id="company_name" name="company_name" type="text" placeholder="আপনার কোম্পানির নাম" title="আপনার কোম্পানির নাম" class="form-control" required>
+                            @error('company_name')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $message }}
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12  ">
+                        <div class="form-group service-form-group">
+                            <label class="control-label sr-only" for="name"></label>
+                            <input id="name" name="name" type="text" placeholder="আপনার পূর্ণাঙ্গ নাম" title="আপনার পূর্ণাঙ্গ নাম" class="form-control" required>
+                            @error('name')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $message }}
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
+                        <div class="form-group service-form-group">
+                            <label class="control-label sr-only" for="phone"></label>
+                            <input id="phone" name="phone" type="text" placeholder="আপনার মোবাইল নাম্বার" title="আপনার মোবাইল নাম্বার" class="form-control" required>
+                            @error('phone')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $message }}
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
+                        <div class="form-group service-form-group">
+                            <label class="control-label sr-only" for="email"></label>
+                            <input id="email" name="email" type="email" placeholder="আপনার ইমেইল এড্রেস" title="আপনার ইমেইল এড্রেস" class="form-control" required>
+                            @error('email')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $message }}
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12  ">
+                        <div class="form-group service-form-group">
+                            <label class="control-label sr-only" for="password"></label>
+                            <input id="password" name="password" type="password" placeholder="একটি নতুন পাসপোর্ট লিখুন" title="একটি নতুন পাসপোর্ট লিখুন" class="form-control" required>
+                            @error('password')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $message }}
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12  ">
+                        <div class="form-group service-form-group">
+                            <label class="control-label sr-only" for="password_confirmation"></label>
+                            <input id="password_confirmation" name="password_confirmation" type="password" placeholder="পাসওয়ার্ডটি পুনরায় লিখুন"  title="পাসওয়ার্ডটি পুনরায় লিখুন" class="form-control" required>
+                            @error('password_confirmation')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $message }}
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 submit-btn">
+                        <button type="submit" style="cursor: pointer;" class="send-btn col-12"> সাবমিট </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<!--faq section-->
+
 <!--shiping section-->
 <section class="shiping-section space1" id="shiping">
     <div class="container">
@@ -609,158 +762,7 @@
 </section>
 <!--pricing section-->
 
-<!--faq section-->
-<section class="row faq-section" id="faq">
-    <div class="col-lg-6 col-md-12 faq-desc bg-color">
-        <div class="title-section t-border pb-60">
-            <h2>FAQ'S</h2>
-            <p class="title-desc"> Lorem ipsum dolor sit amet, consectetur adipiscing </p>
-        </div>
-        <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
-            <div class="card">
-                <div class="card-header" role="tab" id="headingOne1">
-                    <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
-                       aria-controls="collapseOne1">
-                        <h5 class="mb-0"> How it work ?</h5>
-                    </a>
-                </div>
-                <!-- Card body -->
-                <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
-                     data-parent="#accordionEx">
-                    <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec sagittis nisi. Duis
-                            rhoncus imperdiet tortor eu sodales</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Accordion card -->
 
-            <!-- Accordion card -->
-            <div class="card">
-                <!-- Card header -->
-                <div class="card-header" role="tab" id="headingTwo2">
-                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
-                       aria-expanded="false" aria-controls="collapseTwo2">
-                        <h5 class="mb-0">
-                            There are many variations of passage ?</h5>
-                    </a>
-                </div>
-                <!-- Card body -->
-                <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
-                     data-parent="#accordionEx">
-                    <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec sagittis nisi. Duis
-                            rhoncus imperdiet tortor eu sodales</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Accordion card -->
-
-            <!-- Accordion card -->
-            <div class="card">
-                <!-- Card header -->
-                <div class="card-header" role="tab" id="headingThree3">
-                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
-                       aria-expanded="false" aria-controls="collapseThree3">
-                        <h5 class="mb-0">Warehosing solutions</h5>
-                    </a>
-                </div>
-                <!-- Card body -->
-                <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
-                     data-parent="#accordionEx">
-                    <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec sagittis nisi. Duis
-                            rhoncus imperdiet tortor eu sodales Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Aenean nec sagittis nisi. Duis rhoncus imperdiet tortor eu sodales</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6 col-md-12 faq-details">
-        <form id="companyRegistrationForm" action="{{ route('frontend.companyRegistration') }}" method="post">
-            @csrf
-            <div class="service-form">
-                <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-12 faq-section-title center pb-60">
-                            <h2>ট্রান্সপোর্ট এজেন্সি সফটওয়্যারে </h2>
-                            <h3><span>আপনার কোম্পানি একাউন্ট খুলুন</span></h3>
-                        </div>
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
-                            <div class="form-group service-form-group">
-                                <label class="control-label sr-only" for="company_name"></label>
-                                <input id="company_name" name="company_name" type="text" placeholder="আপনার কোম্পানির নাম" title="আপনার কোম্পানির নাম" class="form-control" required>
-                                @error('company_name')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12  ">
-                            <div class="form-group service-form-group">
-                                <label class="control-label sr-only" for="name"></label>
-                                <input id="name" name="name" type="text" placeholder="আপনার পূর্ণাঙ্গ নাম" title="আপনার পূর্ণাঙ্গ নাম" class="form-control" required>
-                                @error('name')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
-                            <div class="form-group service-form-group">
-                                <label class="control-label sr-only" for="phone"></label>
-                                <input id="phone" name="phone" type="text" placeholder="আপনার মোবাইল নাম্বার" title="আপনার মোবাইল নাম্বার" class="form-control" required>
-                                @error('phone')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
-                            <div class="form-group service-form-group">
-                                <label class="control-label sr-only" for="email"></label>
-                                <input id="email" name="email" type="email" placeholder="আপনার ইমেইল এড্রেস" title="আপনার ইমেইল এড্রেস" class="form-control" required>
-                                @error('email')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12  ">
-                            <div class="form-group service-form-group">
-                                <label class="control-label sr-only" for="password"></label>
-                                <input id="password" name="password" type="password" placeholder="একটি নতুন পাসপোর্ট লিখুন" title="একটি নতুন পাসপোর্ট লিখুন" class="form-control" required>
-                                @error('password')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12  ">
-                            <div class="form-group service-form-group">
-                                <label class="control-label sr-only" for="password_confirmation"></label>
-                                <input id="password_confirmation" name="password_confirmation" type="password" placeholder="পাসওয়ার্ডটি পুনরায় লিখুন"  title="পাসওয়ার্ডটি পুনরায় লিখুন" class="form-control" required>
-                                @error('password_confirmation')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 submit-btn">
-                            <button type="submit" style="cursor: pointer;" class="send-btn col-12"> সাবমিট </button>
-                        </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</section>
-<!--faq section-->
 
 <!--team section-->
 <section class="row team-section space" id="team">
