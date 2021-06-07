@@ -68,14 +68,11 @@
                             <input type="hidden" value="sender-name">
                             <input type="text" class="form-control search-item" id="sender-name" name="sender-name" placeholder="Sender name" value="{{ $invoice->sender_name }}">
                         </div>
-                        @if($invoice->condition_amount > 0)
-{{--                            This id condition type invoice--}}
-                            <div class="form-group col-md-3">
-                                <label for="sender-phone">প্রেরকের ফোন</label>
-                                <input type="hidden" value="sender-phone">
-                                <input type="text" class="form-control search-item" id="sender-phone" name="sender-phone" placeholder="Sender phone" value="{{ $invoice->sender_phone }}">
-                            </div>
-                        @endif
+                        <div class="form-group col-md-3">
+                            <label for="sender-phone">প্রেরকের ফোন</label>
+                            <input type="hidden" value="sender-phone">
+                            <input type="text" class="form-control search-item" id="sender-phone" name="sender-phone" placeholder="Sender phone" value="{{ $invoice->sender_phone }}">
+                        </div>
                         <div class="form-group col-md-3">
                             <label for="receiver-name">প্রাপকের নাম</label>
                             <input type="hidden" value="receiver-name">
@@ -434,11 +431,11 @@
                         advance:$('#edit-inv-form #advance').val(),
                         home:$('#edit-inv-form #home').val(),
                         labour:$('#edit-inv-form #labour').val(),
+                        sender_phone: $('#sender-phone').val(),
                         @if($invoice->condition_amount > 0)
                         condition: true,
                         condition_amount: $('#condition-amount').val(),
                         condition_charge: $('#condition-charge').val(),
-                        sender_phone: $('#sender-phone').val(),
                         @endif
                     },
                     beforeSend: function (){
