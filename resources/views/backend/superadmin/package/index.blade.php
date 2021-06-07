@@ -38,6 +38,7 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Price</th>
                                         <th>Branch</th>
                                         <th>Admin</th>
                                         <th>Manager</th>
@@ -53,6 +54,7 @@
                                     @foreach($packages as $package)
                                       <tr>
                                           <td>{{ $package->name }}</td>
+                                          <td>{{ $package->price }}</td>
                                           <td>{{ $package->branch }}</td>
                                           <td>{{ $package->admin }}</td>
                                           <td>{{ $package->manager }}</td>
@@ -71,6 +73,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Price</th>
                                         <th>Branch</th>
                                         <th>Admin</th>
                                         <th>Manager</th>
