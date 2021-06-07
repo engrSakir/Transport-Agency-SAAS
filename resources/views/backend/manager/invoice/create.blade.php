@@ -32,13 +32,11 @@
                             <input type="hidden" value="sender-name">
                             <input type="text" class="form-control search-item" id="sender-name" name="sender-name" placeholder="Sender name" value="">
                         </div>
-                        @if(Request::is('*/manager/condition-invoice/create'))
-                            <div class="form-group col-md-3">
-                                <label for="sender-phone">প্রেরকের ফোন</label>
-                                <input type="hidden" value="sender-phone">
-                                <input type="text" class="form-control search-item" id="sender-phone" name="sender-phone" placeholder="Sender phone" value="">
-                            </div>
-                        @endif
+                        <div class="form-group col-md-3">
+                            <label for="sender-phone">প্রেরকের ফোন</label>
+                            <input type="hidden" value="sender-phone">
+                            <input type="text" class="form-control search-item" id="sender-phone" name="sender-phone" placeholder="Sender phone" value="">
+                        </div>
                         <div class="form-group col-md-3">
                             <label for="receiver-name">প্রাপকের নাম</label>
                             <input type="hidden" value="receiver-name">
@@ -151,6 +149,15 @@
                         <button type="button" id="save-invoice" class="btn waves-effect waves-light btn-lg btn-primary"> ভাউচার সেভ </button>
                     </div>
                 </form>
+            </div>
+        </div>
+        <div class="col-sm-12 response_area" style="display:none;">
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                <h3 class="text-success"><i class="fa fa-check-circle response_inv_id"></i>{{--Assign by ajax--}}</h3>
+                <p class="response_inv_message">
+                    {{--Assign by ajax--}}
+                </p>
             </div>
         </div>
     </div>
@@ -390,11 +397,11 @@
                 formData.append('advance', $('#advance').val());
                 formData.append('home', $('#home').val());
                 formData.append('labour', $('#labour').val());
+                formData.append('sender_phone', $('#sender-phone').val());
                 @if(Request::is('*/manager/condition-invoice/create'))
                 formData.append('condition', true);
                 formData.append('condition_amount', $('#condition-amount').val());
                 formData.append('condition_charge', $('#condition-charge').val());
-                formData.append('sender_phone', $('#sender-phone').val());
                 @endif
                 $.ajax({
                     method: 'POST',
@@ -419,11 +426,16 @@
                             $('#extra-large-modal-body').addClass( "text-center" );
                             $('#extra-large-modal-title').text( "INVOICE" );
                             $('#extra-large-modal').modal('show');
+                            $('.response_area').css('display','block');
+                            $('.response_inv_id').text('বিল নংঃ '+data.invoice_id);
+                            $('.response_inv_message').text(data.sms_api_response);
                             Swal.fire({
+                                position: 'bottom-end',
                                 icon: data.type,
-                                title: 'INVOICE',
-                                text: data.message,
-                            });
+                                title: data.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
                         }else{
                             Swal.fire({
                                 icon: data.type,

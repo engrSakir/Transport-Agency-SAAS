@@ -133,11 +133,12 @@ class InvoiceController extends Controller
 
         $invoice->creator_id        = auth()->user()->id;
 
+        $invoice->sender_phone              = bn_to_en($request->sender_phone);
+
         //If conditional invoice
         if(auth()->user()->branch->active_conditional_booking && $request->condition){
             $invoice->condition_amount              = bn_to_en($request->condition_amount);
             $invoice->condition_charge              = bn_to_en($request->condition_charge);
-            $invoice->sender_phone              = bn_to_en($request->sender_phone);
         }
 
         //Logic for custom counter
@@ -171,31 +172,33 @@ class InvoiceController extends Controller
         }
 
         //# Step 5 SMS
+        $sms_api_response = '';
         if(company()->invoice_sms_to_receiver_at_receive && !check_conditional_invoice($invoice) && $invoice->receiver->phone){
             //send message to receiver of this general invoice
-            paid_sms_sender($invoice->receiver->phone,company()->name.' আপনার মাল '.$invoice->sender_name.' থেকে রিসিভ করেছে। বিল নং '.$invoice->custom_counter);
+            $sms_api_response .= 'প্রাপকঃ ' . paid_sms_sender($invoice->receiver->phone,company()->name.' আপনার মাল '.$invoice->sender_name.' থেকে রিসিভ করেছে। বিল নং '.$invoice->custom_counter);
         }
 
         if(company()->invoice_sms_to_sender_at_receive && !check_conditional_invoice($invoice) && $invoice->sender_phone){
             //send message to sender of this general invoice
-            paid_sms_sender($invoice->sender_phone,company()->name.' এর পক্ষ থেকে মাল বুকিং হয়েছে। পার্টি '.$invoice->receiver->name.' এবং বিল নং '.$invoice->custom_counter);
+            $sms_api_response .= 'প্রেরকঃ ' . paid_sms_sender($invoice->sender_phone,company()->name.' এর পক্ষ থেকে মাল বুকিং হয়েছে। পার্টি '.$invoice->receiver->name.' এবং বিল নং '.$invoice->custom_counter);
         }
 
         if(company()->conditional_invoice_sms_to_receiver_at_receive && auth()->user()->branch->active_conditional_booking && check_conditional_invoice($invoice) && $invoice->receiver->phone){
             //send message to receiver of this conditional invoice
-            paid_sms_sender($invoice->receiver->phone,company()->name.' আপনার মাল '.$invoice->sender_name.' থেকে কন্ডিশনে রিসিভ করেছে। বিল নং '.$invoice->custom_counter);
+            $sms_api_response .= 'প্রাপকঃ ' . paid_sms_sender($invoice->receiver->phone,company()->name.' আপনার মাল '.$invoice->sender_name.' থেকে কন্ডিশনে রিসিভ করেছে। বিল নং '.$invoice->custom_counter);
         }
 
         if(company()->conditional_invoice_sms_to_sender_at_receive && auth()->user()->branch->active_conditional_booking && check_conditional_invoice($invoice) && $invoice->sender_phone){
             //send message to sender of this conditional invoice
-            paid_sms_sender($invoice->sender_phone,company()->name.' এর পক্ষ থেকে মাল কন্ডিশনে বুকিং হয়েছে। পার্টি '.$invoice->receiver->name.' এবং বিল নং '.$invoice->custom_counter);
+            $sms_api_response .= 'প্রেরকঃ ' . paid_sms_sender($invoice->sender_phone,company()->name.' এর পক্ষ থেকে মাল কন্ডিশনে বুকিং হয়েছে। পার্টি '.$invoice->receiver->name.' এবং বিল নং '.$invoice->custom_counter);
         }
-
 
         return response()->json([
             'type' => 'success',
-            'message' => 'Successfully done',
+            'message' => 'বিল তৈরি হয়েছে।',
             'url' => route('manager.invoice.show', $invoice),
+            'invoice_id' => $invoice->id,
+            'sms_api_response' => $sms_api_response,
         ]);
     }
 
