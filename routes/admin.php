@@ -14,6 +14,9 @@ Route::group(['middleware' => 'admin', 'as' => 'admin.', 'prefix' => 'backend/ad
     Route::get('/balance-add', [Admin\BalanceController::class, 'index'])->name('balance.index');
     Route::post('/balance-add', [Admin\BalanceController::class, 'add'])->name('balance.add');
 
+    Route::get('/sms', [Admin\SmsController::class, 'index'])->name('sms.index');
+    Route::post('/sms', [Admin\SmsController::class, 'send'])->name('sms.send');
+
     Route::resource('branch', Admin\BranchController::class);
     Route::resource('manager', Admin\ManagerController::class);
 

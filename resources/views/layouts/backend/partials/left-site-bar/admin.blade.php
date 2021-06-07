@@ -28,4 +28,11 @@
         <i class="far fa-circle text-success"></i><span class="hide-menu">Package</span>
     </a>
 </li>
+@if(auth()->user()->company->custom_sms_to_random_number)
+<li>
+    <a class="waves-effect waves-dark" href="{{ route('admin.sms.index') }}">
+        <i class="far fa-circle text-success"></i><span class="hide-menu">Send SMS</span>
+    </a>
+</li>
+@endif
 

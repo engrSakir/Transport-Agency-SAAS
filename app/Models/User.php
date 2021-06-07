@@ -56,4 +56,18 @@ class User extends Authenticatable
         return $this->belongsTo(Branch::class, 'branch_id', 'id');
     }
 
+    public function messageHistories(){
+        return $this->hasMany(MessageHistory::class, 'sender_id', 'id');
+    }
+
+
+    // this is a recommended way to declare event handlers
+    public static function boot() {
+        parent::boot();
+        static::deleting(function($user) { // before delete() method call this
+
+            // do the rest of the cleanup...
+        });
+    }
+
 }

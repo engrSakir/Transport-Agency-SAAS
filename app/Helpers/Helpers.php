@@ -1,14 +1,12 @@
 <?php
 
-use App\Models\Branch;
 use App\Models\BranchLink;
 use App\Models\CustomPage;
-use App\Models\GlobalImages;
 use App\Models\StaticOption;
 use App\Models\Transaction;
 use App\Models\WebsiteMessage;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
+
 
 
 if (!function_exists('random_code')){
@@ -170,17 +168,12 @@ if (!function_exists('random_code')){
 
 
         //After checking all send to api
-        $message_content = urlencode($message);
-        $user = get_static_option('sms_api_key');
-        $pass = get_static_option('sms_api_pass');
-        $smsresult =  Http::get("http://66.45.237.70/api.php?username=$user&password=$pass&number=$number&message=$message_content");
+        $api_response = Http::acceptJson()->withToken(env('DATATECH_BD_LTD_SMS_API_SECRET'))->asForm()->post('http://sms.datatechbd.com/api/send-sms', [
+            'number' => $number,
+            'message' => $message,
+        ]);
 
-        if(strpos($smsresult, '1101') !== false){
-            $response = "SUCCESS";
-        } else{
-            $response = "FAILED";
-            return $response;
-        }
+        $response = $api_response->json()['message']; //Get a single string message from response collection
 
         if($response == "SUCCESS"){
             $transaction = new Transaction();
@@ -206,8 +199,8 @@ if (!function_exists('random_code')){
             $message_histories->text_count = strlen($message);
             $message_histories->message_count = message_count_from_string($message);
             $message_histories->save();
-            return $response;
         }
+        return $response;
     }
 
     function message_count_from_string($string){
