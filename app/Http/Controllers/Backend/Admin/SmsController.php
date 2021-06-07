@@ -23,7 +23,7 @@ class SmsController extends Controller
             'message' => 'required|string'
         ]);
 
-        $response = paid_sms_sender($request->number, $request->message);
+        $response = paid_sms_sender($request->number, $request->message .' '. auth()->user()->company->name);
 
         if($response == 'SUCCESS'){
             return back()->withSuccess('সফলভাবে ম্যাসেজ পাঠানো হয়েছে।');
