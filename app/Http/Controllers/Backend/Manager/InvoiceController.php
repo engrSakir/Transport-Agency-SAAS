@@ -160,16 +160,37 @@ class InvoiceController extends Controller
 
         }
 
-        //# Step 4 SMS
+        //# Step 4 SAVE Invoice
         try {
             $invoice->save();
-
         }catch (\Exception $exception){
             return response()->json([
                 'type' => 'error',
                 'message' => $exception->getMessage(),
             ]);
         }
+
+        //# Step 5 SMS
+        if(company()->invoice_sms_to_receiver_at_receive && !check_conditional_invoice($invoice) && $invoice->receiver->phone){
+            //send message to receiver of this general invoice
+            paid_sms_sender($invoice->receiver->phone,company()->name.' আপনার মাল '.$invoice->sender_name.' থেকে রিসিভ করেছে। বিল নং '.$invoice->custom_counter);
+        }
+
+        if(company()->invoice_sms_to_sender_at_receive && !check_conditional_invoice($invoice) && $invoice->sender_phone){
+            //send message to sender of this general invoice
+            paid_sms_sender($invoice->sender_phone,company()->name.' এর পক্ষ থেকে মাল বুকিং হয়েছে। পার্টি '.$invoice->receiver->name.' এবং বিল নং '.$invoice->custom_counter);
+        }
+
+        if(company()->conditional_invoice_sms_to_receiver_at_receive && auth()->user()->branch->active_conditional_booking && check_conditional_invoice($invoice) && $invoice->receiver->phone){
+            //send message to receiver of this conditional invoice
+            paid_sms_sender($invoice->receiver->phone,company()->name.' আপনার মাল '.$invoice->sender_name.' থেকে কন্ডিশনে রিসিভ করেছে। বিল নং '.$invoice->custom_counter);
+        }
+
+        if(company()->conditional_invoice_sms_to_sender_at_receive && auth()->user()->branch->active_conditional_booking && check_conditional_invoice($invoice) && $invoice->sender_phone){
+            //send message to sender of this conditional invoice
+            paid_sms_sender($invoice->sender_phone,company()->name.' এর পক্ষ থেকে মাল কন্ডিশনে বুকিং হয়েছে। পার্টি '.$invoice->receiver->name.' এবং বিল নং '.$invoice->custom_counter);
+        }
+
 
         return response()->json([
             'type' => 'success',

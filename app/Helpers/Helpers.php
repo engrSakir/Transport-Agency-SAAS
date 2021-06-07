@@ -117,6 +117,34 @@ if (!function_exists('random_code')){
        return false;
    }
 
+   function check_conditional_invoice(\App\Models\Invoice $invoice){
+       if($invoice->condition_amount > 0){
+           return true;
+       }
+       return false;
+   }
+
+   function company(){
+       if(auth()->user()->type == 'Manager') {
+           return auth()->user()->branch->company;
+       }
+       if(auth()->user()->type == 'Admin') {
+           return auth()->user()->company;
+       }
+       return false;
+   }
+
+   function company_balance(){
+       $current_balance = company()->transactions()->where('status', 'Approved')->where('type', 'Credit')->sum('amount')
+       - company()->transactions()->where('status', 'Approved')->where('type', 'Debit')->sum('amount');
+       return $current_balance;
+   }
+
+   function company_current_package(){
+       return company()->purchasePackage->package;
+   }
+
+
    function en_to_bn($en_value){
        $search         = array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
        $replace_by     =  array('১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯', '০');
@@ -130,37 +158,19 @@ if (!function_exists('random_code')){
        //return filter_var(str_replace($search, $replace_by, $bn_value), FILTER_SANITIZE_NUMBER_INT);
    }
 
-    function sms($number, $message){
-        $text = urlencode($message);
-        $user = get_static_option('sms_api_key');
-        $pass = get_static_option('sms_api_pass');
-        $smsresult =  Http::get("http://66.45.237.70/api.php?username=$user&password=$pass&number=$number&message=$text");
-
-        if(strpos($smsresult, '1101') !== false){
-            return true;
-        } else{
-            return false;
-        }
-    }
-
     function paid_sms_sender($number, $message){
         $response = null;
-
-        if(auth()->user()->type == 'Manager'){
-            $company = auth()->user()->branch->company;
+        if(check_manager()){
             $branch_id = auth()->user()->branch->id;
-            if($company->transactions()->where('status', 'Approved')->where('type', 'Credit')->sum('amount')
-                - $company->transactions()->where('status', 'Approved')->where('type', 'Debit')->sum('amount') < message_count_from_string($message) * $company->purchasePackage->package->price_per_message){
+            if(company_balance() < message_count_from_string($message) * company_current_package()->price_per_message){
                 $response = "আপনার কোম্পানির একাউন্টে মেসেজ দেওয়ার মতো পর্যাপ্ত পরিমাণ টাকা নেই। দয়া করে মেসেজ ব্যবহার করতে এডমিনকে অবগত করুন।";
                 return $response;
             }
         }
 
-        if(auth()->user()->type == 'Admin'){
-            $company = auth()->user()->company;
+        if(check_admin()){
             $branch_id =null;
-            if($company->transactions()->where('status', 'Approved')->where('type', 'Credit')->sum('amount')
-                - $company->transactions()->where('status', 'Approved')->where('type', 'Debit')->sum('amount') < message_count_from_string($message) * $company->purchasePackage->package->price_per_message){
+            if(company_balance() < message_count_from_string($message) * company_current_package()->price_per_message){
                 $response = "আপনার কোম্পানির একাউন্টে মেসেজ দেওয়ার মতো পর্যাপ্ত পরিমাণ টাকা নেই। দয়া করে মেসেজ ব্যবহার করতে টাকায় যোগ করুন।";
                 return $response;
             }
@@ -177,20 +187,20 @@ if (!function_exists('random_code')){
 
         if($response == "SUCCESS"){
             $transaction = new Transaction();
-            $transaction->company_id = $company->id;
+            $transaction->company_id = company()->id;
             $transaction->creator_id = auth()->user()->id;
             $transaction->type = 'Debit';
-            $transaction->amount = message_count_from_string($message) * $company->purchasePackage->package->price_per_message;
+            $transaction->amount = message_count_from_string($message) * company_current_package()->price_per_message;
             $transaction->method = 'Balance';
             $transaction->purpose = 'Send SMS :'.$number;
             $transaction->status = 'Approved';
             $transaction->save();
 
             $message_histories = new \App\Models\MessageHistory();
-            $message_histories->company_id = $company->id;
+            $message_histories->company_id = company()->id;
             $message_histories->branch_id = $branch_id;
-            $message_histories->package_id = $company->purchasePackage->package->id;
-            $message_histories->message_cost = message_count_from_string($message) * $company->purchasePackage->package->price_per_message;
+            $message_histories->package_id = company_current_package()->id;
+            $message_histories->message_cost = message_count_from_string($message) *company_current_package()->price_per_message;
 
             $message_histories->sender_id =  auth()->user()->id;
             $message_histories->receiver_id = \App\Models\User::where('phone', $number)->first()->id ?? null;
