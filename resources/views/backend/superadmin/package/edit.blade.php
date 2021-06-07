@@ -100,7 +100,7 @@
                             <div class="form-group row">
                                 <label for="price_per_message" class="col-sm-4 col-form-label">Price per SMS</label>
                                 <div class="col-sm-8">
-                                    <input value="{{ $package->price_per_message }}" name="price_per_message" type="number" class="form-control"
+                                    <input value="{{ $package->price_per_message }}" name="price_per_message" type="text" class="form-control"
                                            id="price_per_message" placeholder="price_per_message">
                                     @error('price_per_message')
                                     <div class="alert alert-danger" role="alert">
