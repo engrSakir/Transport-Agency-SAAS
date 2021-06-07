@@ -210,6 +210,4 @@ if (!function_exists('random_code')){
         }
         return intval($counter);
     }
-
-
 }

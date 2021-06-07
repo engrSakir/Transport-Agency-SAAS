@@ -27,16 +27,16 @@
     <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                @if (check_superadmin())
+                @if(check_superadmin())
                     @include('layouts.backend.partials.left-site-bar.superadmin')
                 @endif
-                @if (check_admin())
+                @if(check_admin())
                     @include('layouts.backend.partials.left-site-bar.admin')
                 @endif
-                @if (check_manager())
+                @if(check_manager())
                     @include('layouts.backend.partials.left-site-bar.manager')
                 @endif
-                @if (check_customer())
+                @if(check_customer())
                     @include('layouts.backend.partials.left-site-bar.customer')
                 @endif
                 <br>
