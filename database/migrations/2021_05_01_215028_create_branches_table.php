@@ -38,6 +38,7 @@ class CreateBranchesTable extends Migration
             $table->string('invoice_paid_watermark')->nullable()->comment('Invoice paid watermark image');
             $table->string('invoice_head_design')->nullable()->comment('Invoice head image');
             $table->string('chalan_head_design')->nullable()->comment('Chalan head image');
+            $table->string('expense_head_design')->nullable()->comment('Expense head image');
             $table->boolean('active_image_head_invoice')->default(false)->comment('0 inactive | 1 Active');
             $table->boolean('active_image_head_chalan')->default(false)->comment('0 inactive | 1 Active');
             $table->boolean('active_conditional_booking')->default(false)->comment('0 inactive | 1 Active');

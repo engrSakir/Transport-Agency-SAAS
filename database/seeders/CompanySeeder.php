@@ -31,12 +31,13 @@ class CompanySeeder extends Seeder
         //10 package
         for ($package_counter = 1; $package_counter <= 2; $package_counter++) {
             $package = new Package();
-            $package->name = 'Package - '.$package_counter;
-            $package->branch = $faker->numberBetween(1,10);
-            $package->admin = $faker->numberBetween(1,10);
-            $package->manager = $faker->numberBetween(1,10);
-            $package->free_sms = $faker->numberBetween(50,500);
-            $package->price_per_message =  $faker->numberBetween(0.30,0.60);
+            $package->name = 'Unusable - '.$package_counter;
+            $package->branch = 1;
+            $package->admin = 1;
+            $package->manager = 1;
+            $package->free_sms = 0;
+            $package->price_per_message =  0.45;
+            $package->is_active = 0;
             $package->save();
             //10 * 10 = 100 company
             for ($company_counter = 1; $company_counter <= 5; $company_counter++) {
