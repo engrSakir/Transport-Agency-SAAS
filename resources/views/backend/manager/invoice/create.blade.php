@@ -234,7 +234,7 @@
                 }
             });
 
-            @if(Request::is('*/manager/condition-invoice/create'))
+
             $( "#create-inv-form #sender-phone" ).autocomplete({
                 source: function(request, response) {
                     // console.log(request.term);
@@ -266,8 +266,6 @@
                     $('#sender-name').val(ui.item.phone);
                 }
             });
-            @endif
-
 
             $( "#create-inv-form #receiver-name" ).autocomplete({
                 source: function(request, response) {

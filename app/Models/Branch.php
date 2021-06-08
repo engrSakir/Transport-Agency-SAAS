@@ -49,15 +49,20 @@ class Branch extends Model
         return $this->hasMany(BranchLink::class, 'to_branch_id', 'id');
     }
 
+    public function expenseCategories(){
+        return $this->hasMany(ExpenseCategory::class, 'branch_id', 'id');
+    }
+
     // this is a recommended way to declare event handlers
     public static function boot() {
         parent::boot();
-        static::deleting(function($company) { // before delete() method call this
-            $company->managers()->delete();
-            $company->branchCustomers()->delete();
-            $company->invoices()->delete();
-            $company->fromLinkedBranchs()->delete();
-            $company->toLinkedBranchs()->delete();
+        static::deleting(function($branch) { // before delete() method call this
+            $branch->managers()->delete();
+            $branch->branchCustomers()->delete();
+            $branch->invoices()->delete();
+            $branch->fromLinkedBranchs()->delete();
+            $branch->toLinkedBranchs()->delete();
+            $branch->expenseCategories()->delete();
             // do the rest of the cleanup...
         });
     }

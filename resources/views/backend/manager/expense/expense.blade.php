@@ -1,0 +1,121 @@
+@push('title')
+    Expense
+@endpush
+@extends('layouts.backend.app')
+@push('style')
+
+@endpush
+@section('breadcrumb')
+    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+            <h4 class="text-themecolor font-weight-bold">Message</h4>
+        </div>
+        <div class="col-md-7 align-self-center text-right">
+            <div class="d-flex justify-content-end align-items-center">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Message</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <h3 class="card-title text-center">{{ company()->name }}</h3>
+                <h5 class="card-subtitle text-center"> <b>দৈনিক অফিসে রিপোর্ট ({{ date('d-m-Y') }})</b> </h5>
+                <div class="row">
+                    <div class="col-sm-12 col-xs-12">
+                        <form>
+
+                                <div class="table-responsive">
+                                    <table class="table color-bordered-table primary-bordered-table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>শাখা সমূহ</th>
+                                            <th>নগদ</th>
+                                            <th>বাকী</th>
+                                            <th>খরচের বিবরণ</th>
+                                            <th>টাকা</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($expense_categories as $expense_category)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $expense_category->name }}</td>
+                                            <td><input type="text" name="" class="form-control is-valid" id="" placeholder="নগদ"></td>
+                                            <td><input type="text" name="" class="form-control is-valid" id="" placeholder="বাকী"></td>
+                                            <td><input type="text" name="" class="form-control is-valid" id="" placeholder="খরচের বিবরণ"></td>
+                                            <td><input type="text" name="" class="form-control is-valid" id="" placeholder="টাকা"></td>
+                                        </tr>
+                                        @endforeach
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>শাখা সমূহ</th>
+                                            <th>নগদ</th>
+                                            <th>বাকী</th>
+                                            <th>খরচের বিবরণ</th>
+                                            <th>টাকা</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                    </table>
+                                </div>
+                            <button type="submit" class="btn btn-success m-2 col-12">সেভ</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="invoice-table table-responsive">
+                        <table class="table color-bordered-table primary-bordered-table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Number</th>
+                                <th>Message</th>
+                                <th>Note</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($expenses as $message)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $message->created_at->format('h:i A d/m/Y') }}</td>
+                                    <td>{{ $message->number }}</td>
+                                    <td>{{ $message->message }}</td>
+                                    <td>#Char:{{ $message->text_count }} #Mess:{{ $message->message_count }} #Cost:{{ $message->message_cost }}</td>
+                                </tr>
+                            @endforeach
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Number</th>
+                                <th>Message</th>
+                                <th>Note</th>
+                            </tr>
+                            </thead>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@push('script')
+
+@endpush

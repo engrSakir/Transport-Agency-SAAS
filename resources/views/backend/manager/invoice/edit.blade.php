@@ -264,8 +264,6 @@
                 }
             });
 
-            @if($invoice->condition_amount > 0)
-            {{--                            This id condition type invoice--}}
             $( "#edit-inv-form #sender-phone" ).autocomplete({
                 source: function(request, response) {
                     // console.log(request.term);
@@ -297,7 +295,6 @@
                     $('#sender-name').val(ui.item.phone);
                 }
             });
-            @endif
 
             $( "#edit-inv-form #receiver-name" ).autocomplete({
                 source: function(request, response) {

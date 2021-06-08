@@ -384,7 +384,7 @@ class InvoiceController extends Controller
             return Invoice::groupBy('sender_name')
                 ->where('from_branch_id', auth()->user()->branch->id)
                 ->where('sender_name', 'LIKE', '%'. $request->name. '%')
-                ->select('sender_name')
+                ->select('sender_name', 'sender_phone')
                 ->get();
         }else{
             return redirect()->back()->withErrors('Request no allowed');

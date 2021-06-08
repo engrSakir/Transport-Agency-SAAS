@@ -7,6 +7,8 @@ use App\Models\Branch;
 use App\Models\BranchLink;
 use App\Models\Company;
 use App\Models\CustomerAndBranch;
+use App\Models\Expense;
+use App\Models\ExpenseCategory;
 use App\Models\Package;
 use App\Models\PurchaseMessage;
 use App\Models\PurchasePackage;
@@ -95,6 +97,25 @@ class CompanySeeder extends Seeder
                         $customer_and_branch->branch_id = $branch->id;
                         $customer_and_branch->user_id = $customer->id;
                         $customer_and_branch->save();
+                    }
+
+                    for ($linked_expense_category_counter = 1; $linked_expense_category_counter <= 10; $linked_expense_category_counter++) {
+                        $expense_category = new ExpenseCategory();
+                        $expense_category->branch_id = $branch->id;
+                        $expense_category->name = 'Name -'.$linked_expense_category_counter;
+                        $expense_category->save();
+
+                        for ($linked_expense_counter = 1; $linked_expense_counter <= 10; $linked_expense_counter++) {
+                            $expense = new Expense();
+                            $expense->category_id = $expense_category->id;
+                            $expense->creator_id = null;
+                            $expense->immediate = 100+$linked_expense_counter;
+                            $expense->due = 50+$linked_expense_counter;
+                            $expense->taka = 150+$linked_expense_counter;
+                            $expense->description = 'Description -'.$linked_expense_counter;
+                            $expense->save();
+
+                        }
                     }
 
                 }

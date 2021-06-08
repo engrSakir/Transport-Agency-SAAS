@@ -86,7 +86,7 @@
                                     <td>{{ $message->created_at->format('h:i A d/m/Y') }}</td>
                                     <td>{{ $message->number }}</td>
                                     <td>{{ $message->message }}</td>
-                                    <td>#Char:{{ $message->text_count }} #Mess:{{ $message->message_count }} #Cost"{{ $message->message_cost }}</td>
+                                    <td>#Char:{{ $message->text_count }} #Mess:{{ $message->message_count }} #Cost:{{ $message->message_cost }}</td>
                                 </tr>
                             @endforeach
                             <thead>
