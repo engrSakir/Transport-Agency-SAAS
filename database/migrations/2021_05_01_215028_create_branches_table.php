@@ -34,16 +34,21 @@ class CreateBranchesTable extends Migration
             $table->text('chalan_heading_one')->nullable();
             $table->text('chalan_heading_two')->nullable();
             $table->text('chalan_heading_three')->nullable();
+
             $table->string('invoice_due_watermark')->nullable()->comment('Invoice due watermark image');
             $table->string('invoice_paid_watermark')->nullable()->comment('Invoice paid watermark image');
+
             $table->string('invoice_head_design')->nullable()->comment('Invoice head image');
             $table->string('chalan_head_design')->nullable()->comment('Chalan head image');
             $table->string('expense_head_design')->nullable()->comment('Expense head image');
+
             $table->boolean('active_image_head_invoice')->default(false)->comment('0 inactive | 1 Active');
             $table->boolean('active_image_head_chalan')->default(false)->comment('0 inactive | 1 Active');
             $table->boolean('active_image_head_expense')->default(false)->comment('0 inactive | 1 Active');
+
             $table->boolean('active_conditional_booking')->default(false)->comment('0 inactive | 1 Active');
             $table->boolean('active_expense_system')->default(false)->comment('0 inactive | 1 Active');
+
             $table->string('invoice_style')->default('A5')->comment('A5|A4');
             $table->timestamps();
         });

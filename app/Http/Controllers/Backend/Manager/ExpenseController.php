@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Manager;
 
 use App\Http\Controllers\Controller;
 use App\Models\Expense;
+use App\Models\ExpenseCategory;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -59,13 +60,22 @@ class ExpenseController extends Controller
 
     public function getExpenseCategory()
     {
-        echo('<h1>This new feature is now Under Development</h1>');
+        $expense_categories = auth()->user()->branch->expenseCategories;
+        return view('backend.manager.expense.expense-category', compact( 'expense_categories'));
     }
 
-    public function storeExpenseCategory()
+    public function storeExpenseCategory(Request $request)
     {
-
+        $request->validate([
+            'category_name' => 'required|string'
+        ]);
+        if(ExpenseCategory::where('branch_id', auth()->user()->branch->id)->where('name', $request->name)->count() > 0){
+            return back()->withErrors('ইতিমধ্যে এই নামের একটি ক্যাটাগরি আপনার ব্রাঞ্চের জন্য তৈরি করা হয়েছে');
+        }
+        $expense_category = new ExpenseCategory();
+        $expense_category->name = $request->category_name;
+        $expense_category->branch_id = auth()->user()->branch->id;
+        $expense_category->save();
+        return back()->withSuccess('সফল ভাবে সেভ হয়েছে।');
     }
-
-
 }

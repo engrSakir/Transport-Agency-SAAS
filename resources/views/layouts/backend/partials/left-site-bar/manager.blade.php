@@ -47,7 +47,8 @@
         <i class="far fa-circle text-success"></i><span class="hide-menu">চালান সমূহ</span>
     </a>
 </li>
-<hr class="bg-success">
+@if(auth()->user()->branch->active_expense_system)
+    <hr class="bg-success">
 <li>
     <a class="waves-effect waves-dark" href="{{ route('manager.getExpense') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">খরচ সমূহ</span>
@@ -58,3 +59,4 @@
         <i class="far fa-circle text-success"></i><span class="hide-menu">খরচ এর ধরণ</span>
     </a>
 </li>
+@endif
