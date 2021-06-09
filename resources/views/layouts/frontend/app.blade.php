@@ -122,7 +122,11 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="javascript:0"><span>About</span> </a></li>
+                    @if(auth()->check())
+                        <li><a href="{{ route('login') }}">My Panel</a></li>
+                    @else
+                        <li><a href="javascript:0" data-toggle="modal" data-target="#login">Login</a></li>
+                    @endif
                     <li>
                         <a class="nav-link" href="#"><span>Services</span> <span class="menu-toggle"><i
                                     class="fas fa-angle-down" aria-hidden="true"></i></span></a>
@@ -185,7 +189,11 @@
                             <a class="dropdown-item" href="javascript:0">Home Three</a>
                         </div>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="javascript:0">About</a></li>
+                    @if(auth()->check())
+                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">My Panel</a></li>
+                    @else
+                        <li class="nav-item"><a class="nav-link" href="javascript:0" data-toggle="modal" data-target="#login">Login</a></li>
+                    @endif
                     <li class="nav-item dropdown dropdown-slide dropdown-hover">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
@@ -197,19 +205,6 @@
                             <a class="dropdown-item" href="javascript:0">Tracking</a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown dropdown-slide dropdown-hover">
-                        <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown3" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            Blogs
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                            <a class="dropdown-item" href="javascript:0">Blog</a>
-                            <a class="dropdown-item" href="javascript:0">Blog Detail</a>
-                            <a class="dropdown-item" href="javascript:0">Blog Leftsidebar</a>
-                            <a class="dropdown-item" href="javascript:0">Blog Full Width</a>
-                        </div>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="javascript:0">Location</a></li>
                     <li class="nav-item"><a class="nav-link" href="javascript:0">Contact</a></li>
                 </ul>
                 <div class="search-container">
