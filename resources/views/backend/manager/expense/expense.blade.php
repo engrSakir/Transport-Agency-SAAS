@@ -8,13 +8,13 @@
 @section('breadcrumb')
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h4 class="text-themecolor font-weight-bold">Message</h4>
+            <h4 class="text-themecolor font-weight-bold">Expense</h4>
         </div>
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Message</li>
+                    <li class="breadcrumb-item active">Expense</li>
                 </ol>
             </div>
         </div>
@@ -28,45 +28,45 @@
                 <h5 class="card-subtitle text-center"> <b>দৈনিক অফিসে রিপোর্ট ({{ date('d-m-Y') }})</b> </h5>
                 <div class="row">
                     <div class="col-sm-12 col-xs-12">
-                        <form>
-
-                                <div class="table-responsive">
-                                    <table class="table color-bordered-table primary-bordered-table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>শাখা সমূহ</th>
-                                            <th>নগদ</th>
-                                            <th>বাকী</th>
-                                            <th>খরচের বিবরণ</th>
-                                            <th>টাকা</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($expense_categories as $expense_category)
+                        <form method="post" action="{{ route('manager.storeExpense') }}">
+                            @csrf
+                            <div class="table-responsive">
+                                <table class="table color-bordered-table primary-bordered-table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>শাখা সমূহ</th>
+                                        <th>নগদ</th>
+                                        <th>বাকী</th>
+                                        <th>খরচের বিবরণ</th>
+                                        <th>টাকা</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($expense_categories as $expense_category)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $expense_category->name }}</td>
-                                            <td><input type="text" name="" class="form-control is-valid" id="" placeholder="নগদ"></td>
-                                            <td><input type="text" name="" class="form-control is-valid" id="" placeholder="বাকী"></td>
-                                            <td><input type="text" name="" class="form-control is-valid" id="" placeholder="খরচের বিবরণ"></td>
-                                            <td><input type="text" name="" class="form-control is-valid" id="" placeholder="টাকা"></td>
+                                            <td><input type="text" name="{{ 'immediate_for_'.Str::slug($expense_category->name, '_') }}" class="form-control is-valid" id="" placeholder="নগদ"></td>
+                                            <td><input type="text" name="{{ 'due_for_'.Str::slug($expense_category->name, '_') }}" class="form-control is-valid" id="" placeholder="বাকী"></td>
+                                            <td><input type="text" name="{{ 'description_for_'.Str::slug($expense_category->name, '_') }}" class="form-control is-valid" id="" placeholder="খরচের বিবরণ"></td>
+                                            <td><input type="text" name="{{ 'taka_for_'.Str::slug($expense_category->name, '_') }}" class="form-control is-valid" id="" placeholder="টাকা"></td>
                                         </tr>
-                                        @endforeach
-                                        </tbody>
-                                        <tfoot>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>শাখা সমূহ</th>
-                                            <th>নগদ</th>
-                                            <th>বাকী</th>
-                                            <th>খরচের বিবরণ</th>
-                                            <th>টাকা</th>
-                                        </tr>
-                                        </tfoot>
-                                        <tbody>
-                                    </table>
-                                </div>
+                                    @endforeach
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>শাখা সমূহ</th>
+                                        <th>নগদ</th>
+                                        <th>বাকী</th>
+                                        <th>খরচের বিবরণ</th>
+                                        <th>টাকা</th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+                                </table>
+                            </div>
                             <button type="submit" class="btn btn-success m-2 col-12">সেভ</button>
                         </form>
                     </div>
@@ -83,29 +83,36 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Date</th>
-                                <th>Number</th>
-                                <th>Message</th>
-                                <th>Note</th>
+                                <th>তারিখ</th>
+                                <th>মোট নগদ</th>
+                                <th>মোট বাকী</th>
+                                <th>মোট টাকা</th>
+                                <th>#</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($expenses as $message)
+                            @foreach($expense_dates as $expense_date => $expenses)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $message->created_at->format('h:i A d/m/Y') }}</td>
-                                    <td>{{ $message->number }}</td>
-                                    <td>{{ $message->message }}</td>
-                                    <td>#Char:{{ $message->text_count }} #Mess:{{ $message->message_count }} #Cost:{{ $message->message_cost }}</td>
+                                    <td>{{ $expense_date }}</td>
+                                    <td>{{ $expenses->sum('immediate') }}</td>
+                                    <td>{{ $expenses->sum('due') }}</td>
+                                    <td>{{ $expenses->sum('taka') }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-success btn-rounded show-expense" value="{{ route('manager.showExpense', $expense_date) }}">
+                                            <i class="mdi mdi-printer"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                             @endforeach
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Date</th>
-                                <th>Number</th>
-                                <th>Message</th>
-                                <th>Note</th>
+                                <th>তারিখ</th>
+                                <th>মোট নগদ</th>
+                                <th>মোট বাকী</th>
+                                <th>মোট টাকা</th>
+                                <th>#</th>
                             </tr>
                             </thead>
                             </tbody>
@@ -117,5 +124,15 @@
     </div>
 @endsection
 @push('script')
-
+    <script>
+        $(document).ready(function(){
+            $(".show-expense").click( function (){
+                var html_embed_code = `<embed type="text/html" src="`+$(this).val()+`" width="750" height="500">`;
+                $('#extra-large-modal-body').html(html_embed_code);
+                $('#extra-large-modal-body').addClass( "text-center" );
+                $('#extra-large-modal-title').text( "দৈনিক অফিসে রিপোর্ট" );
+                $('#extra-large-modal').modal('show');
+            });
+        });
+    </script>
 @endpush

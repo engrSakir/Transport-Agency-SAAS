@@ -41,6 +41,7 @@ class CreateBranchesTable extends Migration
             $table->string('expense_head_design')->nullable()->comment('Expense head image');
             $table->boolean('active_image_head_invoice')->default(false)->comment('0 inactive | 1 Active');
             $table->boolean('active_image_head_chalan')->default(false)->comment('0 inactive | 1 Active');
+            $table->boolean('active_image_head_expense')->default(false)->comment('0 inactive | 1 Active');
             $table->boolean('active_conditional_booking')->default(false)->comment('0 inactive | 1 Active');
             $table->boolean('active_expense_system')->default(false)->comment('0 inactive | 1 Active');
             $table->string('invoice_style')->default('A5')->comment('A5|A4');

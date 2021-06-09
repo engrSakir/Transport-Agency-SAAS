@@ -31,6 +31,7 @@ Route::group(['middleware' => 'manager', 'as' => 'manager.', 'prefix' => 'backen
 
     Route::get('expense', [Manager\ExpenseController::class, 'getExpense'])->name('getExpense');
     Route::post('expense', [Manager\ExpenseController::class, 'storeExpense'])->name('storeExpense');
+    Route::get('expense/{expense_date}', [Manager\ExpenseController::class, 'showExpense'])->name('showExpense');
     Route::get('expense-category', [Manager\ExpenseController::class, 'getExpenseCategory'])->name('getExpenseCategory');
     Route::post('expense-category', [Manager\ExpenseController::class, 'storeExpenseCategory'])->name('storeExpenseCategory');
 
