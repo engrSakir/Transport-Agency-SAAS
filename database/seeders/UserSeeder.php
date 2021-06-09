@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
         $user->email = 'superadmin@gmail.com';
         $user->phone = '01857110581';
         $user->username = 'superadmin';
-        $user->password = Hash::make('password');
+        $user->password = Hash::make('Secret2021');
         $user->save();
 
         $user = new User();
