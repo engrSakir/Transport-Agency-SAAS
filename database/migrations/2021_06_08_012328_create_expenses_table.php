@@ -17,8 +17,6 @@ class CreateExpensesTable extends Migration
             $table->id();
             $table->foreignId('category_id');
             $table->foreignId('creator_id')->nullable();
-            $table->double('immediate')->nullable();
-            $table->double('due')->nullable();
             $table->double('taka')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
