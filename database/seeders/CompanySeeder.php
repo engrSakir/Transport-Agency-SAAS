@@ -62,7 +62,7 @@ class CompanySeeder extends Seeder
                     $purchase_message->save();
                 }
                 // 10 * 10 * 10 = 1000 branches
-                for ($branch_counter = 1; $branch_counter <= 10; $branch_counter++) {
+                for ($branch_counter = 1; $branch_counter <= 2; $branch_counter++) {
                     $branch = new Branch();
                     $branch->company_id = $company->id;
                     $branch->name = 'Branch -'. $branch_counter . ' of '. $company->name;
@@ -78,7 +78,7 @@ class CompanySeeder extends Seeder
                     $manager->save();
 
                     // 10 * 10 * 10 * 10 = 10000 links branches
-                    for ($linked_branch_counter = 1; $linked_branch_counter <= 10; $linked_branch_counter++) {
+                    for ($linked_branch_counter = 1; $linked_branch_counter <= 2; $linked_branch_counter++) {
                         $linked_branch = new BranchLink();
                         $linked_branch->from_branch_id = $branch->id;
                         $linked_branch->to_branch_id = $linked_branch_counter;
@@ -86,7 +86,7 @@ class CompanySeeder extends Seeder
                     }
 
                     // 10 * 10 * 10 * 10 = 10000 customers and linked with branch
-                    for ($branch_customer_counter = 1; $branch_customer_counter <= 10; $branch_customer_counter++) {
+                    for ($branch_customer_counter = 1; $branch_customer_counter <= 2; $branch_customer_counter++) {
                         $customer = new User();
                         $customer->type = 'Customer';
                         $customer->name = 'Customer v-'.$company->id.'-'.$branch->id.'-'.$branch_customer_counter;
@@ -100,7 +100,7 @@ class CompanySeeder extends Seeder
                         $customer_and_branch->save();
                     }
 
-                    for ($linked_expense_category_counter = 1; $linked_expense_category_counter <= 10; $linked_expense_category_counter++) {
+                    for ($linked_expense_category_counter = 1; $linked_expense_category_counter <= 2; $linked_expense_category_counter++) {
                         $expense_category = new ExpenseCategory();
                         $expense_category->branch_id = $branch->id;
                         $expense_category->name = 'Name -'.$linked_expense_category_counter;
@@ -110,17 +110,13 @@ class CompanySeeder extends Seeder
                             $expense = new Expense();
                             $expense->category_id = $expense_category->id;
                             $expense->creator_id = null;
-                            $expense->immediate = 100+$linked_expense_counter;
-                            $expense->due = 50+$linked_expense_counter;
                             $expense->taka = 150+$linked_expense_counter;
                             $expense->description = 'Description -'.$linked_expense_counter;
                             $expense->save();
 
                         }
                     }
-
                 }
-
             }
         }
     }
