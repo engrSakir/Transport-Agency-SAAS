@@ -219,7 +219,7 @@
                             var array = $.map(data,function(obj){
                                 return{
                                     value: obj.sender_name, //Fillable in input field
-                                    label: obj.sender_name + ' '+obj.sender_phone,  //Show as label of input field
+                                    label: obj.sender_name + ' #'+obj.sender_phone,  //Show as label of input field
                                     phone: obj.sender_phone,
                                 }
                             })
@@ -252,7 +252,7 @@
                             var array = $.map(data,function(obj){
                                 return{
                                     value: obj.sender_phone, //Fillable in input field
-                                    label: obj.sender_phone + ' '+obj.sender_name,  //Show as label of input field
+                                    label: obj.sender_phone + ' #'+obj.sender_name,  //Show as label of input field
                                     phone: obj.sender_name,
                                 }
                             })
@@ -285,7 +285,7 @@
                             var array = $.map(data,function(obj){
                                 return{
                                     value: obj.name, //Filable in input field
-                                    label: obj.name + '<br>' + obj.phone + '<br>' + obj.email,  //Show as label of input field
+                                    label: obj.name + ' #' + obj.phone + ' #' + obj.email,  //Show as label of input field
                                     phone: obj.phone,
                                     email: obj.email,
                                     sender_branch: obj.to_branch_id,
@@ -323,7 +323,7 @@
                             var array = $.map(data,function(obj){
                                 return{
                                     value: obj.phone, //Filable in input field
-                                    label: obj.name + '-' + obj.phone + '-' + obj.email,  //Show as label of input field
+                                    label: obj.name + ' #' + obj.phone + ' #' + obj.email,  //Show as label of input field
                                     name: obj.name,
                                     email: obj.email,
                                     sender_branch: obj.to_branch_id
@@ -361,7 +361,7 @@
                             var array = $.map(data,function(obj){
                                 return{
                                     value: obj.email, //Filable in input field
-                                    label: obj.name + '-' + obj.phone + '-' + obj.email,  //Show as label of input field
+                                    label: obj.name + ' #' + obj.phone + ' #' + obj.email,  //Show as label of input field
                                     phone: obj.phone,
                                     name: obj.name,
                                     sender_branch: obj.to_branch_id
