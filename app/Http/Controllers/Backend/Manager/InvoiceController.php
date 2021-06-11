@@ -196,7 +196,7 @@ class InvoiceController extends Controller
             'type' => 'success',
             'message' => 'বিল তৈরি হয়েছে।',
             'url' => route('manager.invoice.show', $invoice),
-            'invoice_id' => $invoice->id,
+            'invoice_id' => $invoice->custom_counter,
             'sms_api_response' => $sms_api_response,
         ]);
     }
