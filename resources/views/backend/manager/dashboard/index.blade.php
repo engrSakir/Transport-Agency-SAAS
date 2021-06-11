@@ -27,7 +27,7 @@
                 <a href="{{ route('manager.invoice.statusAndBranchConstant', [\Illuminate\Support\Str::slug('All', ' ', '-'), $invoice_group]) }}">
                     <div class="card">
                         <div class="box @if($loop->odd) bg-info @else bg-success @endif text-center">
-                            <h4 class="font-light text-white font-weight-bold"> {{ \App\Models\Branch::find($invoice_group)->name }}</h4>
+                            <h4 class="font-light text-white font-weight-bold"> {{ \App\Models\Branch::find($invoice_group)->name ?? '--'}}</h4>
                             <h6 class="text-white"> Invoice: {{ $invoice_items->count() }} </h6>
                             <h6 class="text-white">
                                 Price : {{ $invoice_items->sum('price') + $invoice_items->sum('home') + $invoice_items->sum('labour') }}
