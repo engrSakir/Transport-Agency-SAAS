@@ -90,32 +90,34 @@ mpdf-->
     <tr>
         <td width="5%">#</td>
         <td width="20%">শাখা সমূহ</td>
-        <td width="10%">নগদ</td>
-        <td width="10%">বাকী</td>
         <td width="45%">খরচের বিবরণ</td>
         <td width="10%">টাকা</td>
     </tr>
     </thead>
     <tbody>
     <!-- ITEMS HERE -->
-    @foreach($expenses as $expense)
+    @foreach($expenses->groupBy('category_id') as $category_group => $expense_list)
         <tr @if($loop->even) style="background-color:rgba(156,156,156,0.2)" @endif>
             <td align="center">{{ en_to_bn($loop->iteration) }}</td>
-            <td align="center">{{ $expense->category->name ?? '--' }}</td>
-            <td align="center">{{ en_to_bn($expense->immediate) ?? '--' }}</td>
-            <td align="center">{{ en_to_bn($expense->due) ?? '--' }}</td>
-            <td>{{ en_to_bn($expense->description) ?? '--' }}</td>
-            <td class="cost">{{ en_to_bn($expense->taka) ?? '--' }}</td>
+            <td align="center">{{ \App\Models\ExpenseCategory::find($category_group)->name ?? '--' }} </td>
+            <td>
+                @if(\App\Models\ExpenseCategory::find($category_group)->name == 'লেবার খরচ' && auth()->user()->branch->active_labour_bill_with_invoice_total != true)
+                    বিলে লেবার খরচ ({{ en_to_bn($expense_list->count()) }})
+                @else
+                    @foreach($expense_list as $expense)
+                        {{ $expense->description }}({{ en_to_bn($expense->taka) }})<br>
+                    @endforeach
+                @endif
+            </td>
+            <td class="cost">{{ en_to_bn($expense_list->sum('taka')) }}</td>
         </tr>
     @endforeach
     <!-- END ITEMS HERE -->
     <tr>
         <th align="center"></th>
-        <th align="center">মোট</th>
-        <th align="center">{{ en_to_bn($expenses->sum('immediate')) ?? '--' }}</th>
-        <th align="center">{{ en_to_bn($expenses->sum('due')) ?? '--' }}</th>
         <th></th>
-        <th class="cost">{{ en_to_bn($expenses->sum('$expense->taka')) ?? '--' }}</th>
+        <th align="right">মোট</th>
+        <th class="cost">{{ en_to_bn($expenses->sum('taka')) ?? '--' }}</th>
     </tr>
     </tbody>
 </table>

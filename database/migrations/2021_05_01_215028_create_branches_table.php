@@ -49,7 +49,7 @@ class CreateBranchesTable extends Migration
             $table->boolean('active_conditional_booking')->default(false)->comment('0 inactive | 1 Active');
             $table->boolean('active_expense_system')->default(false)->comment('0 inactive | 1 Active');
 
-            $table->boolean('active_labour_bill_with_invoice_total')->default(false)->comment('0 Add to expense | 1 Add to invoice');
+            $table->boolean('active_labour_bill_with_invoice_total')->default(true)->comment('0 Add to expense | 1 Add to invoice');
 
             $table->string('invoice_style')->default('A5')->comment('A5|A4');
             $table->string('chalan_style')->default('A5')->comment('A5|A4');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend\Manager;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\CustomerAndBranch;
+use App\Models\Expense;
+use App\Models\ExpenseCategory;
 use App\Models\Invoice;
 use App\Models\Sender;
 use App\Models\User;
@@ -128,6 +130,7 @@ class InvoiceController extends Controller
         $invoice->price             = bn_to_en($request->price);
         $invoice->home              = bn_to_en($request->home);
         $invoice->labour            = bn_to_en($request->labour);
+
         $invoice->paid              = bn_to_en($request->advance);
 
         $invoice->creator_id        = auth()->user()->id;
@@ -168,6 +171,19 @@ class InvoiceController extends Controller
                 'type' => 'error',
                 'message' => $exception->getMessage(),
             ]);
+        }
+
+        if(!auth()->user()->branch->active_labour_bill_with_invoice_total){
+            $expenseCategory = ExpenseCategory::firstOrCreate(
+                ['name' => 'লেবার খরচ'],
+                ['branch_id' => auth()->user()->branch->id]
+            );
+            Expense::firstOrCreate(
+                ['category_id' => $expenseCategory->id],
+                ['taka' =>  $invoice->labour],
+                ['creator_id' =>  auth()->user()->id],
+                ['description' =>  $invoice->custom_counter]
+            );
         }
 
         //# Step 5 SMS

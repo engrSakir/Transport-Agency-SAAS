@@ -35,9 +35,7 @@ class ExpenseController extends Controller
             $expense = new Expense();
             $expense->category_id = $expense_category->id;
             $expense->creator_id = auth()->user()->id;
-            $expense->immediate = bn_to_en($request->input('immediate_for_' . Str::slug($expense_category->name, '_')));
-            $expense->due = bn_to_en($request->input('due_for_' . Str::slug($expense_category->name, '_')));
-            $expense->taka = en_to_bn($request->input('taka_for_' . Str::slug($expense_category->name, '_')));
+            $expense->taka = bn_to_en($request->input('taka_for_' . Str::slug($expense_category->name, '_')));
             $expense->description = $request->input('description_for_' . Str::slug($expense_category->name, '_'));
             try {
                 $expense->save();

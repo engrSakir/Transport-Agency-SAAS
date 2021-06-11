@@ -78,6 +78,7 @@ class ChalanController extends Controller
         $chalan->driver_name    =   $request->driver_name;
         $chalan->driver_phone   =   $request->driver_phone;
         $chalan->car_number     =   $request->car_number;
+        $chalan->chalan_note     =   $request->chalan_note;
 
         //Logic for custom counter
         $custom_counter = Chalan::where('from_branch_id', auth()->user()->branch->id)->orderBy('id', 'desc')->first()->custom_counter ?? 0;

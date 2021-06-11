@@ -2,6 +2,7 @@
 
 use App\Models\BranchLink;
 use App\Models\CustomPage;
+use App\Models\Invoice;
 use App\Models\StaticOption;
 use App\Models\Transaction;
 use App\Models\WebsiteMessage;
@@ -219,5 +220,23 @@ if (!function_exists('random_code')){
             $counter = $counter + 1;
         }
         return intval($counter);
+    }
+
+    function get_due_of_invoice(Invoice $invoice){
+        if($invoice->fromBranch->active_labour_bill_with_invoice_total){
+            $due = ($invoice->price + $invoice->home + $invoice->labour) - $invoice->paid;
+        }else{
+            $due = ($invoice->price + $invoice->home) - $invoice->paid;
+        }
+        return $due;
+    }
+
+    function get_total_of_invoice(Invoice $invoice){
+        if($invoice->fromBranch->active_labour_bill_with_invoice_total){
+            $total = $invoice->price + $invoice->home + $invoice->labour;
+        }else{
+            $total = $invoice->price + $invoice->home;
+        }
+        return $total;
     }
 }

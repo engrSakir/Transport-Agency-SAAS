@@ -425,7 +425,7 @@
                             $('#extra-large-modal-title').text( "INVOICE" );
                             $('#extra-large-modal').modal('show');
                             $('.response_area').css('display','block');
-                            $('.response_inv_id').text('বিল নংঃ '+data.invoice_id);
+                            $('.response_inv_id').text('সফলভাবে বিল তৈরি হয়েছে এবং নংঃ '+data.invoice_id);
                             $('.response_inv_message').text(data.sms_api_response);
                             Swal.fire({
                                 position: 'bottom-end',

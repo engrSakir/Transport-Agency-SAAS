@@ -17,7 +17,7 @@
 
         .inv-description {
             /* The image used */
-            @if(($invoice->price + $invoice->home + $invoice->labour) > $invoice->paid)
+            @if(get_due_of_invoice($invoice) > 0)
                 background-image: url("{{ asset($invoice->fromBranch->invoice_due_watermark ?? get_static_option('no_image')) }}");
             @else
                 background-image: url("{{ asset($invoice->fromBranch->invoice_paid_watermark ?? get_static_option('no_image')) }}");
@@ -170,7 +170,7 @@
                                 <pre style="text-align: left; font-family: bengali_englisg;"> @if($invoice->condition_amount > 0) <b>কন্ডিশনঃ {{ en_to_bn($invoice->condition_amount) }} + চার্জঃ {{ en_to_bn($invoice->condition_charge) }} = মোটঃ {{ en_to_bn($invoice->condition_amount + $invoice->condition_charge) }}</b>
                                     <hr> @endif{{ $invoice->description }}</pre>
                             </td>
-                            <td  style="text-align: center; font-size: 22px;" class="right-color bottom-color @if(($invoice->price + $invoice->home + $invoice->labour) > $invoice->paid)  inv-due-seal @else inv-paid-seal @endif">
+                            <td  style="text-align: center; font-size: 22px;" class="right-color bottom-color @if(get_due_of_invoice($invoice) > 0)  inv-due-seal @else inv-paid-seal @endif">
                                 {{ en_to_bn($invoice->price)  }}
 
                             </td>
@@ -196,7 +196,7 @@
                                 বুকিং তারিখ- {{ en_to_bn($invoice->created_at->format('d/m/Y')) }}
                             </th>
                             <td style="text-align: right">মোট- </td>
-                            <td style="text-align: center; background-color: rgba(11,198,145,0.5); border: 1px solid black;"><b>{{ en_to_bn($invoice->price + $invoice->home + $invoice->labour) }}</b></td>
+                            <td style="text-align: center; background-color: rgba(11,198,145,0.5); border: 1px solid black;"><b>{{ en_to_bn(get_total_of_invoice($invoice)) }}</b></td>
                         </tr>
                         <tr>
                             <th></th>
@@ -214,7 +214,7 @@
                             <td style="text-align: right; width: 50%;" class="">
                                 বাকী-
                             </td>
-                            <td style="text-align: center; border: 1px solid black; background-color: rgba(11,198,145,0.5);" class=""><b>{{ en_to_bn($invoice->price + $invoice->home + $invoice->labour - $invoice->paid) }}</b></td>
+                            <td style="text-align: center; border: 1px solid black; background-color: rgba(11,198,145,0.5);" class=""><b>{{ en_to_bn(get_due_of_invoice($invoice)) }}</b></td>
                         </tr>
                         </tbody>
                     </table>
@@ -233,7 +233,7 @@
                     <b>Prepared by DataTech BD Ltd.</b>
                 </td>
                 <td style="width: 30%; text-align: right;">
-                    কর্মকর্তার স্বাক্ষর-{{ $invoice->creator->name }}
+                    কর্মকর্তার স্বাক্ষর-{{ $invoice->creator->name ?? '--'}}
                 </td>
             </tr>
         </table>

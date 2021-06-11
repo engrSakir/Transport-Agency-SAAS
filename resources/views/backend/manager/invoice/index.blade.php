@@ -32,9 +32,17 @@
                         <h4 class="font-light text-white font-weight-bold"> {{ \App\Models\Branch::find($branch_id)->name ?? '#'}}</h4>
                         <h6 class="text-white"> ভাউচার: {{ en_to_bn($invoice_items->count()) }} </h6>
                         <h6 class="text-white">
+                            @if(auth()->user()->branch->active_labour_bill_with_invoice_total)
                             মোট টাকা : {{ en_to_bn($invoice_items->sum('price') + $invoice_items->sum('home') + $invoice_items->sum('labour')) }}
+                            @else
+                            মোট টাকা : {{ en_to_bn($invoice_items->sum('price') + $invoice_items->sum('home')) }}
+                            @endif
                             <br>
+                            @if(auth()->user()->branch->active_labour_bill_with_invoice_total)
                             বাকি টাকা : {{ en_to_bn($invoice_items->sum('price') + $invoice_items->sum('home') + $invoice_items->sum('labour') - $invoice_items->sum('paid')) }}
+                            @else
+                            বাকি টাকা : {{ en_to_bn($invoice_items->sum('price') + $invoice_items->sum('home') - $invoice_items->sum('paid')) }}
+                            @endif
                             <br>
                             পরিশোধিত টাকা : {{ en_to_bn($invoice_items->sum('paid')) }}
                         </h6>
@@ -156,9 +164,9 @@
                                     {{ $invoice->creator->name ?? '' }}
                                 </td>
                                 <td style="font-size: 16px;">
-                                    <span class="badge badge-pill badge-danger">{{ en_to_bn($invoice->price + $invoice->home + $invoice->labour - $invoice->paid) }}</span>
+                                    <span class="badge badge-pill badge-danger">{{ en_to_bn(get_due_of_invoice($invoice)) }}</span>
                                     <span class="badge badge-pill badge-success">{{ en_to_bn($invoice->paid) }}</span>
-                                    <span class="badge badge-pill badge-secondary">{{ en_to_bn($invoice->price + $invoice->home + $invoice->labour) }}</span>
+                                    <span class="badge badge-pill badge-secondary">{{ en_to_bn(get_total_of_invoice($invoice)) }}</span>
                                 </td>
                                 @if (Request::is('*/manager/condition-invoice'))
                                     <td>

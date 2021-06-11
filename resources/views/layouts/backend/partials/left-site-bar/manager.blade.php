@@ -4,14 +4,14 @@
     </a>
 </li>
 @if(auth()->user()->branch->active_conditional_booking)
-<li>
-    <a class="waves-effect waves-dark" href="{{ route('manager.conditionInvoice.create') }}">
+<li class="bg-primary">
+    <a class="waves-effect waves-dark text-white" href="{{ route('manager.conditionInvoice.create') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">কন্ডিশন বিল তৈরি</span>
     </a>
 </li>
 @endif
-<li>
-    <a class="waves-effect waves-dark" href="{{ route('manager.invoice.create') }}">
+<li class="bg-inverse">
+    <a class="waves-effect waves-dark text-white" href="{{ route('manager.invoice.create') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">সাধারণ বিল তৈরি</span>
     </a>
 </li>
@@ -27,18 +27,18 @@
         <i class="far fa-circle text-success"></i><span class="hide-menu">সকল সাধারণ বিল</span>
     </a>
 </li>
-<li>
-    <a class="waves-effect waves-dark" href="{{ route('manager.invoice.statusConstant', 'received') }}">
+<li class="bg-success">
+    <a class="waves-effect waves-dark text-white" href="{{ route('manager.invoice.statusConstant', 'received') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">রিসিভ বিল</span>
     </a>
 </li>
-<li>
-    <a class="waves-effect waves-dark" href="{{ route('manager.invoice.statusConstant', 'on-going') }}">
+<li class="bg-warning">
+    <a class="waves-effect waves-dark text-white" href="{{ route('manager.invoice.statusConstant', 'on-going') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">গাড়িতে বিল</span>
     </a>
 </li>
-<li>
-    <a class="waves-effect waves-dark" href="{{ route('manager.invoice.statusConstant', 'delivered') }}">
+<li class="bg-info">
+    <a class="waves-effect waves-dark text-white" href="{{ route('manager.invoice.statusConstant', 'delivered') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">ডেলিভারি বিল</span>
     </a>
 </li>

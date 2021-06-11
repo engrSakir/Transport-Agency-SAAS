@@ -172,6 +172,8 @@ class BranchController extends Controller
             'active_conditional_booking' => 'nullable|boolean',
             'active_expense_system' => 'nullable|boolean',
 
+            'active_labour_bill_with_invoice_total' => 'nullable|boolean',
+
             'active_image_head_invoice' => 'nullable|boolean',
             'active_image_head_chalan' => 'nullable|boolean',
         ]);
@@ -203,6 +205,8 @@ class BranchController extends Controller
 
         $branch->active_conditional_booking = $request->active_conditional_booking ?? null;
         $branch->active_expense_system = $request->active_expense_system ?? null;
+
+        $branch->active_labour_bill_with_invoice_total = $request->active_labour_bill_with_invoice_total ?? null;
 
         $branch->active_image_head_invoice = $request->active_image_head_invoice ?? null;
         $branch->active_image_head_chalan = $request->active_image_head_chalan ?? null;

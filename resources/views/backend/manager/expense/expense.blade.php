@@ -36,21 +36,18 @@
                                     <tr>
                                         <th>#</th>
                                         <th>শাখা সমূহ</th>
-                                        <th>নগদ</th>
-                                        <th>বাকী</th>
                                         <th>খরচের বিবরণ</th>
                                         <th>টাকা</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($expense_categories as $expense_category)
+
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $expense_category->name }}</td>
-                                            <td><input type="text" name="{{ 'immediate_for_'.Str::slug($expense_category->name, '_') }}" class="form-control is-valid" id="" placeholder="নগদ"></td>
-                                            <td><input type="text" name="{{ 'due_for_'.Str::slug($expense_category->name, '_') }}" class="form-control is-valid" id="" placeholder="বাকী"></td>
                                             <td><input type="text" name="{{ 'description_for_'.Str::slug($expense_category->name, '_') }}" class="form-control is-valid" id="" placeholder="খরচের বিবরণ"></td>
-                                            <td><input type="text" name="{{ 'taka_for_'.Str::slug($expense_category->name, '_') }}" class="form-control is-valid" id="" placeholder="টাকা"></td>
+                                            <td><input type="number" name="{{ 'taka_for_'.Str::slug($expense_category->name, '_') }}" class="form-control is-valid" id="" placeholder="টাকা"></td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -58,8 +55,6 @@
                                     <tr>
                                         <th>#</th>
                                         <th>শাখা সমূহ</th>
-                                        <th>নগদ</th>
-                                        <th>বাকী</th>
                                         <th>খরচের বিবরণ</th>
                                         <th>টাকা</th>
                                     </tr>

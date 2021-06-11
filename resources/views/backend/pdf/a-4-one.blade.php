@@ -122,7 +122,7 @@ mpdf-->
             <td>{{ $invoice->description ?? '--' }}</td>
             <td align="center">{{ en_to_bn($invoice->quantity) ?? '--' }}</td>
             <td class="cost">{{ en_to_bn($invoice->paid) ?? '--' }}</td>
-            <td class="cost">{{  en_to_bn($invoice->price +  $invoice->home +  $invoice->labour - $invoice->paid) }}</td>
+            <td class="cost">{{  en_to_bn(get_due_of_invoice($invoice)) }}</td>
         </tr>
     @endforeach
     <!-- END ITEMS HERE -->
@@ -132,11 +132,17 @@ mpdf-->
         <td class="totals"><b>{{ en_to_bn($chalan->invoices->sum('quantity')) }}</b></td>
         <td class="totals"><b>{{ en_to_bn($chalan->invoices->sum('paid')) }}</b></td>
         <td class="totals cost">
+            @if(auth()->user()->branch->active_labour_bill_with_invoice_total)
             <b>{{ en_to_bn($chalan->invoices->sum('price') + $chalan->invoices->sum('home') + $chalan->invoices->sum('labour') - $chalan->invoices->sum('paid')) }}</b>
+            @else
+            <b>{{ en_to_bn($chalan->invoices->sum('price') + $chalan->invoices->sum('home') - $chalan->invoices->sum('paid')) }}</b>
+            @endif
         </td>
     </tr>
     </tbody>
 </table>
+<div>{!! $chalan->chalan_note ?? '' !!}</div>
+<br>
 <div style="text-align: center; font-style: italic;">Prepared by DataTech BD Ltd.</div>
 </body>
 </html>

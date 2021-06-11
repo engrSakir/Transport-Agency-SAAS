@@ -356,7 +356,7 @@
                                                 <label class="custom-control-label"
                                                        for="active_conditional_booking">Active conditional bill</label>
                                             </div>
-                                            @error('status')
+                                            @error('active_conditional_booking')
                                             <div class="alert alert-danger" role="alert">
                                                 {{ $message }}
                                             </div>
@@ -379,7 +379,7 @@
                                                 <label class="custom-control-label"
                                                        for="active_expense_system">Active expense system</label>
                                             </div>
-                                            @error('status')
+                                            @error('active_expense_system')
                                             <div class="alert alert-danger" role="alert">
                                                 {{ $message }}
                                             </div>
@@ -388,6 +388,28 @@
                                     </div>
                                 </div>
                                 <!--/Expense manage-->
+                                <!--active_labour_bill_with_invoice_total-->
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input name="active_labour_bill_with_invoice_total" type="checkbox"
+                                                       class="custom-control-input"
+                                                       id="active_labour_bill_with_invoice_total"
+                                                       value="1"
+                                                       @if($branch->active_labour_bill_with_invoice_total) checked="" @endif>
+                                                <label class="custom-control-label"
+                                                       for="active_labour_bill_with_invoice_total">Labour bill with invoice total</label>
+                                            </div>
+                                            @error('active_labour_bill_with_invoice_total')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                </div>
+                                <!--/active_labour_bill_with_invoice_total-->
                             </div>
                             <hr class="bg-success m-3">
                             <div class="row">
