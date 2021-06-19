@@ -132,7 +132,7 @@
                                         </div>
                                     </label>
                                     <br>
-                                    @if($invoice->chalan_id)
+                                    @if($invoice->chalan)
                                         <button type="button" class="btn btn-outline-success btn-rounded show-chalan" value="{{ route('manager.chalan.show', $invoice->chalan) }}">
                                             <i class="mdi mdi-receipt"></i>
                                             {{ $invoice->chalan->custom_counter ?? '--' }}

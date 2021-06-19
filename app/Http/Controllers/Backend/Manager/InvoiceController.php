@@ -144,7 +144,12 @@ class InvoiceController extends Controller
         }
 
         //Logic for custom counter
-        $custom_counter = Invoice::where('from_branch_id', auth()->user()->branch->id)->orderBy('id', 'desc')->first()->custom_counter ?? 0;
+        $custom_counter = Invoice::where('from_branch_id', auth()->user()->branch->id)->orderBy('id', 'desc')->first()->custom_counter ?? auth()->user()->branch->custom_inv_counter_min_value;
+
+        if($custom_counter < auth()->user()->branch->custom_inv_counter_min_value){
+            $custom_counter = auth()->user()->branch->custom_inv_counter_min_value;
+        }
+
         if ($custom_counter >= auth()->user()->branch->custom_inv_counter_max_value){
             $custom_counter = auth()->user()->branch->custom_inv_counter_min_value;
         }else{
