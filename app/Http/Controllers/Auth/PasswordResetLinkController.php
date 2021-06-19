@@ -43,7 +43,7 @@ class PasswordResetLinkController extends Controller
                 return back()->withErrors('এই নাম্বারটি আমাদের ডেটাবেজ রেকর্ডে পাওয়া যাচ্ছে না।');
             }
             $password = Str::random(4);
-            if(application_sms_sender($request->email, 'ট্রান্সপোর্ট এজেন্সি সফটওয়্যারে লগইন করার নতুন পাসওয়ার্ড হচ্ছে: '. $password)){
+            if(application_sms_sender($request->email, 'ট্রান্সপোর্ট এজেন্সি সফটওয়্যারে লগইন করার নতুন পাসওয়ার্ড হচ্ছে: '. $password) == "SUCCESS"){
                 $user->password = bcrypt($password);
                 $user->save();
                 return redirect()->route('login')->withSuccess('সফলভাবে নতুন পাসওয়ার্ড আপনার ফোন নাম্বারে পাঠানো হয়েছে।');
@@ -65,7 +65,7 @@ class PasswordResetLinkController extends Controller
                 return back()->withErrors('এই ইউজারনেম আমাদের ডেটাবেজ রেকর্ডে পাওয়া যাচ্ছে না।');
             }
             $password = Str::random(4);
-            if(application_sms_sender($request->email, 'ট্রান্সপোর্ট এজেন্সি সফটওয়্যারে লগইন করার নতুন পাসওয়ার্ড হচ্ছে: '. $password)){
+            if(application_sms_sender($request->email, 'ট্রান্সপোর্ট এজেন্সি সফটওয়্যারে লগইন করার নতুন পাসওয়ার্ড হচ্ছে: '. $password) == "SUCCESS"){
                 $user->password = bcrypt($password);
                 $user->save();
                 return redirect()->route('login')->withSuccess('সফলভাবে নতুন পাসওয়ার্ড আপনার ফোন নাম্বারে পাঠানো হয়েছে।');
