@@ -159,6 +159,10 @@ if (!function_exists('random_code')){
        //return filter_var(str_replace($search, $replace_by, $bn_value), FILTER_SANITIZE_NUMBER_INT);
    }
 
+    function application_sms_sender($number, $message){
+
+   }
+
     function paid_sms_sender($number, $message){
         $response = null;
         if(check_manager()){
