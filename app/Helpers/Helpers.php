@@ -160,7 +160,12 @@ if (!function_exists('random_code')){
    }
 
     function application_sms_sender($number, $message){
-
+        //After checking all send to api
+        $api_response = Http::acceptJson()->withToken(env('DATATECH_BD_LTD_SMS_API_SECRET'))->asForm()->post('http://sms.datatechbd.com/api/send-sms', [
+            'number' => $number,
+            'message' => $message,
+        ]);
+        return $api_response->json()['message'];
    }
 
     function paid_sms_sender($number, $message){
