@@ -4,10 +4,16 @@
     </a>
 </li>
 <li>
+    <a class="waves-effect waves-dark" href="{{ route('admin.chalan.index') }}">
+        <i class="far fa-circle text-success"></i><span class="hide-menu">চালান সমুহ</span>
+    </a>
+</li>
+<li>
     <a class="waves-effect waves-dark" href="{{ route('admin.manager.index') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">Manager</span>
     </a>
 </li>
+<hr class="bg-share">
 <li>
     <a class="waves-effect waves-dark" href="{{ route('admin.branch.index') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">Branch</span>
@@ -18,6 +24,7 @@
         <i class="far fa-circle text-success"></i><span class="hide-menu">Company</span>
     </a>
 </li>
+<hr class="bg-share">
 <li>
     <a class="waves-effect waves-dark" href="{{ route('admin.balance.index') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">Balance Add</span>

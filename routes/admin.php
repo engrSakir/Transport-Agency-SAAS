@@ -19,6 +19,7 @@ Route::group(['middleware' => 'admin', 'as' => 'admin.', 'prefix' => 'backend/ad
 
     Route::resource('branch', Admin\BranchController::class);
     Route::resource('manager', Admin\ManagerController::class);
+    Route::resource('chalan', Admin\ChalanController::class);
 
 
 });

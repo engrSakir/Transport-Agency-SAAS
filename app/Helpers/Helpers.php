@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\BranchLink;
+use App\Models\Chalan;
 use App\Models\CustomPage;
 use App\Models\Invoice;
 use App\Models\StaticOption;
@@ -143,6 +144,14 @@ if (!function_exists('random_code')){
 
    function company_current_package(){
        return company()->purchasePackage->package;
+   }
+
+   function check_chalan_for_admin(Chalan $chalan){
+        if(company()->branches()->where('id', $chalan->from_branch_id)->count() > 0 || company()->branches()->where('id', $chalan->to_branch_id)->count() > 0){
+            return true;
+        }else{
+            return false;
+        }
    }
 
 

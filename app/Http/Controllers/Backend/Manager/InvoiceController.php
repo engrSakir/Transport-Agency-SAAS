@@ -187,6 +187,7 @@ class InvoiceController extends Controller
                 ['category_id' => $expenseCategory->id],
                 ['taka' =>  $invoice->labour],
                 ['creator_id' =>  auth()->user()->id],
+                ['invoice_id' =>  $invoice->id],
                 ['description' =>  $invoice->custom_counter]
             );
         }

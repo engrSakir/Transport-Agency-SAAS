@@ -53,6 +53,7 @@ class CreateInvoicesTable extends Migration
             $table->string('last_visitor_os')->nullable()->comment('Last visitor os');
             $table->string('last_visitor_location')->nullable()->comment('Last visitor location');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

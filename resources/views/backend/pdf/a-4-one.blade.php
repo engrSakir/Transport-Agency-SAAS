@@ -132,7 +132,7 @@ mpdf-->
         <td class="totals"><b>{{ en_to_bn($chalan->invoices->sum('quantity')) }}</b></td>
         <td class="totals"><b>{{ en_to_bn($chalan->invoices->sum('paid')) }}</b></td>
         <td class="totals cost">
-            @if(auth()->user()->branch->active_labour_bill_with_invoice_total)
+            @if($chalan->fromBranch->active_labour_bill_with_invoice_total)
             <b>{{ en_to_bn($chalan->invoices->sum('price') + $chalan->invoices->sum('home') + $chalan->invoices->sum('labour') - $chalan->invoices->sum('paid')) }}</b>
             @else
             <b>{{ en_to_bn($chalan->invoices->sum('price') + $chalan->invoices->sum('home') - $chalan->invoices->sum('paid')) }}</b>

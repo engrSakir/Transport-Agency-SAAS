@@ -40,13 +40,13 @@
                         </div>
                     </div>
                     <div class="invoice-table table-responsive">
-                        <table class="table color-bordered-table primary-bordered-table">
+                        <table class="table color-bordered-table primary-bordered-table text-center">
                             <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Date</th>
                                 <th>Driver</th>
-                                <th>Branch Office</th>
+                                <th class="text-center">Office</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -73,13 +73,14 @@
                                     <b>{{ $chalan->driver_phone ?? '' }}<br>
                                     <span class="text-danger">গাড়ি নং: {{ $chalan->car_number }}</span><br></b>
                                 </td>
-                                <td style="font-size: 16px;">
+                                <td style="font-size: 16px;" class="text-center">
+                                    {{ $chalan->fromBranch->name ?? '' }} <br> থেকে <br>
                                     {{ $chalan->toBranch->name ?? '' }}
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-info btn-circle btn-lg show-chalan" value="{{ route('manager.chalan.show', $chalan) }}"><i class="mdi mdi-cloud-print"></i> </button>
+                                    <button type="button" class="btn btn-info btn-circle btn-lg show-chalan" value="{{ route('admin.chalan.show', $chalan) }}"><i class="mdi mdi-cloud-print"></i> </button>
                                     <button type="button" class="btn btn-warning btn-circle btn-lg"><i class="mdi mdi-tooltip-edit"></i> </button>
-                                    <button type="button" class="btn btn-danger btn-circle btn-lg" onclick="delete_function(this)" value="{{ route('manager.chalan.destroy', $chalan) }}"><i class="mdi mdi-delete-circle"></i> </button>
+                                    <button type="button" class="btn btn-danger btn-circle btn-lg" onclick="delete_function(this)" value="{{ route('admin.chalan.destroy', $chalan) }}"><i class="mdi mdi-delete-circle"></i> </button>
                                 </td>
                             </tr>
                             @endforeach
@@ -88,7 +89,7 @@
                                 <th>#</th>
                                 <th>Date</th>
                                 <th>Driver</th>
-                                <th>Branch Office</th>
+                                <th class="text-center">Office</th>
                                 <th>Action</th>
                             </tr>
                             </thead>

@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->foreignId('creator_id')->nullable()->comment('Who add this user');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

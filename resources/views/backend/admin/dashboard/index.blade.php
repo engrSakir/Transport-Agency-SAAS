@@ -30,15 +30,6 @@
                 </div>
             </div>
         </div>
-        <!-- Column 1-->
-        <div class="col-md-6 col-lg-4 col-xlg-2">
-            <div class="card">
-                <div class="box bg-info text-center">
-                    <h1 class="font-light text-white">{{ $data['usable_message_amount'] }} </h1>
-                    <h6 class="text-white"> মেসেজ </h6>
-                </div>
-            </div>
-        </div>
         <!-- Column 2-->
         <div class="col-md-6 col-lg-4 col-xlg-2">
             <div class="card">

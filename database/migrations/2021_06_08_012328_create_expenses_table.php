@@ -17,9 +17,11 @@ class CreateExpensesTable extends Migration
             $table->id();
             $table->foreignId('category_id');
             $table->foreignId('creator_id')->nullable();
+            $table->foreignId('invoice_id')->nullable(); //Use only for labor costing in invoice
             $table->double('taka')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
