@@ -9,11 +9,16 @@
     </a>
 </li>
 <li>
+    <a class="waves-effect waves-dark" href="{{ route('admin.report.index') }}">
+        <i class="far fa-circle text-success"></i><span class="hide-menu">রিপোর্ট</span>
+    </a>
+</li>
+<hr class="bg-share">
+<li>
     <a class="waves-effect waves-dark" href="{{ route('admin.manager.index') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">Manager</span>
     </a>
 </li>
-<hr class="bg-share">
 <li>
     <a class="waves-effect waves-dark" href="{{ route('admin.branch.index') }}">
         <i class="far fa-circle text-success"></i><span class="hide-menu">Branch</span>

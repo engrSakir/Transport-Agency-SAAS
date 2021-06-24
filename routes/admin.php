@@ -17,6 +17,9 @@ Route::group(['middleware' => 'admin', 'as' => 'admin.', 'prefix' => 'backend/ad
     Route::get('/sms', [Admin\SmsController::class, 'index'])->name('sms.index');
     Route::post('/sms', [Admin\SmsController::class, 'send'])->name('sms.send');
 
+    Route::get('/report', [Admin\ReportController::class, 'index'])->name('report.index');
+    Route::post('/report', [Admin\ReportController::class, 'search']);
+
     Route::resource('branch', Admin\BranchController::class);
     Route::resource('manager', Admin\ManagerController::class);
     Route::resource('chalan', Admin\ChalanController::class);

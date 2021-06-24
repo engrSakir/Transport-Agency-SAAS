@@ -1,7 +1,7 @@
+@extends('layouts.backend.app')
 @push('title')
     Package
 @endpush
-@extends('layouts.backend.app')
 @push('style')
     <link href="{{ asset('assets/backend/dist/css/pages/pricing-page.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/dist/css/pages/ribbon-page.css') }}" rel="stylesheet">

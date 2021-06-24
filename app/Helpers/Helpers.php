@@ -168,6 +168,7 @@ if (!function_exists('random_code')){
        //return filter_var(str_replace($search, $replace_by, $bn_value), FILTER_SANITIZE_NUMBER_INT);
    }
 
+
     function application_sms_sender($number, $message){
         //After checking all send to api
         $api_response = Http::acceptJson()->withToken(env('DATATECH_BD_LTD_SMS_API_SECRET'))->asForm()->post('http://sms.datatechbd.com/api/send-sms', [
@@ -256,5 +257,13 @@ if (!function_exists('random_code')){
             $total = $invoice->price + $invoice->home;
         }
         return $total;
+    }
+
+    function get_before_of_string($symbol, $string){
+        return substr($string, 0, strpos($string, $symbol));
+    }
+
+    function get_after_of_string($symbol, $string){
+        return substr($string, strpos($string,$symbol)+strlen($symbol));
     }
 }
