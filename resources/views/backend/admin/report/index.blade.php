@@ -46,6 +46,31 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="form-group button-group">
+                                    @foreach($branches as $branch)
+                                        <div class="btn-group">
+                                            <label class="btn btn-info active">
+                                                <div class="custom-control custom-checkbox mr-sm-2">
+                                                    <input name="branches[]" type="checkbox"
+                                                                class="custom-control-input"
+                                                                id="branch-{{ $loop->iteration }}"
+                                                                value="{{ $branch->id }}"
+                                                                checked="">
+                                                    <label class="custom-control-label"
+                                                                for="branch-{{ $loop->iteration }}">{{ $branch->name }}</label>
+                                                    </label>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                    @error('branches')
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
                                 <div class="input-group mb-3">
                                     <input type="text"
                                            class="form-control form-control-lg datetime text-center font-weight-bold" name="date_range" required>
